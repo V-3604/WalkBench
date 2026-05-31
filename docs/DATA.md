@@ -279,7 +279,9 @@ The zip contains **only** the files that are gitignored: embeddings (~3.3 GB) an
 
 Extract the zip at the repo root. It should populate exactly these two directories:
 
-### Embeddings (132 files → `project/artifacts/embeddings/`)
+### Embeddings (~211 `.npy` files → `project/artifacts/embeddings/`)
+
+The bundle spans five frozen backbones (SigLIP SO400m, SigLIP 2, CLIP ViT-L/14, DINOv2, and RemoteCLIP on NAIP), the in-corpus and LOCO LoRA variants, and all four cities (MSP/Seattle/DC/Pittsburgh); each `.npy` is paired with an `_ids.npy` sidecar. The SigLIP+CLIP / 3-city examples below show the naming pattern — it repeats for the other backbones and for Pittsburgh.
 
 **Frozen baselines** — SigLIP SO400m (1152-d) and CLIP ViT-L/14 (768-d):
 ```
@@ -315,12 +317,12 @@ Each `_ids.npy` sidecar maps row index → `point_id` integer for that city. The
 
 Do **not** include `X_sat_augmented.npy` and `X_str_augmented.npy` — those are legacy files from a discarded augmentation experiment.
 
-Sanity check after extraction (should print 132):
-```bash
-ls project/artifacts/embeddings/ | grep -v "augmented" | wc -l
+Sanity check after extraction — the embeddings count should match the source machine (~211):
+```powershell
+(Get-ChildItem project\artifacts\embeddings -File | Where-Object Name -notlike "*augmented*").Count
 ```
 
-### LoRA adapters (7 directories → `project/artifacts/models/`)
+### LoRA adapters (8 directories → `project/artifacts/models/`)
 
 Only these adapter directories are needed. The `downstream/`, `downstream_v2/`, and `encoders/` model subdirectories are **not** needed (those are MLP downstream checkpoints; skip them).
 
@@ -332,47 +334,39 @@ project/artifacts/models/
 ├── siglip_lora_loco_dc/         LoRA-LOCO v1, holdout=DC
 ├── siglip_lora_loco_msp_v2/     LoRA-LOCO v2, holdout=MSP
 ├── siglip_lora_loco_seattle_v2/ LoRA-LOCO v2, holdout=Seattle
-└── siglip_lora_loco_dc_v2/      LoRA-LOCO v2, holdout=DC
+├── siglip_lora_loco_dc_v2/      LoRA-LOCO v2, holdout=DC
+└── siglip_lora_loco_pittsburgh_v2/  LoRA-LOCO v2, holdout=Pittsburgh (trained on MSP+Seattle+DC)
 ```
 
 Each directory contains `adapter/` (PEFT weights), `classification_heads.pt`, `config.json`, `train_log.jsonl`, and `val_metrics.json`.
 
 Adapters are only needed to re-extract embeddings from scratch. If the embeddings are already in place, you can skip the adapters and go straight to `train_multitarget.py`.
 
-### Building the zip (from the source machine)
+### Building the zip (Windows PowerShell, from the repo root)
 
-```bash
-# From the repo root — produces a ~4.5 GB compressed archive
-tar --use-compress-program='zstd -19 -T0' -cf walkbench_embeddings.tar.zst \
-    project/artifacts/embeddings \
-    project/artifacts/models/siglip_lora_v1 \
-    project/artifacts/models/siglip_lora_loco_msp \
-    project/artifacts/models/siglip_lora_loco_seattle \
-    project/artifacts/models/siglip_lora_loco_dc \
-    project/artifacts/models/siglip_lora_loco_msp_v2 \
-    project/artifacts/models/siglip_lora_loco_seattle_v2 \
-    project/artifacts/models/siglip_lora_loco_dc_v2
+Windows `tar` ships with zstd built in, so this is native — no WSL needed (~5–6 GB output):
+
+```powershell
+tar --zstd -cf walkbench_embeddings_models.tar.zst `
+    project/artifacts/embeddings `
+    project/artifacts/models/siglip_lora_v1 `
+    project/artifacts/models/siglip_lora_loco_msp `
+    project/artifacts/models/siglip_lora_loco_seattle `
+    project/artifacts/models/siglip_lora_loco_dc `
+    project/artifacts/models/siglip_lora_loco_msp_v2 `
+    project/artifacts/models/siglip_lora_loco_seattle_v2 `
+    project/artifacts/models/siglip_lora_loco_dc_v2 `
+    project/artifacts/models/siglip_lora_loco_pittsburgh_v2
 ```
 
 If you also want to share raw imagery for Stage E re-extraction, add the three streetview and three NAIP directories (adds ~7 GB compressed to ~6–7 GB total).
 
-### After extracting on the teammate's machine
+### After extracting (teammate's machine, repo root)
 
-```bash
-cd WalkBench   # cloned repo root
-tar --use-compress-program='zstd -d' -xf walkbench_embeddings.tar.zst
-
-# Verify lock integrity
-.venv/Scripts/python.exe project/scripts/audit_v2_lock.py
-# Verify file presence
-.venv/Scripts/python.exe project/scripts/verify_repo.py
+```powershell
+tar --zstd -xf walkbench_embeddings_models.tar.zst
+& ".venv\Scripts\python.exe" project\scripts\audit_v2_lock.py
+& ".venv\Scripts\python.exe" project\scripts\verify_repo.py
 ```
 
-After extraction at the teammate's repo root, run:
-
-```bash
-& $PY project\scripts\audit_v2_lock.py
-& $PY project\scripts\verify_repo.py
-```
-
-These two scripts verify lock-id integrity and expected file presence respectively. A clean bundle should pass both with zero warnings.
+`tar --zstd` also works on current macOS/Linux tar. Both scripts verify lock-id integrity and file presence — a clean bundle passes with zero warnings.
