@@ -1,0 +1,111 @@
+{
+  "lock_date": "2026-04-22",
+  "lock_strategy": "shared_complete_multimodal_intersection",
+  "why_this_strategy": "Maximal non-arbitrary shared subset: every retained point_id has 4/4 Mapillary headings and a NAIP tile in both cities, without randomly discarding extra Seattle-complete rows.",
+  "raw_point_tables": {
+    "msp": {
+      "path": "project/data/processed/points/msp_points_v2.csv",
+      "rows": 4874
+    },
+    "seattle": {
+      "path": "project/data/processed/points/seattle_points_v2.csv",
+      "rows": 4874
+    }
+  },
+  "availability": {
+    "msp": {
+      "street_complete": 4847,
+      "street_partial": 27,
+      "street_none": 0,
+      "naip_present": 4874,
+      "multimodal_complete": 4847
+    },
+    "seattle": {
+      "street_complete": 4859,
+      "street_partial": 11,
+      "street_none": 4,
+      "naip_present": 4866,
+      "multimodal_complete": 4851
+    }
+  },
+  "lock_sizes": {
+    "shared_final_lock_per_city": 4824,
+    "joint_final_lock_total": 9648,
+    "equal_n_if_city_subsets_were_independent": 4847
+  },
+  "excluded_ids": {
+    "msp_street_incomplete": [
+      1228,
+      1383,
+      1388,
+      1765,
+      1768,
+      1778,
+      1780,
+      1811,
+      1927,
+      2403,
+      2406,
+      2407,
+      2408,
+      2560,
+      2574,
+      2652,
+      2655,
+      2658,
+      2659,
+      2661,
+      2666,
+      2667,
+      2725,
+      2726,
+      3191,
+      3194,
+      3216
+    ],
+    "seattle_street_incomplete": [
+      628,
+      629,
+      630,
+      631,
+      632,
+      633,
+      635,
+      636,
+      637,
+      657,
+      679,
+      723,
+      825,
+      878,
+      3373
+    ],
+    "seattle_naip_missing": [
+      3960,
+      3961,
+      3962,
+      3963,
+      3964,
+      3965,
+      3966,
+      3967
+    ]
+  },
+  "outputs": {
+    "lock_ids": "project/data/processed/locks/v2_final_lock_ids.txt",
+    "lock_manifest": "project/data/processed/locks/v2_final_lock_manifest.csv",
+    "lock_summary": "project/data/processed/locks/v2_final_lock_summary.json",
+    "msp_points_final_lock": "project/data/processed/points/msp_points_v2_final_lock.csv",
+    "seattle_points_final_lock": "project/data/processed/points/seattle_points_v2_final_lock.csv",
+    "seattle_captions_final_lock_csv": "project/data/processed/text/streetview_openai_seattle_final_lock.csv",
+    "seattle_captions_final_lock_jsonl": "project/data/processed/text/streetview_openai_seattle_final_lock.jsonl"
+  },
+  "caption_provenance": {
+    "seattle_existing_captions_filtered_to_lock": {
+      "csv_rows": 4824,
+      "jsonl_rows": 4824
+    },
+    "msp_existing_caption_files_reused": false,
+    "msp_note": "Do not treat the existing MSP caption files as final v2 lock artifacts after retiring OLD_MSP_data. Re-run project/scripts/generate_openai_structured_captions.py against the current Minneapolis folder using project/data/processed/locks/v2_final_lock_ids.txt."
+  }
+}

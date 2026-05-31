@@ -1,0 +1,181 @@
+{
+  "timestamp": "2026-05-11T09:39:02.709994+00:00",
+  "city": "dc",
+  "backbone": "siglip_lora_loco_v2_dc",
+  "n_folds": 5,
+  "model_family": "mlp",
+  "ablation": "full",
+  "pca_dim": 128,
+  "active_targets": [
+    "walkability_index_v2"
+  ],
+  "target_filter": "walkability_index_v2",
+  "ridge_alpha": null,
+  "block_buffer_m": 500.0,
+  "block_buffer_drops": [
+    {
+      "fold_id": 0,
+      "buffer_m": 500.0,
+      "n_train_before": 3525,
+      "n_train_after": 3505,
+      "n_train_dropped": 20,
+      "n_val_before": 881,
+      "n_val_after": 878,
+      "n_val_dropped": 3
+    },
+    {
+      "fold_id": 1,
+      "buffer_m": 500.0,
+      "n_train_before": 3051,
+      "n_train_after": 2967,
+      "n_train_dropped": 84,
+      "n_val_before": 763,
+      "n_val_after": 742,
+      "n_val_dropped": 21
+    },
+    {
+      "fold_id": 2,
+      "buffer_m": 500.0,
+      "n_train_before": 3042,
+      "n_train_after": 2972,
+      "n_train_dropped": 70,
+      "n_val_before": 761,
+      "n_val_after": 745,
+      "n_val_dropped": 16
+    },
+    {
+      "fold_id": 3,
+      "buffer_m": 500.0,
+      "n_train_before": 2961,
+      "n_train_after": 2881,
+      "n_train_dropped": 80,
+      "n_val_before": 740,
+      "n_val_after": 724,
+      "n_val_dropped": 16
+    },
+    {
+      "fold_id": 4,
+      "buffer_m": 500.0,
+      "n_train_before": 2838,
+      "n_train_after": 2691,
+      "n_train_dropped": 147,
+      "n_val_before": 710,
+      "n_val_after": 673,
+      "n_val_dropped": 37
+    }
+  ],
+  "per_fold_results": [
+    {
+      "fold_id": 0,
+      "n_train": 3505,
+      "n_val": 878,
+      "n_test": 412,
+      "metrics": {
+        "walkability_index_v2": {
+          "type": "regression",
+          "n": 412,
+          "r2": 0.593,
+          "r2_recalibrated": 0.5602,
+          "spearman_rho": 0.8001,
+          "rmse": 0.758,
+          "mae": 0.5791
+        }
+      }
+    },
+    {
+      "fold_id": 1,
+      "n_train": 2967,
+      "n_val": 742,
+      "n_test": 1004,
+      "metrics": {
+        "walkability_index_v2": {
+          "type": "regression",
+          "n": 1004,
+          "r2": 0.6877,
+          "r2_recalibrated": 0.5652,
+          "spearman_rho": 0.8353,
+          "rmse": 0.7662,
+          "mae": 0.575
+        }
+      }
+    },
+    {
+      "fold_id": 2,
+      "n_train": 2972,
+      "n_val": 745,
+      "n_test": 1015,
+      "metrics": {
+        "walkability_index_v2": {
+          "type": "regression",
+          "n": 1015,
+          "r2": 0.4983,
+          "r2_recalibrated": 0.5235,
+          "spearman_rho": 0.7038,
+          "rmse": 0.8256,
+          "mae": 0.6367
+        }
+      }
+    },
+    {
+      "fold_id": 3,
+      "n_train": 2881,
+      "n_val": 724,
+      "n_test": 1117,
+      "metrics": {
+        "walkability_index_v2": {
+          "type": "regression",
+          "n": 1117,
+          "r2": 0.4548,
+          "r2_recalibrated": 0.4416,
+          "spearman_rho": 0.696,
+          "rmse": 0.9519,
+          "mae": 0.7044
+        }
+      }
+    },
+    {
+      "fold_id": 4,
+      "n_train": 2691,
+      "n_val": 673,
+      "n_test": 1270,
+      "metrics": {
+        "walkability_index_v2": {
+          "type": "regression",
+          "n": 1270,
+          "r2": 0.5498,
+          "r2_recalibrated": 0.0845,
+          "spearman_rho": 0.6805,
+          "rmse": 0.6891,
+          "mae": 0.5346
+        }
+      }
+    }
+  ],
+  "summary": {
+    "walkability_index_v2": {
+      "type": "regression",
+      "n_folds_with_data": 5,
+      "r2_mean": 0.5567,
+      "r2_std": 0.0804,
+      "r2_min": 0.4548,
+      "r2_max": 0.6877,
+      "r2_recalibrated_mean": 0.435,
+      "r2_recalibrated_std": 0.1808,
+      "r2_recalibrated_min": 0.0845,
+      "r2_recalibrated_max": 0.5652,
+      "spearman_rho_mean": 0.7431,
+      "spearman_rho_std": 0.0623,
+      "spearman_rho_min": 0.6805,
+      "spearman_rho_max": 0.8353,
+      "rmse_mean": 0.7982,
+      "rmse_std": 0.0882,
+      "rmse_min": 0.6891,
+      "rmse_max": 0.9519,
+      "mae_mean": 0.606,
+      "mae_std": 0.059,
+      "mae_min": 0.5346,
+      "mae_max": 0.7044,
+      "n_positive_r2_folds": 5
+    }
+  }
+}

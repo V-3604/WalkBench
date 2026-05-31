@@ -1,0 +1,59 @@
+{
+  "match_radius_m": 25.0,
+  "by_city_target": {
+    "seattle/sidewalk": {
+      "city": "seattle",
+      "target": "sidewalk",
+      "n": 3339,
+      "kappa": 0.13468149025335197,
+      "overture_prevalence": 0.9808325846061695,
+      "ps_prevalence": 0.8619347109913148,
+      "auroc_overture_vs_ps": 0.5429893771132339,
+      "auroc_ps_vs_overture_empirical": 0.7721207061068702,
+      "auroc_ps_vs_overture_theoretical": 0.7721207061068673,
+      "model_auroc_vs_overture_mean": 0.7396759259259259,
+      "model_auroc_vs_overture_per_backbone": {
+        "siglip2": 0.7576518518518518,
+        "dinov2": 0.7217
+      },
+      "model_auroc_vs_ps_mean": 0.665200817427383,
+      "interpretation": "Model AUROC vs Overture is at or below the label-ceiling \u2014 near-signal regime."
+    },
+    "seattle/crosswalk": {
+      "city": "seattle",
+      "target": "crosswalk",
+      "n": 4851,
+      "kappa": 0.04886345057245611,
+      "overture_prevalence": 0.1886209029066172,
+      "ps_prevalence": 0.02391259534116677,
+      "auroc_overture_vs_ps": 0.6065123984997998,
+      "auroc_ps_vs_overture_empirical": 0.5162443355990937,
+      "auroc_ps_vs_overture_theoretical": 0.5162443355990936,
+      "model_auroc_vs_overture_mean": 0.5444287037037037,
+      "model_auroc_vs_overture_per_backbone": {
+        "siglip2": 0.5609796296296297,
+        "dinov2": 0.5278777777777778
+      },
+      "model_auroc_vs_ps_mean": 0.6475062439263066,
+      "interpretation": "Model AUROC vs Overture exceeds ceiling \u2014 fitting Overture-specific noise."
+    },
+    "pittsburgh/sidewalk": {
+      "city": "pittsburgh",
+      "target": "sidewalk",
+      "n": 762,
+      "kappa": 0.18262830738764502,
+      "overture_prevalence": 0.9816272965879265,
+      "ps_prevalence": 0.9540682414698163,
+      "auroc_overture_vs_ps": 0.5652387502456279,
+      "auroc_ps_vs_overture_empirical": 0.6585179526355996,
+      "auroc_ps_vs_overture_theoretical": 0.6585179526355949,
+      "model_auroc_vs_overture_mean": 0.7396759259259259,
+      "model_auroc_vs_overture_per_backbone": {
+        "siglip2": 0.7576518518518518,
+        "dinov2": 0.7217
+      },
+      "model_auroc_vs_ps_mean": 0.665200817427383,
+      "interpretation": "Model AUROC vs Overture exceeds ceiling \u2014 fitting Overture-specific noise."
+    }
+  }
+}

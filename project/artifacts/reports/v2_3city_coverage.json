@@ -1,0 +1,62 @@
+[
+  {
+    "city": "msp",
+    "label": "Minneapolis\u2013Saint Paul",
+    "lock_size": 4847,
+    "street_images_total": 19467,
+    "street_complete_points": 4847,
+    "street_complete_pct": 100.0,
+    "naip_covered": 4847,
+    "naip_pct": 100.0,
+    "street_embed_exists": true,
+    "naip_embed_exists": true,
+    "street_embed_shape": [
+      4824,
+      1152
+    ],
+    "captions_present": 0,
+    "captions_pct": 0.0,
+    "overture_labels_covered": 4824,
+    "overture_labels_pct": 99.5
+  },
+  {
+    "city": "seattle",
+    "label": "Seattle",
+    "lock_size": 4851,
+    "street_images_total": 19461,
+    "street_complete_points": 4851,
+    "street_complete_pct": 100.0,
+    "naip_covered": 4851,
+    "naip_pct": 100.0,
+    "street_embed_exists": true,
+    "naip_embed_exists": true,
+    "street_embed_shape": [
+      4824,
+      1152
+    ],
+    "captions_present": 0,
+    "captions_pct": 0.0,
+    "overture_labels_covered": 4824,
+    "overture_labels_pct": 99.4
+  },
+  {
+    "city": "dc",
+    "label": "Washington DC",
+    "lock_size": 4994,
+    "street_images_total": 19994,
+    "street_complete_points": 4994,
+    "street_complete_pct": 100.0,
+    "naip_covered": 4994,
+    "naip_pct": 100.0,
+    "street_embed_exists": true,
+    "naip_embed_exists": true,
+    "street_embed_shape": [
+      4994,
+      1152
+    ],
+    "captions_present": 0,
+    "captions_pct": 0.0,
+    "overture_labels_covered": 4994,
+    "overture_labels_pct": 100.0
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "city": "pittsburgh",
+    "label": "Pittsburgh",
+    "lock_size": 4982,
+    "street_images_total": 19977,
+    "street_complete_points": 4982,
+    "street_complete_pct": 100.0,
+    "naip_covered": 4982,
+    "naip_pct": 100.0,
+    "street_embed_exists": false,
+    "naip_embed_exists": false,
+    "captions_present": 0,
+    "captions_pct": 0.0,
+    "overture_labels_covered": 4982,
+    "overture_labels_pct": 100.0
+  }
+]

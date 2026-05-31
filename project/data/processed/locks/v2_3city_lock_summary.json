@@ -1,0 +1,42 @@
+{
+  "pittsburgh": {
+    "city": "pittsburgh",
+    "total_points": 5000,
+    "complete_street": 4982,
+    "partial_street": 18,
+    "missing_street": 0,
+    "naip_present": 5000,
+    "missing_naip_from_complete_street": 0,
+    "lock_size": 4982
+  },
+  "msp": {
+    "city": "msp",
+    "total_points": 4874,
+    "complete_street": 4847,
+    "partial_street": 27,
+    "missing_street": 0,
+    "naip_present": 4874,
+    "missing_naip_from_complete_street": 0,
+    "lock_size": 4847
+  },
+  "seattle": {
+    "city": "seattle",
+    "total_points": 4874,
+    "complete_street": 4859,
+    "partial_street": 11,
+    "missing_street": 4,
+    "naip_present": 4866,
+    "missing_naip_from_complete_street": 8,
+    "lock_size": 4851
+  },
+  "dc": {
+    "city": "dc",
+    "total_points": 5000,
+    "complete_street": 4994,
+    "partial_street": 6,
+    "missing_street": 0,
+    "naip_present": 5000,
+    "missing_naip_from_complete_street": 0,
+    "lock_size": 4994
+  }
+}

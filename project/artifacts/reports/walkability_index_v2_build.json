@@ -1,0 +1,53 @@
+{
+  "components": [
+    "sidewalk_present",
+    "crosswalk_present_near",
+    "intersection_count_200m",
+    "building_footprint_frac_100m",
+    "stops_400m"
+  ],
+  "transforms": [
+    "raw",
+    "raw",
+    "log1p_prestored",
+    "raw",
+    "log1p_prestored"
+  ],
+  "scaler_mean": [
+    0.9186586531894549,
+    0.27803578746072943,
+    3.626673562003167,
+    0.20145214451577653,
+    2.071231725862242
+  ],
+  "scaler_scale": [
+    0.27335861447847526,
+    0.4480311243114941,
+    0.5689256939134443,
+    0.11252886614067781,
+    0.7452220566212003
+  ],
+  "pca_loadings_pc1": [
+    0.3580769251820724,
+    0.15442150035587376,
+    0.559827516784916,
+    0.5061707328667906,
+    0.5275597184390822
+  ],
+  "pca_explained_variance_ratio": [
+    0.36530186700124445,
+    0.21994876431740099,
+    0.16516774298786951
+  ],
+  "sign_flipped": false,
+  "anchor": "sidewalk_present",
+  "n_total": 14642,
+  "correlation_with_v1_pearson": 0.8895889883169089,
+  "correlation_with_v1_spearman": 0.8748052415890474,
+  "index_quantiles": {
+    "p05": -2.5064867372049813,
+    "p50": 0.18037222725220775,
+    "p95": 1.9163813542819883
+  },
+  "out_csv": "C:\\Users\\kvars\\Desktop\\WalkCLIP\\project\\data\\processed\\labels\\walkability_index_v2_5feat.csv"
+}

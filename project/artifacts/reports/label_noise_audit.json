@@ -1,0 +1,88 @@
+{
+  "match_radius_m": 25.0,
+  "by_city": {
+    "seattle": {
+      "n_ps_labels_total": 95879,
+      "n_lock_points": 4851,
+      "sidewalk_present": {
+        "n": 3339,
+        "kappa": 0.13468149025335197,
+        "auroc_overture_vs_ps": 0.5429893771132339,
+        "auroc_ps_vs_overture": 0.7721207061068702,
+        "confusion": [
+          [
+            43,
+            418
+          ],
+          [
+            21,
+            2857
+          ]
+        ],
+        "overture_prevalence": 0.9808325846061695,
+        "ps_prevalence": 0.8619347109913148,
+        "raw_agreement": 0.868523510032944
+      },
+      "crosswalk_present": {
+        "n": 4851,
+        "kappa": 0.04886345057245611,
+        "auroc_overture_vs_ps": 0.6065123984997998,
+        "auroc_ps_vs_overture": 0.5162443355990937,
+        "confusion": [
+          [
+            3866,
+            869
+          ],
+          [
+            70,
+            46
+          ]
+        ],
+        "overture_prevalence": 0.1886209029066172,
+        "ps_prevalence": 0.02391259534116677,
+        "raw_agreement": 0.8064316635745207
+      }
+    },
+    "pittsburgh": {
+      "n_ps_labels_total": 10331,
+      "n_lock_points": 4982,
+      "sidewalk_present": {
+        "n": 762,
+        "kappa": 0.18262830738764502,
+        "auroc_overture_vs_ps": 0.5652387502456279,
+        "auroc_ps_vs_overture": 0.6585179526355996,
+        "confusion": [
+          [
+            5,
+            30
+          ],
+          [
+            9,
+            718
+          ]
+        ],
+        "overture_prevalence": 0.9816272965879265,
+        "ps_prevalence": 0.9540682414698163,
+        "raw_agreement": 0.9488188976377953
+      },
+      "crosswalk_present": {
+        "n": 4982,
+        "kappa": NaN,
+        "auroc_overture_vs_ps": NaN,
+        "auroc_ps_vs_overture": NaN,
+        "confusion": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "overture_prevalence": 0.12284223203532718,
+        "ps_prevalence": 0.0
+      }
+    }
+  }
+}

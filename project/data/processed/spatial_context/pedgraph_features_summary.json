@@ -1,0 +1,9 @@
+{
+  "pittsburgh": {
+    "n_points": 4982,
+    "mean_knn_dist_m": 81.68,
+    "mean_neighbors_400m": 37.92,
+    "n_snap_fallback": 0,
+    "n_unanchored": 0
+  }
+}

@@ -1,0 +1,71 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+**/__pycache__/
+*.pyc
+*.pyo
+CLAUDE.md
+
+/paper/ 
+
+# ── Virtual environments ───────────────────────────────────────────────────────
+/.venv/
+/.venv_wsl/
+/venv/
+/cache/
+
+# ── Secrets ────────────────────────────────────────────────────────────────────
+.env
+
+# ── Claude Code internals ─────────────────────────────────────────────────────
+/.claude/
+
+# ── Raw imagery (large; shared via Google Drive) ─────────────────────────────
+/project/data/raw/
+/Natl_WI.gdb/
+
+# ── SAM2 segmentation outputs (intermediate; not needed for repro) ────────────
+/project/data/processed/audit/
+
+# ── Embeddings and LoRA adapters (shared via Google Drive) ───────────────────
+/project/artifacts/embeddings/
+/project/artifacts/models/
+/project/artifacts/logs/
+*.npy
+*.pt
+*.tar
+*.tar.gz
+*.tar.zst
+*.zip
+
+
+# ── Superseded / backup label files ──────────────────────────────────────────
+project/data/processed/labels/heading_overture_labels.csv
+project/data/processed/labels/walkability_index_v2_5feat.csv
+project/data/processed/labels/spatial_context_features.csv
+project/data/processed/labels/overture_targets.backup_pre_recovery.csv
+project/data/processed/labels/*backup*
+
+# ── Superseded lock and point files ──────────────────────────────────────────
+project/data/processed/locks/dc_point_ids_all.txt
+project/data/processed/locks/v2_final_lock_ids.txt
+project/data/processed/points/msp_points_v2.csv
+project/data/processed/points/seattle_points_v2.csv
+project/data/processed/points/dc_points_v2.csv
+
+# ── External reference datasets (PS/APE; result already in model_vs_ps.json) ─
+project/data/external/
+
+# ── Legacy misc ───────────────────────────────────────────────────────────────
+/legacy_export/
+/misc/
+/MSP_data/
+OLD_MSP_data/
+project/models/
+
+# ── SAM2 weights ──────────────────────────────────────────────────────────────
+/sam2/checkpoints/
+
+# ── Local-only notes & side work (kept on disk; not shared with the team) ─────
+docs/archive/
+docs/internal/
+project/exploratory/
+paper/

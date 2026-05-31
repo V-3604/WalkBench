@@ -1,0 +1,116 @@
+{
+  "match_radius_m": 25.0,
+  "test_city": "seattle",
+  "summary": [
+    {
+      "backbone": "clip",
+      "target": "overture_crosswalk_present",
+      "n_runs": 6,
+      "auroc_vs_ps_mean": 0.6446331926709253,
+      "auroc_vs_ps_std": 0.029953588144065107,
+      "auroc_vs_overture_mean": 0.5764867142370753,
+      "delta_auroc_mean": 0.06814647843385002,
+      "ap_vs_ps_mean": 0.03799334714569165,
+      "ap_vs_overture_mean": 0.6213668143193111
+    },
+    {
+      "backbone": "clip",
+      "target": "overture_sidewalk_present",
+      "n_runs": 6,
+      "auroc_vs_ps_mean": 0.6474809836526328,
+      "auroc_vs_ps_std": 0.05123994445891985,
+      "auroc_vs_overture_mean": 0.7631504109279086,
+      "delta_auroc_mean": -0.11566942727527578,
+      "ap_vs_ps_mean": 0.9078539703368053,
+      "ap_vs_overture_mean": 0.9919013180547777
+    },
+    {
+      "backbone": "siglip",
+      "target": "overture_crosswalk_present",
+      "n_runs": 6,
+      "auroc_vs_ps_mean": 0.6503792951816879,
+      "auroc_vs_ps_std": 0.09524422254265198,
+      "auroc_vs_overture_mean": 0.5681679076726918,
+      "delta_auroc_mean": 0.0822113875089961,
+      "ap_vs_ps_mean": 0.04040785729354973,
+      "ap_vs_overture_mean": 0.614140292034303
+    },
+    {
+      "backbone": "siglip",
+      "target": "overture_sidewalk_present",
+      "n_runs": 6,
+      "auroc_vs_ps_mean": 0.6829206512021332,
+      "auroc_vs_ps_std": 0.06872865075688919,
+      "auroc_vs_overture_mean": 0.7854594073393782,
+      "delta_auroc_mean": -0.10253875613724507,
+      "ap_vs_ps_mean": 0.9164064140739709,
+      "ap_vs_overture_mean": 0.992900509153008
+    },
+    {
+      "backbone": "siglip_lora",
+      "target": "overture_crosswalk_present",
+      "n_runs": 6,
+      "auroc_vs_ps_mean": 0.6756094101967429,
+      "auroc_vs_ps_std": 0.020955634524179454,
+      "auroc_vs_overture_mean": 0.8004428274723973,
+      "delta_auroc_mean": -0.12483341727565433,
+      "ap_vs_ps_mean": 0.041862670642177156,
+      "ap_vs_overture_mean": 0.8023000414699811
+    },
+    {
+      "backbone": "siglip_lora",
+      "target": "overture_sidewalk_present",
+      "n_runs": 6,
+      "auroc_vs_ps_mean": 0.6436195161309834,
+      "auroc_vs_ps_std": 0.06368415422012799,
+      "auroc_vs_overture_mean": 0.9343287048568406,
+      "delta_auroc_mean": -0.29070918872585705,
+      "ap_vs_ps_mean": 0.899326504408161,
+      "ap_vs_overture_mean": 0.99766307962588
+    },
+    {
+      "backbone": "siglip_lora_loco_seattle",
+      "target": "overture_crosswalk_present",
+      "n_runs": 6,
+      "auroc_vs_ps_mean": 0.5983667957730415,
+      "auroc_vs_ps_std": 0.05366788439324331,
+      "auroc_vs_overture_mean": 0.5775862236032777,
+      "delta_auroc_mean": 0.0207805721697637,
+      "ap_vs_ps_mean": 0.032419179335908016,
+      "ap_vs_overture_mean": 0.6251255851317686
+    },
+    {
+      "backbone": "siglip_lora_loco_seattle",
+      "target": "overture_sidewalk_present",
+      "n_runs": 6,
+      "auroc_vs_ps_mean": 0.7038122082473935,
+      "auroc_vs_ps_std": 0.016603443367241143,
+      "auroc_vs_overture_mean": 0.8594670739126191,
+      "delta_auroc_mean": -0.1556548656652257,
+      "ap_vs_ps_mean": 0.9204559606110339,
+      "ap_vs_overture_mean": 0.9953017494279627
+    },
+    {
+      "backbone": "siglip_lora_loco_v2_seattle",
+      "target": "overture_crosswalk_present",
+      "n_runs": 6,
+      "auroc_vs_ps_mean": 0.5771966061616943,
+      "auroc_vs_ps_std": 0.04062593199450401,
+      "auroc_vs_overture_mean": 0.5714451677158453,
+      "delta_auroc_mean": 0.0057514384458490775,
+      "ap_vs_ps_mean": 0.03195710768203592,
+      "ap_vs_overture_mean": 0.6189740289602246
+    },
+    {
+      "backbone": "siglip_lora_loco_v2_seattle",
+      "target": "overture_sidewalk_present",
+      "n_runs": 6,
+      "auroc_vs_ps_mean": 0.6937351836545161,
+      "auroc_vs_ps_std": 0.018945437684539542,
+      "auroc_vs_overture_mean": 0.8509250801936709,
+      "delta_auroc_mean": -0.1571898965391548,
+      "ap_vs_ps_mean": 0.9176283578893267,
+      "ap_vs_overture_mean": 0.9951700389859336
+    }
+  ]
+}

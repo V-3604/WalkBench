@@ -1,0 +1,56 @@
+{
+  "references": [
+    "project_sidewalk",
+    "ape",
+    "overture"
+  ],
+  "channels": [
+    "caption",
+    "sam2"
+  ],
+  "ps_match_radius_m": 25.0,
+  "results_by_city": {
+    "seattle": {
+      "sam2_vs_ps_sidewalk": {
+        "precision": 0.8552,
+        "recall": 0.6697,
+        "f1": 0.7512,
+        "n": 3317,
+        "n_pos_gt": 2858,
+        "n_pos_pred": 2238,
+        "auroc": 0.4984
+      },
+      "caption_vs_ps_sidewalk": {
+        "precision": 0.8798,
+        "recall": 0.8681,
+        "f1": 0.8739,
+        "n": 3317,
+        "n_pos_gt": 2858,
+        "n_pos_pred": 2820,
+        "auroc": 0.6384
+      },
+      "sam2_vs_ps_crosswalk": {
+        "precision": 0.0383,
+        "recall": 0.4655,
+        "f1": 0.0708,
+        "n": 4824,
+        "n_pos_gt": 116,
+        "n_pos_pred": 1409,
+        "auroc": 0.6867
+      },
+      "caption_vs_ps_crosswalk": {
+        "precision": 0.049,
+        "recall": 0.5776,
+        "f1": 0.0904,
+        "n": 4824,
+        "n_pos_gt": 116,
+        "n_pos_pred": 1366,
+        "auroc": 0.6508
+      },
+      "n_points": 4824
+    },
+    "dc": {
+      "n_points": 4818
+    }
+  }
+}
