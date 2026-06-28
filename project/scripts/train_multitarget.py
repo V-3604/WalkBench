@@ -862,7 +862,12 @@ def main() -> int:
         "dc":          REPO_ROOT / "project/data/processed/locks/dc_v2_final_lock_ids.txt",
         "pittsburgh":  REPO_ROOT / "project/data/processed/locks/pittsburgh_v2_final_lock_ids.txt",
     }
-    _active_city = args.in_city_city or args.train_city
+    # In multi-city training (--train-cities) each train city loads its own lock inside
+    # run_one, so the only consumer of `lock_ids` there is the *test* city. Fall back to
+    # the test city so Pittsburgh zero-shot filters its test set by Pittsburgh's own lock
+    # rather than the legacy 2-city default (which silently dropped/mismatched test points).
+    # Single-city cross-city and in-city are unchanged (train_city / in_city_city resolve first).
+    _active_city = args.in_city_city or args.train_city or args.test_city
     _city_lock = _city_lock_files.get(_active_city, LOCK_FILE)
     _lock_path = _city_lock if _city_lock.exists() else LOCK_FILE
     lock_ids = [int(x) for x in _lock_path.read_text().strip().splitlines()]
