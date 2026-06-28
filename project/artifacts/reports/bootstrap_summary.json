@@ -1398,10 +1398,10 @@
     "target": "overture_sidewalk_present",
     "metric": "auroc",
     "n_seeds": 3,
-    "mean": 0.7635589636870161,
-    "std": 0.013660482303260694,
-    "ci_lo_mean": 0.7406652282829214,
-    "ci_hi_mean": 0.7851407182909025
+    "mean": 0.779124545413027,
+    "std": 0.023475172730401294,
+    "ci_lo_mean": 0.7581375408078532,
+    "ci_hi_mean": 0.7997958282974102
   },
   "siglip2 / seattle / dc / full / overture_crosswalk_present": {
     "backbone": "siglip2",
@@ -1410,10 +1410,10 @@
     "target": "overture_crosswalk_present",
     "metric": "auroc",
     "n_seeds": 3,
-    "mean": 0.5884968061104342,
-    "std": 0.020613569320612864,
-    "ci_lo_mean": 0.5711311811851322,
-    "ci_hi_mean": 0.6046499663975179
+    "mean": 0.5964070967293039,
+    "std": 0.012574491025732095,
+    "ci_lo_mean": 0.579031178193912,
+    "ci_hi_mean": 0.6133065480572568
   },
   "siglip2 / seattle / dc / full / overture_intersection_count_200m": {
     "backbone": "siglip2",
@@ -1422,10 +1422,10 @@
     "target": "overture_intersection_count_200m",
     "metric": "spearman_rho",
     "n_seeds": 3,
-    "mean": 0.5277863651078062,
-    "std": 0.0071166587614457716,
-    "ci_lo_mean": 0.505940576570191,
-    "ci_hi_mean": 0.5492803375935968
+    "mean": 0.5272982938467082,
+    "std": 0.00627571994150702,
+    "ci_lo_mean": 0.5042743962647346,
+    "ci_hi_mean": 0.5491514948984152
   },
   "siglip2 / seattle / dc / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip2",
@@ -1434,10 +1434,10 @@
     "target": "overture_building_footprint_frac_100m",
     "metric": "spearman_rho",
     "n_seeds": 3,
-    "mean": 0.8357791821708115,
-    "std": 0.009989592470897818,
-    "ci_lo_mean": 0.8252572673087015,
-    "ci_hi_mean": 0.8463329256302498
+    "mean": 0.8390200829800136,
+    "std": 0.012830286344965806,
+    "ci_lo_mean": 0.8281944558535037,
+    "ci_hi_mean": 0.8495268074369928
   },
   "siglip2 / seattle / dc / full / walkability_index_v1": {
     "backbone": "siglip2",
@@ -1446,10 +1446,10 @@
     "target": "walkability_index_v1",
     "metric": "spearman_rho",
     "n_seeds": 3,
-    "mean": 0.6843730032458814,
-    "std": 0.006996330906218413,
-    "ci_lo_mean": 0.6675127878535839,
-    "ci_hi_mean": 0.7006777886625147
+    "mean": 0.6931948101760969,
+    "std": 0.019961583119132608,
+    "ci_lo_mean": 0.6768017695035119,
+    "ci_hi_mean": 0.7093106725209269
   },
   "siglip2 / seattle / dc / full / walkability_index_v2": {
     "backbone": "siglip2",
@@ -1458,10 +1458,22 @@
     "target": "walkability_index_v2",
     "metric": "spearman_rho",
     "n_seeds": 3,
-    "mean": 0.6875645003534551,
-    "std": 0.00789307316514419,
-    "ci_lo_mean": 0.6705752789152696,
-    "ci_hi_mean": 0.7040475528301671
+    "mean": 0.6928381297992736,
+    "std": 0.005629415295870723,
+    "ci_lo_mean": 0.6761020098387696,
+    "ci_hi_mean": 0.7086438196664858
+  },
+  "siglip2 / seattle / dc / full / osm_marked_crossing_present": {
+    "backbone": "siglip2",
+    "direction": "seattle->dc",
+    "ablation": "full",
+    "target": "osm_marked_crossing_present",
+    "metric": "auroc",
+    "n_seeds": 1,
+    "mean": 0.7878926512396462,
+    "std": 0.0,
+    "ci_lo_mean": 0.7751470938501571,
+    "ci_hi_mean": 0.8008296969010062
   },
   "siglip2 / seattle / msp / full / overture_sidewalk_present": {
     "backbone": "siglip2",
@@ -1472,8 +1484,8 @@
     "n_seeds": 3,
     "mean": 0.8242707417397925,
     "std": 0.028572439862549186,
-    "ci_lo_mean": 0.8051959388167945,
-    "ci_hi_mean": 0.8432989175089795
+    "ci_lo_mean": 0.8045916717365632,
+    "ci_hi_mean": 0.8424914392280808
   },
   "siglip2 / seattle / msp / full / overture_crosswalk_present": {
     "backbone": "siglip2",
@@ -1484,8 +1496,8 @@
     "n_seeds": 3,
     "mean": 0.5752810389809699,
     "std": 0.016869317359903165,
-    "ci_lo_mean": 0.5492590800638264,
-    "ci_hi_mean": 0.6015290040020317
+    "ci_lo_mean": 0.5497316214422269,
+    "ci_hi_mean": 0.6008848932835668
   },
   "siglip2 / seattle / msp / full / overture_intersection_count_200m": {
     "backbone": "siglip2",
@@ -1496,8 +1508,8 @@
     "n_seeds": 3,
     "mean": 0.6523945190929336,
     "std": 0.0049510780987335745,
-    "ci_lo_mean": 0.6349992574161846,
-    "ci_hi_mean": 0.6687352539509058
+    "ci_lo_mean": 0.6339943211703344,
+    "ci_hi_mean": 0.668538972839004
   },
   "siglip2 / seattle / msp / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip2",
@@ -1508,8 +1520,8 @@
     "n_seeds": 3,
     "mean": 0.8548441337213354,
     "std": 0.0009660698264542426,
-    "ci_lo_mean": 0.843884173157401,
-    "ci_hi_mean": 0.8642349942120134
+    "ci_lo_mean": 0.8447800656587022,
+    "ci_hi_mean": 0.8641025999777501
   },
   "siglip2 / seattle / msp / full / walkability_index_v1": {
     "backbone": "siglip2",
@@ -1520,8 +1532,8 @@
     "n_seeds": 3,
     "mean": 0.7102600799649924,
     "std": 0.009010523525551,
-    "ci_lo_mean": 0.6946877791496102,
-    "ci_hi_mean": 0.725459635261665
+    "ci_lo_mean": 0.6949270466430963,
+    "ci_hi_mean": 0.7246187799655015
   },
   "siglip2 / seattle / msp / full / walkability_index_v2": {
     "backbone": "siglip2",
@@ -1532,8 +1544,8 @@
     "n_seeds": 3,
     "mean": 0.7475735577774975,
     "std": 0.009079887569123443,
-    "ci_lo_mean": 0.7325571214693386,
-    "ci_hi_mean": 0.7615159592847466
+    "ci_lo_mean": 0.7331717138166849,
+    "ci_hi_mean": 0.7620529720274347
   },
   "siglip / dc+msp+seattle / pittsburgh / full / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -1544,8 +1556,8 @@
     "n_seeds": 3,
     "mean": 0.7634476151563406,
     "std": 0.013590382716915685,
-    "ci_lo_mean": 0.7419980924954026,
-    "ci_hi_mean": 0.7841481487849622
+    "ci_lo_mean": 0.7416895019712335,
+    "ci_hi_mean": 0.7843893332950286
   },
   "siglip / dc+msp+seattle / pittsburgh / full / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -1556,8 +1568,8 @@
     "n_seeds": 3,
     "mean": 0.6216319723051077,
     "std": 0.042113845366208415,
-    "ci_lo_mean": 0.6009315151052653,
-    "ci_hi_mean": 0.6436807927388705
+    "ci_lo_mean": 0.6005601345214914,
+    "ci_hi_mean": 0.641638867801369
   },
   "siglip / dc+msp+seattle / pittsburgh / full / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -1568,8 +1580,8 @@
     "n_seeds": 3,
     "mean": 0.7811416828759034,
     "std": 0.011024335854285566,
-    "ci_lo_mean": 0.7694383913528027,
-    "ci_hi_mean": 0.7922791764767272
+    "ci_lo_mean": 0.7692246871065681,
+    "ci_hi_mean": 0.7920688888246228
   },
   "siglip / dc+msp+seattle / pittsburgh / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -1580,8 +1592,8 @@
     "n_seeds": 3,
     "mean": 0.8861613253303836,
     "std": 0.002906014181113806,
-    "ci_lo_mean": 0.8771704398875709,
-    "ci_hi_mean": 0.8941036683047406
+    "ci_lo_mean": 0.8778733189801543,
+    "ci_hi_mean": 0.8945060323459506
   },
   "siglip / dc+msp+seattle / pittsburgh / full / walkability_index_v2": {
     "backbone": "siglip",
@@ -1592,8 +1604,8 @@
     "n_seeds": 3,
     "mean": 0.8527963216434232,
     "std": 0.005760660725162086,
-    "ci_lo_mean": 0.8437391288151265,
-    "ci_hi_mean": 0.8607156161678974
+    "ci_lo_mean": 0.8437511139039612,
+    "ci_hi_mean": 0.8615841100515444
   },
   "siglip / dc / msp / full / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -1604,8 +1616,8 @@
     "n_seeds": 3,
     "mean": 0.7097694609746951,
     "std": 0.032235771559340674,
-    "ci_lo_mean": 0.6845518962155589,
-    "ci_hi_mean": 0.7330927742322322
+    "ci_lo_mean": 0.6854051432129044,
+    "ci_hi_mean": 0.7335713993156583
   },
   "siglip / dc / msp / full / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -1616,8 +1628,8 @@
     "n_seeds": 3,
     "mean": 0.6213597397563213,
     "std": 0.006474268912229061,
-    "ci_lo_mean": 0.6049504680053088,
-    "ci_hi_mean": 0.6381082052911613
+    "ci_lo_mean": 0.6047297846702641,
+    "ci_hi_mean": 0.6379260449598995
   },
   "siglip / dc / msp / full / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -1628,8 +1640,8 @@
     "n_seeds": 3,
     "mean": 0.6683307244616673,
     "std": 0.00835955491540195,
-    "ci_lo_mean": 0.6507017697048044,
-    "ci_hi_mean": 0.6851884768847142
+    "ci_lo_mean": 0.6512797184270193,
+    "ci_hi_mean": 0.6850501096529622
   },
   "siglip / dc / msp / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -1640,8 +1652,8 @@
     "n_seeds": 3,
     "mean": 0.8379440988548001,
     "std": 0.015690969752775497,
-    "ci_lo_mean": 0.827148253141016,
-    "ci_hi_mean": 0.8483263859013525
+    "ci_lo_mean": 0.8268225024219807,
+    "ci_hi_mean": 0.8480782355171312
   },
   "siglip / dc / msp / full / walkability_index_v1": {
     "backbone": "siglip",
@@ -1652,8 +1664,8 @@
     "n_seeds": 3,
     "mean": 0.744866805995246,
     "std": 0.021840051890616618,
-    "ci_lo_mean": 0.7295782479897328,
-    "ci_hi_mean": 0.7592673622995597
+    "ci_lo_mean": 0.7294064861047093,
+    "ci_hi_mean": 0.7589153585704395
   },
   "siglip / dc / msp / full / walkability_index_v2": {
     "backbone": "siglip",
@@ -1664,8 +1676,8 @@
     "n_seeds": 3,
     "mean": 0.7517793192137278,
     "std": 0.02697442602507369,
-    "ci_lo_mean": 0.7371943319751432,
-    "ci_hi_mean": 0.7659637841440056
+    "ci_lo_mean": 0.7370914163218578,
+    "ci_hi_mean": 0.7657379791810266
   },
   "siglip / dc / msp / vision_only / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -1676,8 +1688,8 @@
     "n_seeds": 3,
     "mean": 0.7438392517593618,
     "std": 0.0308053709969721,
-    "ci_lo_mean": 0.719986350213505,
-    "ci_hi_mean": 0.7672049037571093
+    "ci_lo_mean": 0.7209472000258152,
+    "ci_hi_mean": 0.7659796885574468
   },
   "siglip / dc / msp / vision_only / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -1688,8 +1700,8 @@
     "n_seeds": 3,
     "mean": 0.5959955673239689,
     "std": 0.015888606665945156,
-    "ci_lo_mean": 0.5790807916548938,
-    "ci_hi_mean": 0.612825096692888
+    "ci_lo_mean": 0.5791215740858919,
+    "ci_hi_mean": 0.6127865043085388
   },
   "siglip / dc / msp / vision_only / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -1700,8 +1712,8 @@
     "n_seeds": 3,
     "mean": 0.6175720853676853,
     "std": 0.002508783211506792,
-    "ci_lo_mean": 0.5979249290319634,
-    "ci_hi_mean": 0.6367564467428474
+    "ci_lo_mean": 0.5975444406085902,
+    "ci_hi_mean": 0.6360905022216495
   },
   "siglip / dc / msp / vision_only / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -1712,8 +1724,8 @@
     "n_seeds": 3,
     "mean": 0.837965708851943,
     "std": 0.0039341907181624156,
-    "ci_lo_mean": 0.8270317343257597,
-    "ci_hi_mean": 0.8477494998286249
+    "ci_lo_mean": 0.8270531074302401,
+    "ci_hi_mean": 0.8484686232913683
   },
   "siglip / dc / msp / vision_only / walkability_index_v1": {
     "backbone": "siglip",
@@ -1724,8 +1736,8 @@
     "n_seeds": 3,
     "mean": 0.7380280136419909,
     "std": 0.013515357468295349,
-    "ci_lo_mean": 0.7214935271477657,
-    "ci_hi_mean": 0.7527964786020651
+    "ci_lo_mean": 0.7218979340769448,
+    "ci_hi_mean": 0.7522862663813475
   },
   "siglip / dc / msp / vision_only / walkability_index_v2": {
     "backbone": "siglip",
@@ -1736,8 +1748,8 @@
     "n_seeds": 3,
     "mean": 0.7651086147496327,
     "std": 0.021145319302546085,
-    "ci_lo_mean": 0.7509331587231848,
-    "ci_hi_mean": 0.7774323057693041
+    "ci_lo_mean": 0.7511088792491564,
+    "ci_hi_mean": 0.7789021752656781
   },
   "siglip / dc / seattle / full / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -1748,8 +1760,8 @@
     "n_seeds": 3,
     "mean": 0.7938877554579061,
     "std": 0.01089743879141616,
-    "ci_lo_mean": 0.7611312076334776,
-    "ci_hi_mean": 0.8237064384105564
+    "ci_lo_mean": 0.7631258598201635,
+    "ci_hi_mean": 0.8231389718071161
   },
   "siglip / dc / seattle / full / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -1760,8 +1772,8 @@
     "n_seeds": 3,
     "mean": 0.611421774758747,
     "std": 0.012680892935941634,
-    "ci_lo_mean": 0.5958705802289673,
-    "ci_hi_mean": 0.6275448919916974
+    "ci_lo_mean": 0.596251990495913,
+    "ci_hi_mean": 0.6269616078331127
   },
   "siglip / dc / seattle / full / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -1772,8 +1784,8 @@
     "n_seeds": 3,
     "mean": 0.6536917404303472,
     "std": 0.04072369800306045,
-    "ci_lo_mean": 0.6361881062811476,
-    "ci_hi_mean": 0.6700628966755727
+    "ci_lo_mean": 0.6355376296763905,
+    "ci_hi_mean": 0.6706175117727934
   },
   "siglip / dc / seattle / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -1784,8 +1796,8 @@
     "n_seeds": 3,
     "mean": 0.8092198288182306,
     "std": 0.014757256176678548,
-    "ci_lo_mean": 0.7957439183871055,
-    "ci_hi_mean": 0.8223036476493206
+    "ci_lo_mean": 0.7956657421381351,
+    "ci_hi_mean": 0.8221018178168586
   },
   "siglip / dc / seattle / full / walkability_index_v1": {
     "backbone": "siglip",
@@ -1796,8 +1808,8 @@
     "n_seeds": 3,
     "mean": 0.7423575150952028,
     "std": 0.010234330511162435,
-    "ci_lo_mean": 0.7274241756847782,
-    "ci_hi_mean": 0.7567549933950124
+    "ci_lo_mean": 0.7272865813739108,
+    "ci_hi_mean": 0.7572215337594708
   },
   "siglip / dc / seattle / full / walkability_index_v2": {
     "backbone": "siglip",
@@ -1808,8 +1820,8 @@
     "n_seeds": 3,
     "mean": 0.740698422878728,
     "std": 0.0011705460092770212,
-    "ci_lo_mean": 0.7245626255624851,
-    "ci_hi_mean": 0.7554844985228465
+    "ci_lo_mean": 0.7248753145662893,
+    "ci_hi_mean": 0.7559098478155165
   },
   "siglip / dc / seattle / vision_only / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -1820,8 +1832,8 @@
     "n_seeds": 3,
     "mean": 0.7912714748284428,
     "std": 0.007296760012741695,
-    "ci_lo_mean": 0.7609031443507398,
-    "ci_hi_mean": 0.8210501407952266
+    "ci_lo_mean": 0.7609922792608929,
+    "ci_hi_mean": 0.8202952513973224
   },
   "siglip / dc / seattle / vision_only / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -1832,8 +1844,8 @@
     "n_seeds": 3,
     "mean": 0.5965339453433561,
     "std": 0.022405386622222936,
-    "ci_lo_mean": 0.5808087087605834,
-    "ci_hi_mean": 0.6121434497717401
+    "ci_lo_mean": 0.580773407862251,
+    "ci_hi_mean": 0.6122338623747278
   },
   "siglip / dc / seattle / vision_only / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -1844,8 +1856,8 @@
     "n_seeds": 3,
     "mean": 0.563029933893011,
     "std": 0.017316235807217313,
-    "ci_lo_mean": 0.5424044629432698,
-    "ci_hi_mean": 0.582409226292187
+    "ci_lo_mean": 0.5433240321625878,
+    "ci_hi_mean": 0.5825629906861836
   },
   "siglip / dc / seattle / vision_only / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -1856,8 +1868,8 @@
     "n_seeds": 3,
     "mean": 0.8174223173508158,
     "std": 0.010501972694511127,
-    "ci_lo_mean": 0.8039426558953305,
-    "ci_hi_mean": 0.8298918886648234
+    "ci_lo_mean": 0.8046479412548023,
+    "ci_hi_mean": 0.8299656634015623
   },
   "siglip / dc / seattle / vision_only / walkability_index_v1": {
     "backbone": "siglip",
@@ -1868,8 +1880,8 @@
     "n_seeds": 3,
     "mean": 0.7084957124911325,
     "std": 0.020030972234407744,
-    "ci_lo_mean": 0.6918193764399678,
-    "ci_hi_mean": 0.7241197571049082
+    "ci_lo_mean": 0.6913738832091747,
+    "ci_hi_mean": 0.7246851129719482
   },
   "siglip / dc / seattle / vision_only / walkability_index_v2": {
     "backbone": "siglip",
@@ -1880,8 +1892,8 @@
     "n_seeds": 3,
     "mean": 0.7104585347145379,
     "std": 0.012406612954721636,
-    "ci_lo_mean": 0.6936190822767951,
-    "ci_hi_mean": 0.7261091089096045
+    "ci_lo_mean": 0.6935618622287819,
+    "ci_hi_mean": 0.7268498294464735
   },
   "siglip / msp / dc / full / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -1892,8 +1904,8 @@
     "n_seeds": 3,
     "mean": 0.6274767045114432,
     "std": 0.021158980286030755,
-    "ci_lo_mean": 0.6039970269760448,
-    "ci_hi_mean": 0.6517547741357257
+    "ci_lo_mean": 0.6019109408487758,
+    "ci_hi_mean": 0.6525907637844489
   },
   "siglip / msp / dc / full / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -1904,8 +1916,8 @@
     "n_seeds": 3,
     "mean": 0.5539989300979056,
     "std": 0.019991682016301745,
-    "ci_lo_mean": 0.5389123195445026,
-    "ci_hi_mean": 0.5693060169957996
+    "ci_lo_mean": 0.5386974793582749,
+    "ci_hi_mean": 0.5698745464656649
   },
   "siglip / msp / dc / full / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -1916,8 +1928,8 @@
     "n_seeds": 3,
     "mean": 0.5964335014583771,
     "std": 0.017615225421964562,
-    "ci_lo_mean": 0.576142701114812,
-    "ci_hi_mean": 0.6164106211258328
+    "ci_lo_mean": 0.5764590985836581,
+    "ci_hi_mean": 0.6160851515965053
   },
   "siglip / msp / dc / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -1928,8 +1940,8 @@
     "n_seeds": 3,
     "mean": 0.8259200005535833,
     "std": 0.005296498664094147,
-    "ci_lo_mean": 0.8146874086467596,
-    "ci_hi_mean": 0.8366246392293576
+    "ci_lo_mean": 0.8147449253398932,
+    "ci_hi_mean": 0.8364055702284857
   },
   "siglip / msp / dc / full / walkability_index_v1": {
     "backbone": "siglip",
@@ -1940,8 +1952,8 @@
     "n_seeds": 3,
     "mean": 0.7122163493156567,
     "std": 0.015447330917448236,
-    "ci_lo_mean": 0.6958538363240753,
-    "ci_hi_mean": 0.7269642962634847
+    "ci_lo_mean": 0.6961932993879619,
+    "ci_hi_mean": 0.7274477051674165
   },
   "siglip / msp / dc / full / walkability_index_v2": {
     "backbone": "siglip",
@@ -1952,8 +1964,8 @@
     "n_seeds": 3,
     "mean": 0.7363660268260679,
     "std": 0.011610454661251591,
-    "ci_lo_mean": 0.7210586815929759,
-    "ci_hi_mean": 0.7500387071987111
+    "ci_lo_mean": 0.7209100162150465,
+    "ci_hi_mean": 0.7498941208554801
   },
   "siglip / msp / dc / vision_only / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -1964,8 +1976,8 @@
     "n_seeds": 3,
     "mean": 0.6063382320291154,
     "std": 0.022694943437685976,
-    "ci_lo_mean": 0.5806402459736257,
-    "ci_hi_mean": 0.6313368047241
+    "ci_lo_mean": 0.582260168414655,
+    "ci_hi_mean": 0.6311731284451757
   },
   "siglip / msp / dc / vision_only / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -1976,8 +1988,8 @@
     "n_seeds": 3,
     "mean": 0.5657648602833736,
     "std": 0.016041533747867806,
-    "ci_lo_mean": 0.550177384129447,
-    "ci_hi_mean": 0.5812828037982528
+    "ci_lo_mean": 0.5491588986197878,
+    "ci_hi_mean": 0.5818066780862348
   },
   "siglip / msp / dc / vision_only / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -1988,8 +2000,8 @@
     "n_seeds": 3,
     "mean": 0.5653290516627102,
     "std": 0.013123918358127406,
-    "ci_lo_mean": 0.5442278817743569,
-    "ci_hi_mean": 0.585723129230865
+    "ci_lo_mean": 0.5444463065721856,
+    "ci_hi_mean": 0.585737975623648
   },
   "siglip / msp / dc / vision_only / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -2000,8 +2012,8 @@
     "n_seeds": 3,
     "mean": 0.832436243420637,
     "std": 0.004004367838144581,
-    "ci_lo_mean": 0.8212972744372883,
-    "ci_hi_mean": 0.8425719453966756
+    "ci_lo_mean": 0.8212351257498768,
+    "ci_hi_mean": 0.8423227976694622
   },
   "siglip / msp / dc / vision_only / walkability_index_v1": {
     "backbone": "siglip",
@@ -2012,8 +2024,8 @@
     "n_seeds": 3,
     "mean": 0.716404316769105,
     "std": 0.014689004100960868,
-    "ci_lo_mean": 0.7012575749032369,
-    "ci_hi_mean": 0.7306287544657762
+    "ci_lo_mean": 0.7004616156261033,
+    "ci_hi_mean": 0.7311476980377161
   },
   "siglip / msp / dc / vision_only / walkability_index_v2": {
     "backbone": "siglip",
@@ -2024,8 +2036,8 @@
     "n_seeds": 3,
     "mean": 0.7234436720034378,
     "std": 0.011552229459183936,
-    "ci_lo_mean": 0.7073677472524783,
-    "ci_hi_mean": 0.7383028571386941
+    "ci_lo_mean": 0.7072581843653382,
+    "ci_hi_mean": 0.7373953435158693
   },
   "siglip / msp / seattle / full / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -2036,8 +2048,8 @@
     "n_seeds": 3,
     "mean": 0.7981616167476394,
     "std": 0.02178289537212807,
-    "ci_lo_mean": 0.7671509378183452,
-    "ci_hi_mean": 0.8263541778043052
+    "ci_lo_mean": 0.7696952731715253,
+    "ci_hi_mean": 0.8255257726406618
   },
   "siglip / msp / seattle / full / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -2048,8 +2060,8 @@
     "n_seeds": 3,
     "mean": 0.5237519067239415,
     "std": 0.017623512132695432,
-    "ci_lo_mean": 0.5075744642617736,
-    "ci_hi_mean": 0.5404558357338654
+    "ci_lo_mean": 0.5076252979196053,
+    "ci_hi_mean": 0.5399450191096086
   },
   "siglip / msp / seattle / full / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -2060,8 +2072,8 @@
     "n_seeds": 3,
     "mean": 0.6868227151823719,
     "std": 0.0061502536896737205,
-    "ci_lo_mean": 0.6712537766829705,
-    "ci_hi_mean": 0.702179214857574
+    "ci_lo_mean": 0.6715101164840394,
+    "ci_hi_mean": 0.7019501046414045
   },
   "siglip / msp / seattle / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -2072,8 +2084,8 @@
     "n_seeds": 3,
     "mean": 0.7894918469898751,
     "std": 0.012678027711335837,
-    "ci_lo_mean": 0.775038948466904,
-    "ci_hi_mean": 0.8027061468409591
+    "ci_lo_mean": 0.7754125953429587,
+    "ci_hi_mean": 0.8029318460689584
   },
   "siglip / msp / seattle / full / walkability_index_v1": {
     "backbone": "siglip",
@@ -2084,8 +2096,8 @@
     "n_seeds": 3,
     "mean": 0.7258748220550055,
     "std": 0.001958807419430191,
-    "ci_lo_mean": 0.7098178198433831,
-    "ci_hi_mean": 0.7411102833664058
+    "ci_lo_mean": 0.7102968968373782,
+    "ci_hi_mean": 0.7409762044083417
   },
   "siglip / msp / seattle / full / walkability_index_v2": {
     "backbone": "siglip",
@@ -2096,8 +2108,8 @@
     "n_seeds": 3,
     "mean": 0.7315213133188506,
     "std": 0.014134516238563703,
-    "ci_lo_mean": 0.7156583253940111,
-    "ci_hi_mean": 0.7478858580028266
+    "ci_lo_mean": 0.7157665363091704,
+    "ci_hi_mean": 0.7462626926589104
   },
   "siglip / msp / seattle / vision_only / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -2108,8 +2120,8 @@
     "n_seeds": 3,
     "mean": 0.777346601061565,
     "std": 0.028986034734659605,
-    "ci_lo_mean": 0.7456368102247586,
-    "ci_hi_mean": 0.805364118745028
+    "ci_lo_mean": 0.7469122710192372,
+    "ci_hi_mean": 0.8078115037465191
   },
   "siglip / msp / seattle / vision_only / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -2120,8 +2132,8 @@
     "n_seeds": 3,
     "mean": 0.5375155313988487,
     "std": 0.021319632454591828,
-    "ci_lo_mean": 0.5217527741193906,
-    "ci_hi_mean": 0.554125125495324
+    "ci_lo_mean": 0.5215701081128339,
+    "ci_hi_mean": 0.5531839517639802
   },
   "siglip / msp / seattle / vision_only / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -2132,8 +2144,8 @@
     "n_seeds": 3,
     "mean": 0.6146052505722895,
     "std": 0.00668020438426736,
-    "ci_lo_mean": 0.5970865868904656,
-    "ci_hi_mean": 0.6326025664065104
+    "ci_lo_mean": 0.5968528483565002,
+    "ci_hi_mean": 0.6323851248970472
   },
   "siglip / msp / seattle / vision_only / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -2144,8 +2156,8 @@
     "n_seeds": 3,
     "mean": 0.7898131647106195,
     "std": 0.016569595582101523,
-    "ci_lo_mean": 0.776040258664596,
-    "ci_hi_mean": 0.8029846756819009
+    "ci_lo_mean": 0.7759422089568709,
+    "ci_hi_mean": 0.8030320376297705
   },
   "siglip / msp / seattle / vision_only / walkability_index_v1": {
     "backbone": "siglip",
@@ -2156,8 +2168,8 @@
     "n_seeds": 3,
     "mean": 0.6978525076636913,
     "std": 0.005449080458301788,
-    "ci_lo_mean": 0.6804811544856086,
-    "ci_hi_mean": 0.7137435114697874
+    "ci_lo_mean": 0.680132318250766,
+    "ci_hi_mean": 0.7135037602999713
   },
   "siglip / msp / seattle / vision_only / walkability_index_v2": {
     "backbone": "siglip",
@@ -2168,8 +2180,8 @@
     "n_seeds": 3,
     "mean": 0.690874853880151,
     "std": 0.009446091969982074,
-    "ci_lo_mean": 0.6732611107726386,
-    "ci_hi_mean": 0.7072380736401854
+    "ci_lo_mean": 0.6725588309748374,
+    "ci_hi_mean": 0.7071506115191829
   },
   "siglip / seattle / dc / full / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -2180,8 +2192,8 @@
     "n_seeds": 3,
     "mean": 0.7225171894317052,
     "std": 0.019469329978043355,
-    "ci_lo_mean": 0.6997281970882266,
-    "ci_hi_mean": 0.7443127248150061
+    "ci_lo_mean": 0.7001086326961063,
+    "ci_hi_mean": 0.7458201409558379
   },
   "siglip / seattle / dc / full / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -2192,8 +2204,8 @@
     "n_seeds": 3,
     "mean": 0.5498023170194206,
     "std": 0.003941300728388568,
-    "ci_lo_mean": 0.5338284374972662,
-    "ci_hi_mean": 0.5663287081396877
+    "ci_lo_mean": 0.5339111640161726,
+    "ci_hi_mean": 0.5657280107913555
   },
   "siglip / seattle / dc / full / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -2204,8 +2216,8 @@
     "n_seeds": 3,
     "mean": 0.46803737672416085,
     "std": 0.015567679585460733,
-    "ci_lo_mean": 0.445229631750246,
-    "ci_hi_mean": 0.49019047100417623
+    "ci_lo_mean": 0.4447714362835593,
+    "ci_hi_mean": 0.49028887180467146
   },
   "siglip / seattle / dc / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -2216,8 +2228,8 @@
     "n_seeds": 3,
     "mean": 0.8400259305885046,
     "std": 0.005582039049306767,
-    "ci_lo_mean": 0.8295376951737167,
-    "ci_hi_mean": 0.850194431786197
+    "ci_lo_mean": 0.8293269524823422,
+    "ci_hi_mean": 0.8498441019022357
   },
   "siglip / seattle / dc / full / walkability_index_v1": {
     "backbone": "siglip",
@@ -2228,8 +2240,8 @@
     "n_seeds": 3,
     "mean": 0.6633900185902609,
     "std": 0.009059716590379454,
-    "ci_lo_mean": 0.6460543681807009,
-    "ci_hi_mean": 0.67979410585626
+    "ci_lo_mean": 0.645906161036449,
+    "ci_hi_mean": 0.6802382057794807
   },
   "siglip / seattle / dc / full / walkability_index_v2": {
     "backbone": "siglip",
@@ -2240,8 +2252,8 @@
     "n_seeds": 3,
     "mean": 0.6820284082508067,
     "std": 0.017243775786883284,
-    "ci_lo_mean": 0.6659145570902858,
-    "ci_hi_mean": 0.6977043414035181
+    "ci_lo_mean": 0.6651870859100341,
+    "ci_hi_mean": 0.6984332568121392
   },
   "siglip / seattle / dc / vision_only / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -2252,8 +2264,8 @@
     "n_seeds": 3,
     "mean": 0.6940994155800811,
     "std": 0.02419350233338618,
-    "ci_lo_mean": 0.6720548010177404,
-    "ci_hi_mean": 0.7163424695720196
+    "ci_lo_mean": 0.6719093247179928,
+    "ci_hi_mean": 0.7157830370780597
   },
   "siglip / seattle / dc / vision_only / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -2264,8 +2276,8 @@
     "n_seeds": 3,
     "mean": 0.540346763866302,
     "std": 0.00677242081631921,
-    "ci_lo_mean": 0.5239373189640487,
-    "ci_hi_mean": 0.5567441148718645
+    "ci_lo_mean": 0.5232414179088524,
+    "ci_hi_mean": 0.5567247313084915
   },
   "siglip / seattle / dc / vision_only / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -2276,8 +2288,8 @@
     "n_seeds": 3,
     "mean": 0.46533699096805464,
     "std": 0.02795572499056073,
-    "ci_lo_mean": 0.4423483487727127,
-    "ci_hi_mean": 0.4884289125504169
+    "ci_lo_mean": 0.4424784728206586,
+    "ci_hi_mean": 0.4878802855796199
   },
   "siglip / seattle / dc / vision_only / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -2288,8 +2300,8 @@
     "n_seeds": 3,
     "mean": 0.8492813041419117,
     "std": 0.015895938345780333,
-    "ci_lo_mean": 0.8397700303225971,
-    "ci_hi_mean": 0.8583591285254059
+    "ci_lo_mean": 0.8390987157338193,
+    "ci_hi_mean": 0.858565239998974
   },
   "siglip / seattle / dc / vision_only / walkability_index_v1": {
     "backbone": "siglip",
@@ -2300,8 +2312,8 @@
     "n_seeds": 3,
     "mean": 0.670805418468901,
     "std": 0.023792242591109722,
-    "ci_lo_mean": 0.65355539280029,
-    "ci_hi_mean": 0.6868466586538954
+    "ci_lo_mean": 0.6541049550934522,
+    "ci_hi_mean": 0.6872649803979943
   },
   "siglip / seattle / dc / vision_only / walkability_index_v2": {
     "backbone": "siglip",
@@ -2312,8 +2324,8 @@
     "n_seeds": 3,
     "mean": 0.6835101777628209,
     "std": 0.028000416638922977,
-    "ci_lo_mean": 0.6669008969831992,
-    "ci_hi_mean": 0.6991304175833005
+    "ci_lo_mean": 0.6665290299489156,
+    "ci_hi_mean": 0.699227318623747
   },
   "siglip / seattle / msp / full / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -2324,8 +2336,8 @@
     "n_seeds": 3,
     "mean": 0.8227715022763166,
     "std": 0.01788430118013448,
-    "ci_lo_mean": 0.803791934891624,
-    "ci_hi_mean": 0.8419326652770419
+    "ci_lo_mean": 0.8038070415376266,
+    "ci_hi_mean": 0.8414176199946765
   },
   "siglip / seattle / msp / full / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -2336,8 +2348,8 @@
     "n_seeds": 3,
     "mean": 0.4688720800654536,
     "std": 0.0032716718581897327,
-    "ci_lo_mean": 0.4520131910393359,
-    "ci_hi_mean": 0.486814455483835
+    "ci_lo_mean": 0.45058966233512204,
+    "ci_hi_mean": 0.48719690794819187
   },
   "siglip / seattle / msp / full / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -2348,8 +2360,8 @@
     "n_seeds": 3,
     "mean": 0.6780080184381632,
     "std": 0.004655770206562731,
-    "ci_lo_mean": 0.6619661275804751,
-    "ci_hi_mean": 0.6944764086788036
+    "ci_lo_mean": 0.6623277641067031,
+    "ci_hi_mean": 0.6938315248942271
   },
   "siglip / seattle / msp / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -2360,8 +2372,8 @@
     "n_seeds": 3,
     "mean": 0.854925634880063,
     "std": 0.0015183751888778877,
-    "ci_lo_mean": 0.8451483740896165,
-    "ci_hi_mean": 0.863976502835241
+    "ci_lo_mean": 0.8450471696365184,
+    "ci_hi_mean": 0.8642876927826615
   },
   "siglip / seattle / msp / full / walkability_index_v1": {
     "backbone": "siglip",
@@ -2372,8 +2384,8 @@
     "n_seeds": 3,
     "mean": 0.7196301232875362,
     "std": 0.0056754285151413226,
-    "ci_lo_mean": 0.7035490134708614,
-    "ci_hi_mean": 0.7340144987221837
+    "ci_lo_mean": 0.7038774304208019,
+    "ci_hi_mean": 0.7338682656535949
   },
   "siglip / seattle / msp / full / walkability_index_v2": {
     "backbone": "siglip",
@@ -2384,8 +2396,8 @@
     "n_seeds": 3,
     "mean": 0.7550389300788839,
     "std": 0.012862036780096127,
-    "ci_lo_mean": 0.7403836773648979,
-    "ci_hi_mean": 0.7685909375106753
+    "ci_lo_mean": 0.7405597841354776,
+    "ci_hi_mean": 0.7683461436933025
   },
   "siglip / seattle / msp / vision_only / overture_sidewalk_present": {
     "backbone": "siglip",
@@ -2396,8 +2408,8 @@
     "n_seeds": 3,
     "mean": 0.8239673872411148,
     "std": 0.0312716874250681,
-    "ci_lo_mean": 0.8052124028821751,
-    "ci_hi_mean": 0.842688330521996
+    "ci_lo_mean": 0.8049822822670679,
+    "ci_hi_mean": 0.8426721038359416
   },
   "siglip / seattle / msp / vision_only / overture_crosswalk_present": {
     "backbone": "siglip",
@@ -2408,8 +2420,8 @@
     "n_seeds": 3,
     "mean": 0.45404239258763734,
     "std": 0.017372272614975898,
-    "ci_lo_mean": 0.4368819454199587,
-    "ci_hi_mean": 0.47126913765179257
+    "ci_lo_mean": 0.43674688643318177,
+    "ci_hi_mean": 0.47075287826940443
   },
   "siglip / seattle / msp / vision_only / overture_intersection_count_200m": {
     "backbone": "siglip",
@@ -2420,8 +2432,8 @@
     "n_seeds": 3,
     "mean": 0.6110760596547459,
     "std": 0.031870723701461406,
-    "ci_lo_mean": 0.5921783070191909,
-    "ci_hi_mean": 0.628654219492267
+    "ci_lo_mean": 0.5923818605561446,
+    "ci_hi_mean": 0.629547848456664
   },
   "siglip / seattle / msp / vision_only / overture_building_footprint_frac_100m": {
     "backbone": "siglip",
@@ -2432,8 +2444,8 @@
     "n_seeds": 3,
     "mean": 0.8526560047720516,
     "std": 0.01079720893850029,
-    "ci_lo_mean": 0.8432558854044024,
-    "ci_hi_mean": 0.8620619134216808
+    "ci_lo_mean": 0.8428619495459885,
+    "ci_hi_mean": 0.8617656985845022
   },
   "siglip / seattle / msp / vision_only / walkability_index_v1": {
     "backbone": "siglip",
@@ -2444,8 +2456,8 @@
     "n_seeds": 3,
     "mean": 0.6949612692589705,
     "std": 0.027793898309543104,
-    "ci_lo_mean": 0.678907039729145,
-    "ci_hi_mean": 0.7105471239721095
+    "ci_lo_mean": 0.6785982956168178,
+    "ci_hi_mean": 0.7112435662987605
   },
   "siglip / seattle / msp / vision_only / walkability_index_v2": {
     "backbone": "siglip",
@@ -2456,8 +2468,8 @@
     "n_seeds": 3,
     "mean": 0.7371597237196251,
     "std": 0.03728906805806578,
-    "ci_lo_mean": 0.7223294405578486,
-    "ci_hi_mean": 0.7517175568883112
+    "ci_lo_mean": 0.722258956056811,
+    "ci_hi_mean": 0.7519348378140954
   },
   "siglip_lora / dc / msp / full / overture_sidewalk_present": {
     "backbone": "siglip_lora",
@@ -2468,8 +2480,8 @@
     "n_seeds": 3,
     "mean": 0.9235075900020804,
     "std": 0.011748165480435833,
-    "ci_lo_mean": 0.909874850492837,
-    "ci_hi_mean": 0.9362877092778031
+    "ci_lo_mean": 0.910585728692957,
+    "ci_hi_mean": 0.9357344426373101
   },
   "siglip_lora / dc / msp / full / overture_crosswalk_present": {
     "backbone": "siglip_lora",
@@ -2480,8 +2492,8 @@
     "n_seeds": 3,
     "mean": 0.9298891552119848,
     "std": 0.004317819103152208,
-    "ci_lo_mean": 0.9225636972114307,
-    "ci_hi_mean": 0.9367733617113654
+    "ci_lo_mean": 0.922232716438644,
+    "ci_hi_mean": 0.936959868201262
   },
   "siglip_lora / dc / msp / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora",
@@ -2492,8 +2504,8 @@
     "n_seeds": 3,
     "mean": 0.685274961426488,
     "std": 0.01916647443877362,
-    "ci_lo_mean": 0.669116844558014,
-    "ci_hi_mean": 0.7002814405693188
+    "ci_lo_mean": 0.6694525578157352,
+    "ci_hi_mean": 0.7009106351791826
   },
   "siglip_lora / dc / msp / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora",
@@ -2504,8 +2516,8 @@
     "n_seeds": 3,
     "mean": 0.8238224741572321,
     "std": 0.005529625654260285,
-    "ci_lo_mean": 0.8116080198052188,
-    "ci_hi_mean": 0.8349289619193526
+    "ci_lo_mean": 0.8123396735328029,
+    "ci_hi_mean": 0.8346080371462091
   },
   "siglip_lora / dc / msp / full / walkability_index_v1": {
     "backbone": "siglip_lora",
@@ -2516,8 +2528,8 @@
     "n_seeds": 3,
     "mean": 0.7476312067188674,
     "std": 0.013846179014415266,
-    "ci_lo_mean": 0.732782898886002,
-    "ci_hi_mean": 0.761268386296447
+    "ci_lo_mean": 0.7326262575361224,
+    "ci_hi_mean": 0.7615845328894281
   },
   "siglip_lora / dc / msp / full / walkability_index_v2": {
     "backbone": "siglip_lora",
@@ -2528,8 +2540,8 @@
     "n_seeds": 3,
     "mean": 0.7946166470776191,
     "std": 0.006888048202453203,
-    "ci_lo_mean": 0.7819984963752807,
-    "ci_hi_mean": 0.8064171567950087
+    "ci_lo_mean": 0.7821577012514195,
+    "ci_hi_mean": 0.8066447438741643
   },
   "siglip_lora / dc / seattle / full / overture_sidewalk_present": {
     "backbone": "siglip_lora",
@@ -2540,8 +2552,8 @@
     "n_seeds": 3,
     "mean": 0.9428353413169798,
     "std": 0.0015156672195850947,
-    "ci_lo_mean": 0.925378585269634,
-    "ci_hi_mean": 0.9592555568473236
+    "ci_lo_mean": 0.9241098734608769,
+    "ci_hi_mean": 0.958814099516022
   },
   "siglip_lora / dc / seattle / full / overture_crosswalk_present": {
     "backbone": "siglip_lora",
@@ -2552,8 +2564,8 @@
     "n_seeds": 3,
     "mean": 0.8185640207956832,
     "std": 0.013858949350600804,
-    "ci_lo_mean": 0.8069138129615498,
-    "ci_hi_mean": 0.8304370685881509
+    "ci_lo_mean": 0.8068930225794103,
+    "ci_hi_mean": 0.8299310996799356
   },
   "siglip_lora / dc / seattle / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora",
@@ -2564,8 +2576,8 @@
     "n_seeds": 3,
     "mean": 0.6629042442568255,
     "std": 0.004986292398072433,
-    "ci_lo_mean": 0.6462119873962835,
-    "ci_hi_mean": 0.6798321990549553
+    "ci_lo_mean": 0.6460775085386555,
+    "ci_hi_mean": 0.6798553332299705
   },
   "siglip_lora / dc / seattle / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora",
@@ -2576,8 +2588,8 @@
     "n_seeds": 3,
     "mean": 0.8002131791828823,
     "std": 0.003779649600438969,
-    "ci_lo_mean": 0.7868523328983108,
-    "ci_hi_mean": 0.8129746822774505
+    "ci_lo_mean": 0.7865362732040979,
+    "ci_hi_mean": 0.8127036160430579
   },
   "siglip_lora / dc / seattle / full / walkability_index_v1": {
     "backbone": "siglip_lora",
@@ -2588,8 +2600,8 @@
     "n_seeds": 3,
     "mean": 0.7170008982711472,
     "std": 0.0022665808122113427,
-    "ci_lo_mean": 0.6999800887204982,
-    "ci_hi_mean": 0.7325000997073371
+    "ci_lo_mean": 0.6998045821510245,
+    "ci_hi_mean": 0.7330078307892108
   },
   "siglip_lora / dc / seattle / full / walkability_index_v2": {
     "backbone": "siglip_lora",
@@ -2600,8 +2612,8 @@
     "n_seeds": 3,
     "mean": 0.752482635397865,
     "std": 0.005980745829085675,
-    "ci_lo_mean": 0.7367949837735096,
-    "ci_hi_mean": 0.7673021371790131
+    "ci_lo_mean": 0.7367774634954035,
+    "ci_hi_mean": 0.7677165814880155
   },
   "siglip_lora / msp / dc / full / overture_sidewalk_present": {
     "backbone": "siglip_lora",
@@ -2612,8 +2624,8 @@
     "n_seeds": 3,
     "mean": 0.8438922762006746,
     "std": 0.02660600865018847,
-    "ci_lo_mean": 0.8263119542726732,
-    "ci_hi_mean": 0.8617017047069129
+    "ci_lo_mean": 0.8259444485071206,
+    "ci_hi_mean": 0.8617629440092985
   },
   "siglip_lora / msp / dc / full / overture_crosswalk_present": {
     "backbone": "siglip_lora",
@@ -2624,8 +2636,8 @@
     "n_seeds": 3,
     "mean": 0.8401119452334175,
     "std": 0.010615176538421462,
-    "ci_lo_mean": 0.828413584259904,
-    "ci_hi_mean": 0.8513331631435518
+    "ci_lo_mean": 0.8285599689505924,
+    "ci_hi_mean": 0.8513404378334294
   },
   "siglip_lora / msp / dc / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora",
@@ -2636,8 +2648,8 @@
     "n_seeds": 3,
     "mean": 0.5863265836393919,
     "std": 0.00860318147408555,
-    "ci_lo_mean": 0.5661105017535566,
-    "ci_hi_mean": 0.6052045701815344
+    "ci_lo_mean": 0.5657993986361536,
+    "ci_hi_mean": 0.6056012101667103
   },
   "siglip_lora / msp / dc / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora",
@@ -2648,8 +2660,8 @@
     "n_seeds": 3,
     "mean": 0.7960615504432232,
     "std": 0.0032815897674442315,
-    "ci_lo_mean": 0.7835885387435999,
-    "ci_hi_mean": 0.8082172585302687
+    "ci_lo_mean": 0.7833543641197384,
+    "ci_hi_mean": 0.8084480427546598
   },
   "siglip_lora / msp / dc / full / walkability_index_v1": {
     "backbone": "siglip_lora",
@@ -2660,8 +2672,8 @@
     "n_seeds": 3,
     "mean": 0.6995806611429581,
     "std": 0.0059332701176865905,
-    "ci_lo_mean": 0.6833092423399328,
-    "ci_hi_mean": 0.715270164825256
+    "ci_lo_mean": 0.6829305977193608,
+    "ci_hi_mean": 0.7153277632141442
   },
   "siglip_lora / msp / dc / full / walkability_index_v2": {
     "backbone": "siglip_lora",
@@ -2672,8 +2684,8 @@
     "n_seeds": 3,
     "mean": 0.7342280929981332,
     "std": 0.003611417213119478,
-    "ci_lo_mean": 0.7197140134121692,
-    "ci_hi_mean": 0.7488888468219547
+    "ci_lo_mean": 0.7191895324317915,
+    "ci_hi_mean": 0.7485392695514586
   },
   "siglip_lora / msp / seattle / full / overture_sidewalk_present": {
     "backbone": "siglip_lora",
@@ -2684,8 +2696,8 @@
     "n_seeds": 3,
     "mean": 0.9046510402756508,
     "std": 0.01895539752417885,
-    "ci_lo_mean": 0.8796332431189681,
-    "ci_hi_mean": 0.9268766674336376
+    "ci_lo_mean": 0.8806218908189475,
+    "ci_hi_mean": 0.9263003143714329
   },
   "siglip_lora / msp / seattle / full / overture_crosswalk_present": {
     "backbone": "siglip_lora",
@@ -2696,8 +2708,8 @@
     "n_seeds": 3,
     "mean": 0.7844963911048771,
     "std": 0.013064913753034606,
-    "ci_lo_mean": 0.7719202110942929,
-    "ci_hi_mean": 0.7969283274634774
+    "ci_lo_mean": 0.7713763510782017,
+    "ci_hi_mean": 0.7969994283910021
   },
   "siglip_lora / msp / seattle / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora",
@@ -2708,8 +2720,8 @@
     "n_seeds": 3,
     "mean": 0.6783709523121862,
     "std": 0.020369767055463506,
-    "ci_lo_mean": 0.661488056120767,
-    "ci_hi_mean": 0.6943726318962611
+    "ci_lo_mean": 0.660378514217174,
+    "ci_hi_mean": 0.6942939565088261
   },
   "siglip_lora / msp / seattle / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora",
@@ -2720,8 +2732,8 @@
     "n_seeds": 3,
     "mean": 0.7533426917271546,
     "std": 0.006115222390373088,
-    "ci_lo_mean": 0.7377358916572501,
-    "ci_hi_mean": 0.7685281622520276
+    "ci_lo_mean": 0.7376207124589631,
+    "ci_hi_mean": 0.7679631861251824
   },
   "siglip_lora / msp / seattle / full / walkability_index_v1": {
     "backbone": "siglip_lora",
@@ -2732,8 +2744,8 @@
     "n_seeds": 3,
     "mean": 0.7136920650142632,
     "std": 0.011575957300613098,
-    "ci_lo_mean": 0.6961588372132509,
-    "ci_hi_mean": 0.7296468703392477
+    "ci_lo_mean": 0.6970562578230813,
+    "ci_hi_mean": 0.7293287703445811
   },
   "siglip_lora / msp / seattle / full / walkability_index_v2": {
     "backbone": "siglip_lora",
@@ -2744,8 +2756,8 @@
     "n_seeds": 3,
     "mean": 0.7333363860451273,
     "std": 0.008793307832886213,
-    "ci_lo_mean": 0.7165561212747251,
-    "ci_hi_mean": 0.7493857074003468
+    "ci_lo_mean": 0.7166570134869664,
+    "ci_hi_mean": 0.7491608584773021
   },
   "siglip_lora / seattle / dc / full / overture_sidewalk_present": {
     "backbone": "siglip_lora",
@@ -2756,8 +2768,8 @@
     "n_seeds": 3,
     "mean": 0.8543085279829481,
     "std": 0.010220506793679102,
-    "ci_lo_mean": 0.8397083929305689,
-    "ci_hi_mean": 0.868924002070719
+    "ci_lo_mean": 0.839074661441396,
+    "ci_hi_mean": 0.8700634412987273
   },
   "siglip_lora / seattle / dc / full / overture_crosswalk_present": {
     "backbone": "siglip_lora",
@@ -2768,8 +2780,8 @@
     "n_seeds": 3,
     "mean": 0.8279730810934026,
     "std": 0.011485613326727753,
-    "ci_lo_mean": 0.8167746513644042,
-    "ci_hi_mean": 0.8387377393421943
+    "ci_lo_mean": 0.8170274118211309,
+    "ci_hi_mean": 0.839089069091325
   },
   "siglip_lora / seattle / dc / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora",
@@ -2780,8 +2792,8 @@
     "n_seeds": 3,
     "mean": 0.5681364594049229,
     "std": 0.017698469888400476,
-    "ci_lo_mean": 0.5474917533999711,
-    "ci_hi_mean": 0.587993872762986
+    "ci_lo_mean": 0.5486519734742686,
+    "ci_hi_mean": 0.5884134746255917
   },
   "siglip_lora / seattle / dc / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora",
@@ -2792,8 +2804,8 @@
     "n_seeds": 3,
     "mean": 0.804110392501828,
     "std": 0.003419868921008784,
-    "ci_lo_mean": 0.792036132610674,
-    "ci_hi_mean": 0.8158736877473117
+    "ci_lo_mean": 0.7918187029767458,
+    "ci_hi_mean": 0.815480882761939
   },
   "siglip_lora / seattle / dc / full / walkability_index_v1": {
     "backbone": "siglip_lora",
@@ -2804,8 +2816,8 @@
     "n_seeds": 3,
     "mean": 0.7049379789573447,
     "std": 0.008213002963186323,
-    "ci_lo_mean": 0.6893017990197956,
-    "ci_hi_mean": 0.7197323705779297
+    "ci_lo_mean": 0.6891026789265112,
+    "ci_hi_mean": 0.7201261465725173
   },
   "siglip_lora / seattle / dc / full / walkability_index_v2": {
     "backbone": "siglip_lora",
@@ -2816,8 +2828,8 @@
     "n_seeds": 3,
     "mean": 0.739346776236372,
     "std": 0.0026419541871348087,
-    "ci_lo_mean": 0.7243539808601366,
-    "ci_hi_mean": 0.7534875548580543
+    "ci_lo_mean": 0.7248854073647472,
+    "ci_hi_mean": 0.7536228839400599
   },
   "siglip_lora / seattle / msp / full / overture_sidewalk_present": {
     "backbone": "siglip_lora",
@@ -2828,8 +2840,8 @@
     "n_seeds": 3,
     "mean": 0.9300108737866647,
     "std": 0.01332801651728077,
-    "ci_lo_mean": 0.9166020754742027,
-    "ci_hi_mean": 0.9419427634801668
+    "ci_lo_mean": 0.9163396617372214,
+    "ci_hi_mean": 0.9421090760368337
   },
   "siglip_lora / seattle / msp / full / overture_crosswalk_present": {
     "backbone": "siglip_lora",
@@ -2840,8 +2852,8 @@
     "n_seeds": 3,
     "mean": 0.8999976963727404,
     "std": 0.008908753164351276,
-    "ci_lo_mean": 0.890441561617072,
-    "ci_hi_mean": 0.9091866479320507
+    "ci_lo_mean": 0.8903295827809493,
+    "ci_hi_mean": 0.909556011601477
   },
   "siglip_lora / seattle / msp / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora",
@@ -2852,8 +2864,8 @@
     "n_seeds": 3,
     "mean": 0.6726201165508723,
     "std": 0.013291847089916526,
-    "ci_lo_mean": 0.6562690869833975,
-    "ci_hi_mean": 0.687894026240214
+    "ci_lo_mean": 0.6559000860857945,
+    "ci_hi_mean": 0.6883585263034547
   },
   "siglip_lora / seattle / msp / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora",
@@ -2864,8 +2876,8 @@
     "n_seeds": 3,
     "mean": 0.8125527255097541,
     "std": 0.005929325127792918,
-    "ci_lo_mean": 0.8004140225480872,
-    "ci_hi_mean": 0.8238212886755801
+    "ci_lo_mean": 0.8003404537832957,
+    "ci_hi_mean": 0.8240413230312894
   },
   "siglip_lora / seattle / msp / full / walkability_index_v1": {
     "backbone": "siglip_lora",
@@ -2876,8 +2888,8 @@
     "n_seeds": 3,
     "mean": 0.7272828215057768,
     "std": 0.010032483010283665,
-    "ci_lo_mean": 0.7117338386864125,
-    "ci_hi_mean": 0.7423570892473744
+    "ci_lo_mean": 0.7122879794732929,
+    "ci_hi_mean": 0.7421387295821263
   },
   "siglip_lora / seattle / msp / full / walkability_index_v2": {
     "backbone": "siglip_lora",
@@ -2888,8 +2900,8 @@
     "n_seeds": 3,
     "mean": 0.7602535787385136,
     "std": 0.01033879607016812,
-    "ci_lo_mean": 0.7457752003293076,
-    "ci_hi_mean": 0.7740179873100428
+    "ci_lo_mean": 0.74656862355938,
+    "ci_hi_mean": 0.7740516700863765
   },
   "siglip_lora_loco / dc / msp / full / overture_sidewalk_present": {
     "backbone": "siglip_lora_loco",
@@ -2900,8 +2912,8 @@
     "n_seeds": 3,
     "mean": 0.7005393532597389,
     "std": 0.020018622458580694,
-    "ci_lo_mean": 0.6744340572451022,
-    "ci_hi_mean": 0.7262916702796325
+    "ci_lo_mean": 0.6743129668532623,
+    "ci_hi_mean": 0.7268588810778146
   },
   "siglip_lora_loco / dc / msp / full / overture_crosswalk_present": {
     "backbone": "siglip_lora_loco",
@@ -2912,8 +2924,8 @@
     "n_seeds": 3,
     "mean": 0.6069749112488741,
     "std": 0.01294245186261362,
-    "ci_lo_mean": 0.5912022353059435,
-    "ci_hi_mean": 0.6232075622983048
+    "ci_lo_mean": 0.590590061311982,
+    "ci_hi_mean": 0.6234843607079181
   },
   "siglip_lora_loco / dc / msp / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora_loco",
@@ -2924,8 +2936,8 @@
     "n_seeds": 3,
     "mean": 0.6438206747510404,
     "std": 0.011991879182436667,
-    "ci_lo_mean": 0.6259440973013501,
-    "ci_hi_mean": 0.660581610486826
+    "ci_lo_mean": 0.6258456457035778,
+    "ci_hi_mean": 0.6611019254811074
   },
   "siglip_lora_loco / dc / msp / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora_loco",
@@ -2936,8 +2948,8 @@
     "n_seeds": 3,
     "mean": 0.8238471142876875,
     "std": 0.007617714224659471,
-    "ci_lo_mean": 0.8122086804340395,
-    "ci_hi_mean": 0.8346836493213096
+    "ci_lo_mean": 0.8123636812572532,
+    "ci_hi_mean": 0.8344663358840724
   },
   "siglip_lora_loco / dc / msp / full / walkability_index_v1": {
     "backbone": "siglip_lora_loco",
@@ -2948,8 +2960,8 @@
     "n_seeds": 3,
     "mean": 0.7268132938143378,
     "std": 0.015615854382243615,
-    "ci_lo_mean": 0.7117988439955352,
-    "ci_hi_mean": 0.7414057640213585
+    "ci_lo_mean": 0.7120350620388155,
+    "ci_hi_mean": 0.7424141094337949
   },
   "siglip_lora_loco / dc / msp / full / walkability_index_v2": {
     "backbone": "siglip_lora_loco",
@@ -2960,8 +2972,8 @@
     "n_seeds": 3,
     "mean": 0.7631016291269642,
     "std": 0.00400322901497752,
-    "ci_lo_mean": 0.7487280495636642,
-    "ci_hi_mean": 0.7771739734430493
+    "ci_lo_mean": 0.7492025405032462,
+    "ci_hi_mean": 0.7765273130637853
   },
   "siglip_lora_loco / dc / seattle / full / overture_sidewalk_present": {
     "backbone": "siglip_lora_loco",
@@ -2972,8 +2984,8 @@
     "n_seeds": 3,
     "mean": 0.8573751482178977,
     "std": 0.007799888391124788,
-    "ci_lo_mean": 0.8328215213322822,
-    "ci_hi_mean": 0.8810558706181292
+    "ci_lo_mean": 0.832491530825452,
+    "ci_hi_mean": 0.8807406039508061
   },
   "siglip_lora_loco / dc / seattle / full / overture_crosswalk_present": {
     "backbone": "siglip_lora_loco",
@@ -2984,8 +2996,8 @@
     "n_seeds": 3,
     "mean": 0.5892139386396079,
     "std": 0.010299729089736772,
-    "ci_lo_mean": 0.5727777252945906,
-    "ci_hi_mean": 0.605133351968007
+    "ci_lo_mean": 0.5731796226100986,
+    "ci_hi_mean": 0.6051804407597258
   },
   "siglip_lora_loco / dc / seattle / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora_loco",
@@ -2996,8 +3008,8 @@
     "n_seeds": 3,
     "mean": 0.6187573109893374,
     "std": 0.00710304273288185,
-    "ci_lo_mean": 0.599550727613396,
-    "ci_hi_mean": 0.6371471393051821
+    "ci_lo_mean": 0.5992612029847743,
+    "ci_hi_mean": 0.6377445748621869
   },
   "siglip_lora_loco / dc / seattle / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora_loco",
@@ -3008,8 +3020,8 @@
     "n_seeds": 3,
     "mean": 0.7889245648925695,
     "std": 0.006808075396977227,
-    "ci_lo_mean": 0.7746041519551246,
-    "ci_hi_mean": 0.8032338238504328
+    "ci_lo_mean": 0.774848893641484,
+    "ci_hi_mean": 0.8021594524959292
   },
   "siglip_lora_loco / dc / seattle / full / walkability_index_v1": {
     "backbone": "siglip_lora_loco",
@@ -3020,8 +3032,8 @@
     "n_seeds": 3,
     "mean": 0.6869028536618359,
     "std": 0.009289421591927449,
-    "ci_lo_mean": 0.6694180080672251,
-    "ci_hi_mean": 0.7035543304270383
+    "ci_lo_mean": 0.6692869125772076,
+    "ci_hi_mean": 0.7045581757892335
   },
   "siglip_lora_loco / dc / seattle / full / walkability_index_v2": {
     "backbone": "siglip_lora_loco",
@@ -3032,8 +3044,8 @@
     "n_seeds": 3,
     "mean": 0.7102235873987564,
     "std": 0.003645930403711387,
-    "ci_lo_mean": 0.693821458509059,
-    "ci_hi_mean": 0.7264168251516144
+    "ci_lo_mean": 0.6930595948744923,
+    "ci_hi_mean": 0.7261480533159173
   },
   "siglip_lora_loco / msp / dc / full / overture_sidewalk_present": {
     "backbone": "siglip_lora_loco",
@@ -3044,8 +3056,8 @@
     "n_seeds": 3,
     "mean": 0.5906052060400884,
     "std": 0.0347246347457564,
-    "ci_lo_mean": 0.5702429236429091,
-    "ci_hi_mean": 0.610956582566588
+    "ci_lo_mean": 0.5698787213518274,
+    "ci_hi_mean": 0.6115158931696593
   },
   "siglip_lora_loco / msp / dc / full / overture_crosswalk_present": {
     "backbone": "siglip_lora_loco",
@@ -3056,8 +3068,8 @@
     "n_seeds": 3,
     "mean": 0.5995271178680035,
     "std": 0.0055505804790525895,
-    "ci_lo_mean": 0.5838101723602594,
-    "ci_hi_mean": 0.6155246424018127
+    "ci_lo_mean": 0.5839071593493909,
+    "ci_hi_mean": 0.6145161551281897
   },
   "siglip_lora_loco / msp / dc / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora_loco",
@@ -3068,8 +3080,8 @@
     "n_seeds": 3,
     "mean": 0.5384590544227822,
     "std": 0.013704553463764244,
-    "ci_lo_mean": 0.5180311309414768,
-    "ci_hi_mean": 0.5596152384823717
+    "ci_lo_mean": 0.5176603084183562,
+    "ci_hi_mean": 0.559223055356978
   },
   "siglip_lora_loco / msp / dc / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora_loco",
@@ -3080,8 +3092,8 @@
     "n_seeds": 3,
     "mean": 0.7645072484685751,
     "std": 0.01397039427448849,
-    "ci_lo_mean": 0.7509681621280886,
-    "ci_hi_mean": 0.7780648750161764
+    "ci_lo_mean": 0.7503681127296312,
+    "ci_hi_mean": 0.7778890455039161
   },
   "siglip_lora_loco / msp / dc / full / walkability_index_v1": {
     "backbone": "siglip_lora_loco",
@@ -3092,8 +3104,8 @@
     "n_seeds": 3,
     "mean": 0.6635555760063866,
     "std": 0.016374456206051467,
-    "ci_lo_mean": 0.6457286833401649,
-    "ci_hi_mean": 0.6807213437158675
+    "ci_lo_mean": 0.64543727557652,
+    "ci_hi_mean": 0.6801676446031633
   },
   "siglip_lora_loco / msp / dc / full / walkability_index_v2": {
     "backbone": "siglip_lora_loco",
@@ -3104,8 +3116,8 @@
     "n_seeds": 3,
     "mean": 0.6780389016119007,
     "std": 0.024162444810831095,
-    "ci_lo_mean": 0.6605849963480136,
-    "ci_hi_mean": 0.6942532416845623
+    "ci_lo_mean": 0.661929907441381,
+    "ci_hi_mean": 0.6947318653353397
   },
   "siglip_lora_loco / msp / seattle / full / overture_sidewalk_present": {
     "backbone": "siglip_lora_loco",
@@ -3116,8 +3128,8 @@
     "n_seeds": 3,
     "mean": 0.84369891272781,
     "std": 0.011062350880874013,
-    "ci_lo_mean": 0.8173226711472972,
-    "ci_hi_mean": 0.8694459303048774
+    "ci_lo_mean": 0.8161121567754174,
+    "ci_hi_mean": 0.8681344052387331
   },
   "siglip_lora_loco / msp / seattle / full / overture_crosswalk_present": {
     "backbone": "siglip_lora_loco",
@@ -3128,8 +3140,8 @@
     "n_seeds": 3,
     "mean": 0.5698753981473365,
     "std": 0.013376049849710032,
-    "ci_lo_mean": 0.55487971673697,
-    "ci_hi_mean": 0.5858054043713257
+    "ci_lo_mean": 0.5539232939064517,
+    "ci_hi_mean": 0.5853892630745091
   },
   "siglip_lora_loco / msp / seattle / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora_loco",
@@ -3140,8 +3152,8 @@
     "n_seeds": 3,
     "mean": 0.6636079928679525,
     "std": 0.0068474783376978295,
-    "ci_lo_mean": 0.6468864474706203,
-    "ci_hi_mean": 0.680139703874847
+    "ci_lo_mean": 0.6465388956802042,
+    "ci_hi_mean": 0.6798774148977417
   },
   "siglip_lora_loco / msp / seattle / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora_loco",
@@ -3152,8 +3164,8 @@
     "n_seeds": 3,
     "mean": 0.7555284833008024,
     "std": 0.005690309926212626,
-    "ci_lo_mean": 0.7396570650304394,
-    "ci_hi_mean": 0.7701496323259122
+    "ci_lo_mean": 0.7403686621928918,
+    "ci_hi_mean": 0.7706965522573563
   },
   "siglip_lora_loco / msp / seattle / full / walkability_index_v1": {
     "backbone": "siglip_lora_loco",
@@ -3164,8 +3176,8 @@
     "n_seeds": 3,
     "mean": 0.7183691808587541,
     "std": 0.01273700608743124,
-    "ci_lo_mean": 0.701687706150164,
-    "ci_hi_mean": 0.73339171891993
+    "ci_lo_mean": 0.7022124472461794,
+    "ci_hi_mean": 0.7332675449793676
   },
   "siglip_lora_loco / msp / seattle / full / walkability_index_v2": {
     "backbone": "siglip_lora_loco",
@@ -3176,8 +3188,8 @@
     "n_seeds": 3,
     "mean": 0.7125706374906237,
     "std": 0.01608148225685482,
-    "ci_lo_mean": 0.6951097760559838,
-    "ci_hi_mean": 0.7283537760456648
+    "ci_lo_mean": 0.6951981353124567,
+    "ci_hi_mean": 0.7289941031494921
   },
   "siglip_lora_loco / seattle / dc / full / overture_sidewalk_present": {
     "backbone": "siglip_lora_loco",
@@ -3188,8 +3200,8 @@
     "n_seeds": 3,
     "mean": 0.6689644726727239,
     "std": 0.03777643017915547,
-    "ci_lo_mean": 0.6439155549661125,
-    "ci_hi_mean": 0.6933391989662678
+    "ci_lo_mean": 0.6433460594084656,
+    "ci_hi_mean": 0.6932628229896992
   },
   "siglip_lora_loco / seattle / dc / full / overture_crosswalk_present": {
     "backbone": "siglip_lora_loco",
@@ -3200,8 +3212,8 @@
     "n_seeds": 3,
     "mean": 0.5827748521561985,
     "std": 0.011788967927823872,
-    "ci_lo_mean": 0.5670046354632431,
-    "ci_hi_mean": 0.5989197746278226
+    "ci_lo_mean": 0.5669821762743997,
+    "ci_hi_mean": 0.5988849414483585
   },
   "siglip_lora_loco / seattle / dc / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora_loco",
@@ -3212,8 +3224,8 @@
     "n_seeds": 3,
     "mean": 0.5141522142445711,
     "std": 0.009275948096266274,
-    "ci_lo_mean": 0.4913629483820056,
-    "ci_hi_mean": 0.5357787133899486
+    "ci_lo_mean": 0.4920580220606512,
+    "ci_hi_mean": 0.5365178948169023
   },
   "siglip_lora_loco / seattle / dc / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora_loco",
@@ -3224,8 +3236,8 @@
     "n_seeds": 3,
     "mean": 0.7907754592741535,
     "std": 0.008408596491145533,
-    "ci_lo_mean": 0.7776815799218443,
-    "ci_hi_mean": 0.8033997637227333
+    "ci_lo_mean": 0.7779455925127334,
+    "ci_hi_mean": 0.8030923492992215
   },
   "siglip_lora_loco / seattle / dc / full / walkability_index_v1": {
     "backbone": "siglip_lora_loco",
@@ -3236,8 +3248,8 @@
     "n_seeds": 3,
     "mean": 0.6453561784310793,
     "std": 0.012288222405570265,
-    "ci_lo_mean": 0.6272289829039043,
-    "ci_hi_mean": 0.6626919147428906
+    "ci_lo_mean": 0.6272715187381547,
+    "ci_hi_mean": 0.6623179144930081
   },
   "siglip_lora_loco / seattle / dc / full / walkability_index_v2": {
     "backbone": "siglip_lora_loco",
@@ -3248,8 +3260,8 @@
     "n_seeds": 3,
     "mean": 0.6678302530767427,
     "std": 0.01659225928380028,
-    "ci_lo_mean": 0.6508503137931464,
-    "ci_hi_mean": 0.6846031610284142
+    "ci_lo_mean": 0.6505525527359186,
+    "ci_hi_mean": 0.6848156631838371
   },
   "siglip_lora_loco / seattle / msp / full / overture_sidewalk_present": {
     "backbone": "siglip_lora_loco",
@@ -3260,8 +3272,8 @@
     "n_seeds": 3,
     "mean": 0.8256262434391733,
     "std": 0.004629404355727573,
-    "ci_lo_mean": 0.8058045093152194,
-    "ci_hi_mean": 0.8447979276019552
+    "ci_lo_mean": 0.80525442984516,
+    "ci_hi_mean": 0.846074972213827
   },
   "siglip_lora_loco / seattle / msp / full / overture_crosswalk_present": {
     "backbone": "siglip_lora_loco",
@@ -3272,8 +3284,8 @@
     "n_seeds": 3,
     "mean": 0.5540022774591673,
     "std": 0.02371094546138815,
-    "ci_lo_mean": 0.5366770127968074,
-    "ci_hi_mean": 0.57082344246241
+    "ci_lo_mean": 0.5367997813194423,
+    "ci_hi_mean": 0.5708305550483886
   },
   "siglip_lora_loco / seattle / msp / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora_loco",
@@ -3284,8 +3296,8 @@
     "n_seeds": 3,
     "mean": 0.6219572012156861,
     "std": 0.018962214380016558,
-    "ci_lo_mean": 0.6039951917949024,
-    "ci_hi_mean": 0.6400078480775409
+    "ci_lo_mean": 0.60403384036434,
+    "ci_hi_mean": 0.6399545362393049
   },
   "siglip_lora_loco / seattle / msp / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora_loco",
@@ -3296,8 +3308,8 @@
     "n_seeds": 3,
     "mean": 0.8410028011255548,
     "std": 0.002274025967490055,
-    "ci_lo_mean": 0.8303254205462588,
-    "ci_hi_mean": 0.8509657188716003
+    "ci_lo_mean": 0.8309301887218786,
+    "ci_hi_mean": 0.8512468519206481
   },
   "siglip_lora_loco / seattle / msp / full / walkability_index_v1": {
     "backbone": "siglip_lora_loco",
@@ -3308,8 +3320,8 @@
     "n_seeds": 3,
     "mean": 0.7087334965219996,
     "std": 0.004868372536755714,
-    "ci_lo_mean": 0.6930965722913953,
-    "ci_hi_mean": 0.724782740409811
+    "ci_lo_mean": 0.6927354944199848,
+    "ci_hi_mean": 0.7237990681041162
   },
   "siglip_lora_loco / seattle / msp / full / walkability_index_v2": {
     "backbone": "siglip_lora_loco",
@@ -3320,8 +3332,8 @@
     "n_seeds": 3,
     "mean": 0.7381350014620903,
     "std": 0.008504821218269775,
-    "ci_lo_mean": 0.723154142071904,
-    "ci_hi_mean": 0.7527733716613095
+    "ci_lo_mean": 0.72336408909258,
+    "ci_hi_mean": 0.7521191674317868
   },
   "siglip_lora_loco_v2 / dc / msp / full / overture_sidewalk_present": {
     "backbone": "siglip_lora_loco_v2",
@@ -3332,8 +3344,8 @@
     "n_seeds": 3,
     "mean": 0.746470178632713,
     "std": 0.007458781347261061,
-    "ci_lo_mean": 0.7230219916492224,
-    "ci_hi_mean": 0.7705357127827656
+    "ci_lo_mean": 0.7237143320215721,
+    "ci_hi_mean": 0.769100850963588
   },
   "siglip_lora_loco_v2 / dc / msp / full / overture_crosswalk_present": {
     "backbone": "siglip_lora_loco_v2",
@@ -3344,8 +3356,8 @@
     "n_seeds": 3,
     "mean": 0.6059686700856416,
     "std": 0.009884969384582647,
-    "ci_lo_mean": 0.5893555366837824,
-    "ci_hi_mean": 0.6228518930768253
+    "ci_lo_mean": 0.588380349897036,
+    "ci_hi_mean": 0.6224046400207305
   },
   "siglip_lora_loco_v2 / dc / msp / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora_loco_v2",
@@ -3356,8 +3368,8 @@
     "n_seeds": 3,
     "mean": 0.6719220614823748,
     "std": 0.007200389475100902,
-    "ci_lo_mean": 0.6552575838136638,
-    "ci_hi_mean": 0.6882996470825544
+    "ci_lo_mean": 0.6550191260223434,
+    "ci_hi_mean": 0.6878673252653931
   },
   "siglip_lora_loco_v2 / dc / msp / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora_loco_v2",
@@ -3368,8 +3380,8 @@
     "n_seeds": 3,
     "mean": 0.8267689321761084,
     "std": 0.004737069962054296,
-    "ci_lo_mean": 0.8153522288082842,
-    "ci_hi_mean": 0.8378175451597666
+    "ci_lo_mean": 0.8151085161249335,
+    "ci_hi_mean": 0.837907153619565
   },
   "siglip_lora_loco_v2 / dc / msp / full / walkability_index_v1": {
     "backbone": "siglip_lora_loco_v2",
@@ -3380,8 +3392,8 @@
     "n_seeds": 3,
     "mean": 0.7333418052230432,
     "std": 0.01512648221058538,
-    "ci_lo_mean": 0.7185906690670328,
-    "ci_hi_mean": 0.7471676312715125
+    "ci_lo_mean": 0.7187366042482418,
+    "ci_hi_mean": 0.7475077228850945
   },
   "siglip_lora_loco_v2 / dc / msp / full / walkability_index_v2": {
     "backbone": "siglip_lora_loco_v2",
@@ -3392,8 +3404,8 @@
     "n_seeds": 3,
     "mean": 0.7521341687699031,
     "std": 0.0018635765517074432,
-    "ci_lo_mean": 0.737576903830325,
-    "ci_hi_mean": 0.7662480286155574
+    "ci_lo_mean": 0.7381557926953768,
+    "ci_hi_mean": 0.766560677011442
   },
   "siglip_lora_loco_v2 / dc / seattle / full / overture_sidewalk_present": {
     "backbone": "siglip_lora_loco_v2",
@@ -3404,8 +3416,8 @@
     "n_seeds": 3,
     "mean": 0.8459437590205011,
     "std": 0.00564459386675026,
-    "ci_lo_mean": 0.8187877410312163,
-    "ci_hi_mean": 0.87104365356076
+    "ci_lo_mean": 0.8185972240197036,
+    "ci_hi_mean": 0.871742755119453
   },
   "siglip_lora_loco_v2 / dc / seattle / full / overture_crosswalk_present": {
     "backbone": "siglip_lora_loco_v2",
@@ -3416,8 +3428,8 @@
     "n_seeds": 3,
     "mean": 0.5668175010020463,
     "std": 0.0041071077886997995,
-    "ci_lo_mean": 0.5514098319087828,
-    "ci_hi_mean": 0.5835034535129277
+    "ci_lo_mean": 0.550695186387456,
+    "ci_hi_mean": 0.5828584381056482
   },
   "siglip_lora_loco_v2 / dc / seattle / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora_loco_v2",
@@ -3428,8 +3440,8 @@
     "n_seeds": 3,
     "mean": 0.657325737742999,
     "std": 0.007395728842618403,
-    "ci_lo_mean": 0.6403135185543382,
-    "ci_hi_mean": 0.6737134702660256
+    "ci_lo_mean": 0.6397147651887779,
+    "ci_hi_mean": 0.6742020604859359
   },
   "siglip_lora_loco_v2 / dc / seattle / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora_loco_v2",
@@ -3440,8 +3452,8 @@
     "n_seeds": 3,
     "mean": 0.7901326879340506,
     "std": 0.013475418234816912,
-    "ci_lo_mean": 0.7758131112756361,
-    "ci_hi_mean": 0.8037934625894106
+    "ci_lo_mean": 0.7754412784856957,
+    "ci_hi_mean": 0.803929655819979
   },
   "siglip_lora_loco_v2 / dc / seattle / full / walkability_index_v1": {
     "backbone": "siglip_lora_loco_v2",
@@ -3452,8 +3464,8 @@
     "n_seeds": 3,
     "mean": 0.7306979409041956,
     "std": 0.008929706346756605,
-    "ci_lo_mean": 0.7146026242282844,
-    "ci_hi_mean": 0.74608282477688
+    "ci_lo_mean": 0.7139374117372457,
+    "ci_hi_mean": 0.7459323413652509
   },
   "siglip_lora_loco_v2 / dc / seattle / full / walkability_index_v2": {
     "backbone": "siglip_lora_loco_v2",
@@ -3464,8 +3476,8 @@
     "n_seeds": 3,
     "mean": 0.751878806107071,
     "std": 0.0024036220014735273,
-    "ci_lo_mean": 0.7369069178749711,
-    "ci_hi_mean": 0.7662151128361039
+    "ci_lo_mean": 0.7368974320979941,
+    "ci_hi_mean": 0.7666306212119567
   },
   "siglip_lora_loco_v2 / msp / dc / full / overture_sidewalk_present": {
     "backbone": "siglip_lora_loco_v2",
@@ -3476,8 +3488,8 @@
     "n_seeds": 3,
     "mean": 0.6345852292936117,
     "std": 0.01221356783940054,
-    "ci_lo_mean": 0.6092893276859681,
-    "ci_hi_mean": 0.660962752826651
+    "ci_lo_mean": 0.6083475081343033,
+    "ci_hi_mean": 0.6589475073732455
   },
   "siglip_lora_loco_v2 / msp / dc / full / overture_crosswalk_present": {
     "backbone": "siglip_lora_loco_v2",
@@ -3488,8 +3500,8 @@
     "n_seeds": 3,
     "mean": 0.6234483341268668,
     "std": 0.014794340164338993,
-    "ci_lo_mean": 0.6082663932148317,
-    "ci_hi_mean": 0.6379560023094016
+    "ci_lo_mean": 0.6082039876168942,
+    "ci_hi_mean": 0.6391780561919277
   },
   "siglip_lora_loco_v2 / msp / dc / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora_loco_v2",
@@ -3500,8 +3512,8 @@
     "n_seeds": 3,
     "mean": 0.5728370377532803,
     "std": 0.005607961731150417,
-    "ci_lo_mean": 0.5528133625717757,
-    "ci_hi_mean": 0.5938154676638129
+    "ci_lo_mean": 0.5525253702990902,
+    "ci_hi_mean": 0.5929624993336943
   },
   "siglip_lora_loco_v2 / msp / dc / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora_loco_v2",
@@ -3512,8 +3524,8 @@
     "n_seeds": 3,
     "mean": 0.8026364392928546,
     "std": 0.011750084980470202,
-    "ci_lo_mean": 0.7902296168890692,
-    "ci_hi_mean": 0.814242248440389
+    "ci_lo_mean": 0.79018459222705,
+    "ci_hi_mean": 0.8136153944623666
   },
   "siglip_lora_loco_v2 / msp / dc / full / walkability_index_v1": {
     "backbone": "siglip_lora_loco_v2",
@@ -3524,8 +3536,8 @@
     "n_seeds": 3,
     "mean": 0.6828524590478492,
     "std": 0.016935099914908415,
-    "ci_lo_mean": 0.6660942605730957,
-    "ci_hi_mean": 0.699441811001818
+    "ci_lo_mean": 0.6659260513945767,
+    "ci_hi_mean": 0.6992635854487516
   },
   "siglip_lora_loco_v2 / msp / dc / full / walkability_index_v2": {
     "backbone": "siglip_lora_loco_v2",
@@ -3536,8 +3548,8 @@
     "n_seeds": 3,
     "mean": 0.6973291333476719,
     "std": 0.01670114348316585,
-    "ci_lo_mean": 0.6807260112401821,
-    "ci_hi_mean": 0.7136206453624575
+    "ci_lo_mean": 0.6802160452160129,
+    "ci_hi_mean": 0.7129659535024438
   },
   "siglip_lora_loco_v2 / msp / seattle / full / overture_sidewalk_present": {
     "backbone": "siglip_lora_loco_v2",
@@ -3548,8 +3560,8 @@
     "n_seeds": 3,
     "mean": 0.8283100884681929,
     "std": 0.01800797482671858,
-    "ci_lo_mean": 0.8002786889738411,
-    "ci_hi_mean": 0.8561470338675258
+    "ci_lo_mean": 0.8008068965515777,
+    "ci_hi_mean": 0.8564882070143348
   },
   "siglip_lora_loco_v2 / msp / seattle / full / overture_crosswalk_present": {
     "backbone": "siglip_lora_loco_v2",
@@ -3560,8 +3572,8 @@
     "n_seeds": 3,
     "mean": 0.5658040384559189,
     "std": 0.015690067640728066,
-    "ci_lo_mean": 0.549588295418661,
-    "ci_hi_mean": 0.5817908786417036
+    "ci_lo_mean": 0.5496068927908215,
+    "ci_hi_mean": 0.5817514227209508
   },
   "siglip_lora_loco_v2 / msp / seattle / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora_loco_v2",
@@ -3572,8 +3584,8 @@
     "n_seeds": 3,
     "mean": 0.6483562002843671,
     "std": 0.015780916331778708,
-    "ci_lo_mean": 0.6305423614517258,
-    "ci_hi_mean": 0.6657633435636292
+    "ci_lo_mean": 0.6308244921454662,
+    "ci_hi_mean": 0.6651013858783673
   },
   "siglip_lora_loco_v2 / msp / seattle / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora_loco_v2",
@@ -3584,8 +3596,8 @@
     "n_seeds": 3,
     "mean": 0.7773154986548857,
     "std": 0.001394486146987157,
-    "ci_lo_mean": 0.7619041968188522,
-    "ci_hi_mean": 0.7912764792302166
+    "ci_lo_mean": 0.7628142772863473,
+    "ci_hi_mean": 0.7917888596321302
   },
   "siglip_lora_loco_v2 / msp / seattle / full / walkability_index_v1": {
     "backbone": "siglip_lora_loco_v2",
@@ -3596,8 +3608,8 @@
     "n_seeds": 3,
     "mean": 0.7062031069674756,
     "std": 0.002834367922998103,
-    "ci_lo_mean": 0.6890524010502338,
-    "ci_hi_mean": 0.7226936962497502
+    "ci_lo_mean": 0.6899250902371397,
+    "ci_hi_mean": 0.7224700384490509
   },
   "siglip_lora_loco_v2 / msp / seattle / full / walkability_index_v2": {
     "backbone": "siglip_lora_loco_v2",
@@ -3608,8 +3620,8 @@
     "n_seeds": 3,
     "mean": 0.723364441931893,
     "std": 0.003831952041883183,
-    "ci_lo_mean": 0.7076752924231368,
-    "ci_hi_mean": 0.7389099283765289
+    "ci_lo_mean": 0.7069946685532993,
+    "ci_hi_mean": 0.7391570588381245
   },
   "siglip_lora_loco_v2 / seattle / dc / full / overture_sidewalk_present": {
     "backbone": "siglip_lora_loco_v2",
@@ -3620,8 +3632,8 @@
     "n_seeds": 3,
     "mean": 0.7996100620253525,
     "std": 0.00726901698819209,
-    "ci_lo_mean": 0.7795348135706904,
-    "ci_hi_mean": 0.8182296564249493
+    "ci_lo_mean": 0.7792779394017404,
+    "ci_hi_mean": 0.818273959030131
   },
   "siglip_lora_loco_v2 / seattle / dc / full / overture_crosswalk_present": {
     "backbone": "siglip_lora_loco_v2",
@@ -3632,8 +3644,8 @@
     "n_seeds": 3,
     "mean": 0.6740578320068124,
     "std": 0.028442819094992154,
-    "ci_lo_mean": 0.6598202308720285,
-    "ci_hi_mean": 0.6881178156773391
+    "ci_lo_mean": 0.6594790496606938,
+    "ci_hi_mean": 0.6882628438822648
   },
   "siglip_lora_loco_v2 / seattle / dc / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora_loco_v2",
@@ -3644,8 +3656,8 @@
     "n_seeds": 3,
     "mean": 0.6300844339396551,
     "std": 0.013917573680078092,
-    "ci_lo_mean": 0.6113847241927451,
-    "ci_hi_mean": 0.6479825162773789
+    "ci_lo_mean": 0.6105885352069746,
+    "ci_hi_mean": 0.6479049087603852
   },
   "siglip_lora_loco_v2 / seattle / dc / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora_loco_v2",
@@ -3656,8 +3668,8 @@
     "n_seeds": 3,
     "mean": 0.8369183543328894,
     "std": 0.006916222959010329,
-    "ci_lo_mean": 0.8259858167310424,
-    "ci_hi_mean": 0.8471341358832704
+    "ci_lo_mean": 0.8265576919871931,
+    "ci_hi_mean": 0.8467600532411191
   },
   "siglip_lora_loco_v2 / seattle / dc / full / walkability_index_v1": {
     "backbone": "siglip_lora_loco_v2",
@@ -3668,8 +3680,8 @@
     "n_seeds": 3,
     "mean": 0.732662702690359,
     "std": 0.005021291881398009,
-    "ci_lo_mean": 0.7170345566582816,
-    "ci_hi_mean": 0.7469368058867024
+    "ci_lo_mean": 0.7176805607264134,
+    "ci_hi_mean": 0.7474904503690024
   },
   "siglip_lora_loco_v2 / seattle / dc / full / walkability_index_v2": {
     "backbone": "siglip_lora_loco_v2",
@@ -3680,8 +3692,8 @@
     "n_seeds": 3,
     "mean": 0.7400268603096857,
     "std": 0.005321654095826091,
-    "ci_lo_mean": 0.7252411095602748,
-    "ci_hi_mean": 0.754579182512663
+    "ci_lo_mean": 0.7254601306793748,
+    "ci_hi_mean": 0.7541335216971502
   },
   "siglip_lora_loco_v2 / seattle / msp / full / overture_sidewalk_present": {
     "backbone": "siglip_lora_loco_v2",
@@ -3692,8 +3704,8 @@
     "n_seeds": 3,
     "mean": 0.8089873980520473,
     "std": 0.01656470418688664,
-    "ci_lo_mean": 0.7869694973534919,
-    "ci_hi_mean": 0.8300127093973774
+    "ci_lo_mean": 0.7875047892413548,
+    "ci_hi_mean": 0.8300985954811207
   },
   "siglip_lora_loco_v2 / seattle / msp / full / overture_crosswalk_present": {
     "backbone": "siglip_lora_loco_v2",
@@ -3704,8 +3716,8 @@
     "n_seeds": 3,
     "mean": 0.5739777532243125,
     "std": 0.006157238232333622,
-    "ci_lo_mean": 0.5564901663920226,
-    "ci_hi_mean": 0.5910344319861901
+    "ci_lo_mean": 0.557039920623334,
+    "ci_hi_mean": 0.5909740951375626
   },
   "siglip_lora_loco_v2 / seattle / msp / full / overture_intersection_count_200m": {
     "backbone": "siglip_lora_loco_v2",
@@ -3716,8 +3728,8 @@
     "n_seeds": 3,
     "mean": 0.6520998979509799,
     "std": 0.0034046926983920494,
-    "ci_lo_mean": 0.6348347948386901,
-    "ci_hi_mean": 0.6687222927523561
+    "ci_lo_mean": 0.6346824191345848,
+    "ci_hi_mean": 0.6684422088277211
   },
   "siglip_lora_loco_v2 / seattle / msp / full / overture_building_footprint_frac_100m": {
     "backbone": "siglip_lora_loco_v2",
@@ -3728,8 +3740,8 @@
     "n_seeds": 3,
     "mean": 0.8445131373401084,
     "std": 0.0027239516981161665,
-    "ci_lo_mean": 0.834405801729616,
-    "ci_hi_mean": 0.854229633447527
+    "ci_lo_mean": 0.834651869376767,
+    "ci_hi_mean": 0.8542708411249178
   },
   "siglip_lora_loco_v2 / seattle / msp / full / walkability_index_v1": {
     "backbone": "siglip_lora_loco_v2",
@@ -3740,8 +3752,8 @@
     "n_seeds": 3,
     "mean": 0.7196539505294508,
     "std": 0.005876729071473187,
-    "ci_lo_mean": 0.7045359981318091,
-    "ci_hi_mean": 0.7342564693241403
+    "ci_lo_mean": 0.7045225152723145,
+    "ci_hi_mean": 0.7345339835654711
   },
   "siglip_lora_loco_v2 / seattle / msp / full / walkability_index_v2": {
     "backbone": "siglip_lora_loco_v2",
@@ -3752,7 +3764,7 @@
     "n_seeds": 3,
     "mean": 0.7442662770431147,
     "std": 0.010255089399630829,
-    "ci_lo_mean": 0.7295658721309777,
-    "ci_hi_mean": 0.75838859564771
+    "ci_lo_mean": 0.7294673097796011,
+    "ci_hi_mean": 0.7583374323574645
   }
 }
