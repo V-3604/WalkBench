@@ -1,22 +1,53 @@
 """
-Geography-only Ridge baseline for WalkCLIP v2 (Diagnostic Experiment 2.2).
+Coordinates-only geo baseline for WalkBench (advisor floor check, 2026-06-24).
 
-Answers: how well does NatWalkInd (and other EPA targets) predict from lat/lon
-and census/GTFS features alone, with zero image information?
+Purpose
+-------
+Quantify how well the walkability targets can be predicted from raw geography
+(lat/lon) alone, under the same city-holdout protocol as the imagery models.
+If coordinates-only models match the frozen-imagery transfer numbers the imagery
+is not earning its keep; if imagery clearly wins, that gap is the motivation for
+the method. Spec: docs/internal/ADVISOR_FEEDBACK_LOG.md (2026-06-24,
+"coordinates-only baseline"). This is a full rewrite of the old RidgeCV /
+NatWalkInd / 2-city script.
 
-This baseline is essential for the paper — images must beat it, not just beat zero.
+Protocol (city holdout, matching the main results)
+--------------------------------------------------
+  * 6 cross-city directions among MSP / Seattle / DC (train one city, test
+    another).
+  * Pittsburgh held out: train msp+seattle+dc -> test pittsburgh (zero-shot).
+  * Supplementary in-city diagonal (seeded 70/30 split within each city) to show
+    that geography predicts *within* a city but does not transfer *across*
+    cities -- the contrast that motivates a visual method.
 
-Run:
-    # Cross-city
-    python project/scripts/train_geo_baseline.py --train-city msp --test-city seattle
-    python project/scripts/train_geo_baseline.py --train-city seattle --test-city msp
+Models : RandomForest, HistGradientBoosting, KNN. Classifiers for the two binary
+         targets, regressors for the three continuous ones. Seeds 41/42/43.
+Features: lat/lon only (headline) plus an optional census/GTFS "geo+context" set.
+Hygiene: median-impute + StandardScaler fit on the training cities only (KNN
+         needs scaling; trees are invariant to it). Every estimator is seeded.
 
-    # In-city
-    python project/scripts/train_geo_baseline.py --in-city-city msp
-    python project/scripts/train_geo_baseline.py --in-city-city seattle
+Targets (5, apples-to-apples with the main table)
+  overture_sidewalk_present              (binary, AUROC)
+  overture_crosswalk_present             (binary, AUROC)
+  overture_intersection_count_200m       (regression, Spearman rho)
+  overture_building_footprint_frac_100m  (regression, Spearman rho)
+  walkability_index_v2                   (regression, Spearman rho -- HEADLINE)
+walkability_index_v2 is NOT in the FLA; it is joined from walkability_index.csv
+on (point_id, city).
 
-    # All four at once
-    python project/scripts/train_geo_baseline.py --all
+Outputs
+-------
+  project/artifacts/reports/geo_baseline_results.json  -- one record per
+      (eval_mode x feature_set x train_set x test_city x seed x model) with a
+      results_per_target block comparable to multitarget_results.jsonl.
+  project/artifacts/reports/geo_baseline_summary.json  -- seed-averaged headline
+      walk-index comparison against the frozen-imagery anchors + decision verdict.
+
+Run
+---
+    & ".venv\\Scripts\\python.exe" project\\scripts\\train_geo_baseline.py            # full sweep
+    & ".venv\\Scripts\\python.exe" project\\scripts\\train_geo_baseline.py --quick    # seed 42, latlon only
+    & ".venv\\Scripts\\python.exe" project\\scripts\\train_geo_baseline.py --dry-run  # print the run plan
 """
 
 from __future__ import annotations
@@ -24,350 +55,573 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import random
+import statistics
+from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import scipy.stats
-from sklearn.linear_model import RidgeCV
-from sklearn.metrics import r2_score
+from sklearn.ensemble import (
+    HistGradientBoostingClassifier,
+    HistGradientBoostingRegressor,
+    RandomForestClassifier,
+    RandomForestRegressor,
+)
+from sklearn.metrics import average_precision_score, r2_score, roc_auc_score
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.preprocessing import StandardScaler
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 LABELS_CSV = REPO_ROOT / "project" / "data" / "processed" / "labels" / "features_labels_agreement.csv"
-LOCK_FILE = REPO_ROOT / "project" / "data" / "processed" / "locks" / "v2_final_lock_ids.txt"
+WALK_INDEX_CSV = REPO_ROOT / "project" / "data" / "processed" / "labels" / "walkability_index.csv"
+LOCK_DIR = REPO_ROOT / "project" / "data" / "processed" / "locks"
 REPORT_DIR = REPO_ROOT / "project" / "artifacts" / "reports"
+RESULTS_PATH = REPORT_DIR / "geo_baseline_results.json"
+SUMMARY_PATH = REPORT_DIR / "geo_baseline_summary.json"
 
-SEED = 42
+CITIES = ["msp", "seattle", "dc", "pittsburgh"]
+CROSS_CITY_TRIO = ["msp", "seattle", "dc"]
+PITTSBURGH_TRAIN = ["msp", "seattle", "dc"]
 
-GEO_ONLY_FEATURES = [
-    "lat",
-    "lon",
-    "D1A",
-    "D1B",
-    "D2B_E8MIX",
-    "D3A",
-    "D3B",
-    "D3APO",
-    "D4A",
-    "D4C",
-    "D4D",
-    "stops_400m",
-    "trips_per_hr_400m",
-    "LPA_CrudePrev",
-    "OBESITY_CrudePrev",
+SEEDS_DEFAULT = [41, 42, 43]
+KNN_NEIGHBORS = 15
+RF_N_ESTIMATORS = 300
+MODEL_NAMES = ["random_forest", "hist_gbdt", "knn"]
+
+LATLON_FEATURES = ["lat", "lon"]
+# Optional geo+context comparison. PLACES vars (LPA/OBESITY) are null for
+# Pittsburgh -> median-imputed from the training cities at test time; that only
+# affects the geo_context variant, never the lat/lon-only headline.
+GEO_CONTEXT_FEATURES = [
+    "lat", "lon",
+    "D1A", "D1B", "D2B_E8MIX", "D3A", "D3B", "D3APO", "D4A", "D4C", "D4D",
+    "stops_400m", "trips_per_hr_400m",
+    "LPA_CrudePrev", "OBESITY_CrudePrev",
 ]
-
-PRIMARY_TARGET = "NatWalkInd"
-RIDGE_ALPHAS = [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]
+FEATURE_SETS = {"latlon": LATLON_FEATURES, "geo_context": GEO_CONTEXT_FEATURES}
 
 
-def evaluate_metrics(y_true: np.ndarray, pred: np.ndarray) -> dict[str, float]:
-    r2 = float(r2_score(y_true, pred))
-    rmse = float(np.sqrt(np.mean((pred - y_true) ** 2)))
-    mae = float(np.mean(np.abs(pred - y_true)))
-    pearson_r, _ = scipy.stats.pearsonr(pred, y_true)
-    spearman_rho, _ = scipy.stats.spearmanr(pred, y_true)
-    return {
-        "r2": round(r2, 4),
-        "rmse": round(rmse, 4),
-        "mae": round(mae, 4),
-        "pearson_r": round(float(pearson_r), 4),
-        "spearman_rho": round(float(spearman_rho), 4),
-    }
+@dataclass(frozen=True)
+class TargetSpec:
+    name: str
+    kind: str   # "binary" | "regression"
+    source: str  # "fla" | "walk_index"
 
 
-def evaluate_recalibrated(
-    y_true: np.ndarray,
-    pred: np.ndarray,
-    train_mean: float,
-    train_std: float,
-) -> dict[str, float]:
-    """Z-score pred using train stats, rescale to test distribution, recompute R²."""
-    pred_z = (pred - train_mean) / max(train_std, 1e-8)
-    test_mean = float(np.mean(y_true))
-    test_std = float(np.std(y_true))
-    pred_recal = pred_z * test_std + test_mean
-    r2_recal = float(r2_score(y_true, pred_recal))
-    rmse_recal = float(np.sqrt(np.mean((pred_recal - y_true) ** 2)))
-    return {
-        "r2_recalibrated": round(r2_recal, 4),
-        "rmse_recalibrated": round(rmse_recal, 4),
-    }
+TARGETS: list[TargetSpec] = [
+    TargetSpec("overture_sidewalk_present", "binary", "fla"),
+    TargetSpec("overture_crosswalk_present", "binary", "fla"),
+    TargetSpec("overture_intersection_count_200m", "regression", "fla"),
+    TargetSpec("overture_building_footprint_frac_100m", "regression", "fla"),
+    TargetSpec("walkability_index_v2", "regression", "walk_index"),
+]
+HEADLINE_TARGET = "walkability_index_v2"
+
+# Frozen-imagery walk-index Spearman rho the baseline must be compared against.
+IMAGERY_ANCHORS = {
+    "cross_city_trio": {
+        "siglip_frozen": 0.732,
+        "clip_frozen": 0.713,
+        "source": "docs/RESULTS.md / bootstrap_summary.json (walk-index rho, mean over 6 MSP/Seattle/DC LOCO directions)",
+    },
+    "pittsburgh_holdout": {
+        "frozen_rho_low": 0.833,
+        "frozen_rho_high": 0.862,
+        "source": "CLAUDE.md SRC-3 / bootstrap_summary.json (Pittsburgh zero-shot, frozen backbones x 3 seeds)",
+    },
+}
+DECISION_MARGIN = 0.03
 
 
-def evaluate_block_group_aggregated(
-    point_ids: np.ndarray,
-    pred: np.ndarray,
-    label_frame: pd.DataFrame,
-) -> dict[str, float]:
-    """Average point-level preds within block groups, then compute BG-level R²."""
-    df = pd.DataFrame(
-        {
-            "point_id": point_ids,
-            "pred": pred,
-            "bg": label_frame.loc[point_ids, "blockgroup_geoid"].values,
-            "true": label_frame.loc[point_ids, PRIMARY_TARGET].values,
-        }
-    )
-    bg = (
-        df.groupby("bg")
-        .agg(pred_mean=("pred", "mean"), true_mean=("true", "first"))
-        .dropna()
-    )
-    if len(bg) < 2:
-        return {"bg_r2": float("nan"), "bg_pearson_r": float("nan"), "n_block_groups": len(bg)}
-    bg_r2 = float(r2_score(bg["true_mean"], bg["pred_mean"]))
-    bg_r, _ = scipy.stats.pearsonr(bg["pred_mean"], bg["true_mean"])
-    return {
-        "bg_r2": round(bg_r2, 4),
-        "bg_pearson_r": round(float(bg_r), 4),
-        "n_block_groups": int(len(bg)),
-    }
+def primary_metric_key(kind: str) -> str:
+    return "auroc" if kind == "binary" else "spearman_rho"
 
 
-def prepare_city(
-    city: str,
-    labels: pd.DataFrame,
-    lock_ids: list[int],
-    feature_cols: list[str],
-) -> tuple[np.ndarray, np.ndarray, np.ndarray, pd.DataFrame]:
-    """Return X, y, point_ids, label_frame for a city."""
-    city_df = labels[labels["city"] == city].copy()
-    city_df["point_id"] = city_df["point_id"].astype(int)
-    city_df = city_df[city_df["point_id"].isin(lock_ids)].set_index("point_id")
-    present_ids = np.array([pid for pid in lock_ids if pid in city_df.index], dtype=np.int32)
-    if len(present_ids) == 0:
-        raise ValueError(f"No locked rows found for city={city}.")
+def load_dataset() -> pd.DataFrame:
+    """Load the 4-city FLA, join walkability_index_v2, filter to the per-city locks."""
+    if not LABELS_CSV.exists():
+        raise FileNotFoundError(f"{LABELS_CSV} not found. Build the labels file first.")
+    if not WALK_INDEX_CSV.exists():
+        raise FileNotFoundError(f"{WALK_INDEX_CSV} not found. Run the walkability-index build first.")
 
-    X = city_df.loc[present_ids, feature_cols].to_numpy(dtype=np.float64)
-    y = city_df.loc[present_ids, PRIMARY_TARGET].to_numpy(dtype=np.float64)
-    return X, y, present_ids, city_df
+    fla = pd.read_csv(LABELS_CSV, low_memory=False)
+    fla["point_id"] = fla["point_id"].astype(int)
+    walk_index = pd.read_csv(WALK_INDEX_CSV)
+    walk_index["point_id"] = walk_index["point_id"].astype(int)
 
-
-def run_cross_city(
-    train_city: str,
-    test_city: str,
-    labels: pd.DataFrame,
-    lock_ids: list[int],
-    feature_cols: list[str],
-) -> dict[str, object]:
-    rng = np.random.default_rng(SEED)
-
-    X_train_full, y_train_full, train_ids, train_frame = prepare_city(
-        train_city, labels, lock_ids, feature_cols
-    )
-    X_test, y_test, test_ids, test_frame = prepare_city(
-        test_city, labels, lock_ids, feature_cols
+    merged = fla.merge(
+        walk_index[["point_id", "city", "walkability_index_v2"]],
+        on=["point_id", "city"],
+        how="left",
     )
 
-    # 85/15 train/val split on training city
-    n = len(y_train_full)
-    perm = rng.permutation(n)
-    n_train = int(round(n * 0.85))
-    train_idx = perm[:n_train]
+    required = (
+        set(LATLON_FEATURES)
+        | {t.name for t in TARGETS if t.source == "fla"}
+        | {HEADLINE_TARGET, "city", "point_id"}
+    )
+    missing = sorted(required - set(merged.columns))
+    if missing:
+        raise KeyError(f"Missing required columns in joined dataset: {missing}")
+    if merged[HEADLINE_TARGET].isna().any():
+        n_missing = int(merged[HEADLINE_TARGET].isna().sum())
+        raise ValueError(
+            f"{n_missing} rows missing {HEADLINE_TARGET} after join on (point_id, city). "
+            "Check walkability_index.csv coverage."
+        )
 
-    X_train = X_train_full[train_idx]
-    y_train = y_train_full[train_idx]
+    kept: list[pd.DataFrame] = []
+    for city in CITIES:
+        lock_path = LOCK_DIR / f"{city}_v2_final_lock_ids.txt"
+        if not lock_path.exists():
+            raise FileNotFoundError(f"{lock_path} not found.")
+        lock_ids = {int(x) for x in lock_path.read_text().split()}
+        city_rows = merged[merged["city"] == city]
+        locked = city_rows[city_rows["point_id"].isin(lock_ids)]
+        dropped = len(city_rows) - len(locked)
+        logging.info(
+            "city=%-10s FLA=%4d  lock=%4d  kept=%4d%s",
+            city, len(city_rows), len(lock_ids), len(locked),
+            f"  (dropped {dropped} not in lock)" if dropped else "",
+        )
+        kept.append(locked)
 
-    # Impute missing with training median, scale
+    dataset = pd.concat(kept, ignore_index=True)
+    logging.info("Dataset ready: %d rows across %d cities.", len(dataset), dataset["city"].nunique())
+    return dataset
+
+
+def build_estimator(model_name: str, kind: str, seed: int):
+    is_binary = kind == "binary"
+    if model_name == "random_forest":
+        cls = RandomForestClassifier if is_binary else RandomForestRegressor
+        return cls(n_estimators=RF_N_ESTIMATORS, n_jobs=-1, random_state=seed)
+    if model_name == "hist_gbdt":
+        cls = HistGradientBoostingClassifier if is_binary else HistGradientBoostingRegressor
+        return cls(random_state=seed)
+    if model_name == "knn":
+        cls = KNeighborsClassifier if is_binary else KNeighborsRegressor
+        return cls(n_neighbors=KNN_NEIGHBORS, weights="distance")
+    raise ValueError(f"Unknown model_name: {model_name!r}")
+
+
+def prepare_features(
+    train_df: pd.DataFrame, test_df: pd.DataFrame, feature_cols: list[str]
+) -> tuple[np.ndarray, np.ndarray]:
+    """Median-impute (train stats) then StandardScaler (fit on train cities only)."""
+    X_train = train_df[feature_cols].to_numpy(dtype=np.float64)
+    X_test = test_df[feature_cols].to_numpy(dtype=np.float64)
+
     fill = np.nanmedian(X_train, axis=0)
     fill = np.where(np.isfinite(fill), fill, 0.0)
-    X_train_f = np.where(np.isnan(X_train), fill, X_train)
-    X_test_f = np.where(np.isnan(X_test), fill, X_test)
-    scaler = StandardScaler()
-    X_train_s = scaler.fit_transform(X_train_f)
-    X_test_s = scaler.transform(X_test_f)
+    X_train = np.where(np.isnan(X_train), fill, X_train)
+    X_test = np.where(np.isnan(X_test), fill, X_test)
 
-    model = RidgeCV(alphas=RIDGE_ALPHAS, cv=5)
-    model.fit(X_train_s, y_train)
-    train_mean = float(np.mean(y_train))
-    train_std = float(np.std(y_train))
+    scaler = StandardScaler().fit(X_train)
+    return scaler.transform(X_train), scaler.transform(X_test)
 
-    pred_test = model.predict(X_test_s).astype(np.float64)
-    metrics = evaluate_metrics(y_test, pred_test)
-    recal = evaluate_recalibrated(y_test, pred_test, train_mean, train_std)
-    bg = evaluate_block_group_aggregated(test_ids, pred_test, test_frame)
 
-    return {
-        "eval_mode": "cross_city",
-        "model": "ridge_cv",
-        "ablation": "geo_only",
-        "train_city": train_city,
-        "test_city": test_city,
-        "selected_alpha": float(model.alpha_),
-        "train_mean": round(train_mean, 4),
-        "train_std": round(train_std, 4),
-        "n_features": len(feature_cols),
-        "feature_cols": feature_cols,
-        "primary_metrics": {**metrics, **recal},
-        "block_group_metrics": bg,
+def evaluate_binary(y_true: np.ndarray, proba: np.ndarray) -> dict[str, object]:
+    y_true = np.asarray(y_true, dtype=int)
+    out: dict[str, object] = {
+        "type": "binary",
+        "n": int(len(y_true)),
+        "positive_rate": round(float(y_true.mean()), 4),
     }
+    if len(np.unique(y_true)) < 2:
+        out.update({"auroc": None, "avg_precision": None, "note": "single_class_test_set"})
+        return out
+    out["auroc"] = round(float(roc_auc_score(y_true, proba)), 4)
+    out["avg_precision"] = round(float(average_precision_score(y_true, proba)), 4)
+    return out
+
+
+def evaluate_regression(y_true: np.ndarray, pred: np.ndarray) -> dict[str, object]:
+    y_true = np.asarray(y_true, dtype=np.float64)
+    pred = np.asarray(pred, dtype=np.float64)
+    # A constant prediction carries no rank signal; report rho=0 and flag it
+    # rather than emitting a NaN (StandardScaler pushes a held-out city far
+    # outside the training leaves, collapsing trees/KNN to a near-constant).
+    constant_pred = bool(np.std(pred) < 1e-12)
+    if constant_pred:
+        rho, pearson = 0.0, 0.0
+    else:
+        rho = float(scipy.stats.spearmanr(pred, y_true)[0])
+        pearson = float(scipy.stats.pearsonr(pred, y_true)[0])
+    return {
+        "type": "regression",
+        "n": int(len(y_true)),
+        "spearman_rho": round(rho, 4),
+        "pearson_r": round(pearson, 4),
+        "r2": round(float(r2_score(y_true, pred)), 4),
+        "rmse": round(float(np.sqrt(np.mean((pred - y_true) ** 2))), 4),
+        "mae": round(float(np.mean(np.abs(pred - y_true))), 4),
+        "pred_is_constant": constant_pred,
+    }
+
+
+def fit_eval_all_targets(
+    train_df: pd.DataFrame,
+    test_df: pd.DataFrame,
+    feature_cols: list[str],
+    model_names: list[str],
+    seed: int,
+) -> dict[str, dict]:
+    """Fit every (model, target) on the same prepared features; return per-model results."""
+    X_train, X_test = prepare_features(train_df, test_df, feature_cols)
+    per_model: dict[str, dict] = {}
+    for model_name in model_names:
+        results_per_target: dict[str, dict] = {}
+        for tspec in TARGETS:
+            y_train = train_df[tspec.name].to_numpy()
+            y_test = test_df[tspec.name].to_numpy()
+            estimator = build_estimator(model_name, tspec.kind, seed)
+            if tspec.kind == "binary":
+                estimator.fit(X_train, y_train.astype(int))
+                proba = estimator.predict_proba(X_test)[:, 1]
+                results_per_target[tspec.name] = evaluate_binary(y_test, proba)
+            else:
+                estimator.fit(X_train, y_train.astype(np.float64))
+                pred = estimator.predict(X_test)
+                results_per_target[tspec.name] = evaluate_regression(y_test, pred)
+        per_model[model_name] = results_per_target
+    return per_model
+
+
+def run_holdout(
+    dataset: pd.DataFrame,
+    train_cities: list[str],
+    test_city: str,
+    eval_mode: str,
+    feature_set_name: str,
+    model_names: list[str],
+    seed: int,
+) -> list[dict]:
+    random.seed(seed)
+    np.random.seed(seed)
+    feature_cols = FEATURE_SETS[feature_set_name]
+    train_df = dataset[dataset["city"].isin(train_cities)]
+    test_df = dataset[dataset["city"] == test_city]
+    per_model = fit_eval_all_targets(train_df, test_df, feature_cols, model_names, seed)
+    return [
+        {
+            "eval_mode": eval_mode,
+            "feature_set": feature_set_name,
+            "model": model_name,
+            "train_cities": list(train_cities),
+            "test_city": test_city,
+            "seed": seed,
+            "n_train": int(len(train_df)),
+            "n_test": int(len(test_df)),
+            "n_features": len(feature_cols),
+            "results_per_target": results_per_target,
+        }
+        for model_name, results_per_target in per_model.items()
+    ]
 
 
 def run_in_city(
+    dataset: pd.DataFrame,
     city: str,
-    labels: pd.DataFrame,
-    lock_ids: list[int],
-    feature_cols: list[str],
-) -> dict[str, object]:
-    rng = np.random.default_rng(SEED)
+    feature_set_name: str,
+    model_names: list[str],
+    seed: int,
+) -> list[dict]:
+    random.seed(seed)
+    np.random.seed(seed)
+    feature_cols = FEATURE_SETS[feature_set_name]
+    city_df = dataset[dataset["city"] == city].reset_index(drop=True)
+    perm = np.random.default_rng(seed).permutation(len(city_df))
+    n_train = int(round(len(city_df) * 0.70))
+    train_df = city_df.iloc[perm[:n_train]]
+    test_df = city_df.iloc[perm[n_train:]]
+    per_model = fit_eval_all_targets(train_df, test_df, feature_cols, model_names, seed)
+    return [
+        {
+            "eval_mode": "in_city",
+            "feature_set": feature_set_name,
+            "model": model_name,
+            "train_cities": [city],
+            "test_city": city,
+            "seed": seed,
+            "n_train": int(len(train_df)),
+            "n_test": int(len(test_df)),
+            "n_features": len(feature_cols),
+            "results_per_target": results_per_target,
+        }
+        for model_name, results_per_target in per_model.items()
+    ]
 
-    X_full, y_full, point_ids, label_frame = prepare_city(
-        city, labels, lock_ids, feature_cols
-    )
 
-    # 70/15/15 split
-    n = len(y_full)
-    perm = rng.permutation(n)
-    n_train = int(round(n * 0.70))
-    n_val = int(round(n * 0.15))
-    train_idx = perm[:n_train]
-    val_idx = perm[n_train : n_train + n_val]
-    test_idx = perm[n_train + n_val :]
+def build_plan() -> list[tuple[str, list[str], str]]:
+    """Return (eval_mode, train_cities, test_city) tuples for the holdout protocol."""
+    plan: list[tuple[str, list[str], str]] = []
+    for train_city in CROSS_CITY_TRIO:
+        for test_city in CROSS_CITY_TRIO:
+            if train_city != test_city:
+                plan.append(("cross_city", [train_city], test_city))
+    plan.append(("pittsburgh_holdout", PITTSBURGH_TRAIN, "pittsburgh"))
+    return plan
 
-    X_train = X_full[train_idx]
-    y_train = y_full[train_idx]
-    X_val = X_full[val_idx]
-    y_val = y_full[val_idx]
-    X_test = X_full[test_idx]
-    y_test = y_full[test_idx]
-    test_ids = point_ids[test_idx]
 
-    fill = np.nanmedian(X_train, axis=0)
-    fill = np.where(np.isfinite(fill), fill, 0.0)
-    X_train_f = np.where(np.isnan(X_train), fill, X_train)
-    X_val_f = np.where(np.isnan(X_val), fill, X_val)
-    X_test_f = np.where(np.isnan(X_test), fill, X_test)
-    scaler = StandardScaler()
-    X_train_s = scaler.fit_transform(X_train_f)
-    X_val_s = scaler.transform(X_val_f)
-    X_test_s = scaler.transform(X_test_f)
-
-    model = RidgeCV(alphas=RIDGE_ALPHAS, cv=5)
-    model.fit(X_train_s, y_train)
-    train_mean = float(np.mean(y_train))
-    train_std = float(np.std(y_train))
-
-    pred_val = model.predict(X_val_s).astype(np.float64)
-    pred_test = model.predict(X_test_s).astype(np.float64)
-    val_metrics = evaluate_metrics(y_val, pred_val)
-    test_metrics = evaluate_metrics(y_test, pred_test)
-    recal = evaluate_recalibrated(y_test, pred_test, train_mean, train_std)
-    bg = evaluate_block_group_aggregated(test_ids, pred_test, label_frame)
-
+def aggregate_metric(
+    records: list[dict], target: str, model: str, metric_key: str
+) -> dict | None:
+    values = [
+        r["results_per_target"][target][metric_key]
+        for r in records
+        if r["model"] == model and r["results_per_target"][target].get(metric_key) is not None
+    ]
+    if not values:
+        return None
     return {
-        "eval_mode": "in_city",
-        "model": "ridge_cv",
-        "ablation": "geo_only",
-        "train_city": city,
-        "test_city": city,
-        "selected_alpha": float(model.alpha_),
-        "train_mean": round(train_mean, 4),
-        "train_std": round(train_std, 4),
-        "n_features": len(feature_cols),
-        "feature_cols": feature_cols,
-        "val_metrics": val_metrics,
-        "primary_metrics": {**test_metrics, **recal},
-        "block_group_metrics": bg,
+        "mean": round(statistics.fmean(values), 4),
+        "std": round(statistics.pstdev(values), 4) if len(values) > 1 else 0.0,
+        "n": len(values),
     }
 
 
-def print_result(res: dict[str, object]) -> None:
-    m = res["primary_metrics"]
-    bg = res["block_group_metrics"]
-    logging.info(
-        "%-12s %-8s %-8s | R²=%.4f  R²_recal=%.4f  ρ=%.4f  RMSE=%.4f  BG_R²=%.4f  (n_BG=%d)  α=%.3g",
-        res["eval_mode"],
-        res["train_city"],
-        res["test_city"],
-        m["r2"],
-        m.get("r2_recalibrated", float("nan")),
-        m["spearman_rho"],
-        m["rmse"],
-        bg["bg_r2"],
-        bg["n_block_groups"],
-        res["selected_alpha"],
-    )
+def best_model_for(
+    records: list[dict], target: str, metric_key: str, model_names: list[str]
+) -> tuple[str | None, dict | None]:
+    best_name, best_stats = None, None
+    for model_name in model_names:
+        stats = aggregate_metric(records, target, model_name, metric_key)
+        if stats is None:
+            continue
+        if best_stats is None or stats["mean"] > best_stats["mean"]:
+            best_name, best_stats = model_name, stats
+    return best_name, best_stats
+
+
+def verdict(geo_rho: float | None, imagery_rho: float) -> dict[str, object]:
+    if geo_rho is None:
+        return {"verdict": "no_geo_estimate", "gap": None}
+    gap = round(imagery_rho - geo_rho, 4)
+    if gap > DECISION_MARGIN:
+        label = "imagery_wins"
+    elif gap < -DECISION_MARGIN:
+        label = "CONCERN_geo_beats_imagery"
+    else:
+        label = "CONCERN_geo_competitive"
+    return {"verdict": label, "imagery_rho": imagery_rho, "geo_best_rho": geo_rho, "gap": gap}
+
+
+def summarize(records: list[dict], model_names: list[str]) -> dict:
+    latlon = [r for r in records if r["feature_set"] == "latlon"]
+    cross = [r for r in latlon if r["eval_mode"] == "cross_city"]
+    pgh = [r for r in latlon if r["eval_mode"] == "pittsburgh_holdout"]
+    in_city = [r for r in latlon if r["eval_mode"] == "in_city"]
+
+    metric_key = primary_metric_key("regression")  # walk index is regression
+
+    cross_per_model = {m: aggregate_metric(cross, HEADLINE_TARGET, m, metric_key) for m in model_names}
+    cross_best_name, cross_best = best_model_for(cross, HEADLINE_TARGET, metric_key, model_names)
+    pgh_per_model = {m: aggregate_metric(pgh, HEADLINE_TARGET, m, metric_key) for m in model_names}
+    pgh_best_name, pgh_best = best_model_for(pgh, HEADLINE_TARGET, metric_key, model_names)
+    in_city_per_model = {m: aggregate_metric(in_city, HEADLINE_TARGET, m, metric_key) for m in model_names}
+
+    headline = {
+        "target": HEADLINE_TARGET,
+        "feature_set": "latlon",
+        "cross_city_trio": {
+            "per_model_rho": cross_per_model,
+            "best_model": cross_best_name,
+            "best_rho": cross_best["mean"] if cross_best else None,
+            **verdict(
+                cross_best["mean"] if cross_best else None,
+                IMAGERY_ANCHORS["cross_city_trio"]["siglip_frozen"],
+            ),
+        },
+        "pittsburgh_holdout": {
+            "per_model_rho": pgh_per_model,
+            "best_model": pgh_best_name,
+            "best_rho": pgh_best["mean"] if pgh_best else None,
+            **verdict(
+                pgh_best["mean"] if pgh_best else None,
+                IMAGERY_ANCHORS["pittsburgh_holdout"]["frozen_rho_low"],
+            ),
+        },
+        "in_city_reference": {
+            "per_model_rho": in_city_per_model,
+            "note": "Same-city 70/30 split: geography predicts within a city. Not a transfer number.",
+        },
+    }
+
+    # All 5 targets, best geo model, latlon, for both holdout flavours.
+    all_targets: dict[str, dict] = {}
+    for tspec in TARGETS:
+        mkey = primary_metric_key(tspec.kind)
+        cross_name, cross_stats = best_model_for(cross, tspec.name, mkey, model_names)
+        pgh_name, pgh_stats = best_model_for(pgh, tspec.name, mkey, model_names)
+        inc_name, inc_stats = best_model_for(in_city, tspec.name, mkey, model_names)
+        all_targets[tspec.name] = {
+            "metric": mkey,
+            "cross_city_trio": {"best_model": cross_name, **(cross_stats or {})},
+            "pittsburgh_holdout": {"best_model": pgh_name, **(pgh_stats or {})},
+            "in_city": {"best_model": inc_name, **(inc_stats or {})},
+        }
+
+    summary = {
+        "config": {
+            "seeds": sorted({r["seed"] for r in records}),
+            "models": model_names,
+            "feature_sets": sorted({r["feature_set"] for r in records}),
+            "knn_neighbors": KNN_NEIGHBORS,
+            "rf_n_estimators": RF_N_ESTIMATORS,
+            "decision_margin": DECISION_MARGIN,
+            "n_records": len(records),
+        },
+        "imagery_anchors": IMAGERY_ANCHORS,
+        "headline_walkability_index": headline,
+        "all_targets_latlon": all_targets,
+    }
+
+    if any(r["feature_set"] == "geo_context" for r in records):
+        geo_ctx = [r for r in records if r["feature_set"] == "geo_context"]
+        gc_cross = [r for r in geo_ctx if r["eval_mode"] == "cross_city"]
+        gc_pgh = [r for r in geo_ctx if r["eval_mode"] == "pittsburgh_holdout"]
+        gc_cross_name, gc_cross_stats = best_model_for(gc_cross, HEADLINE_TARGET, metric_key, model_names)
+        gc_pgh_name, gc_pgh_stats = best_model_for(gc_pgh, HEADLINE_TARGET, metric_key, model_names)
+        summary["geo_context_walkability_index"] = {
+            "note": "Optional geo+context comparison (census/GTFS features added to lat/lon).",
+            "cross_city_trio": {
+                "best_model": gc_cross_name,
+                "best_rho": gc_cross_stats["mean"] if gc_cross_stats else None,
+                **verdict(
+                    gc_cross_stats["mean"] if gc_cross_stats else None,
+                    IMAGERY_ANCHORS["cross_city_trio"]["siglip_frozen"],
+                ),
+            },
+            "pittsburgh_holdout": {
+                "best_model": gc_pgh_name,
+                "best_rho": gc_pgh_stats["mean"] if gc_pgh_stats else None,
+                **verdict(
+                    gc_pgh_stats["mean"] if gc_pgh_stats else None,
+                    IMAGERY_ANCHORS["pittsburgh_holdout"]["frozen_rho_low"],
+                ),
+            },
+        }
+    return summary
+
+
+def log_walkindex_table(records: list[dict], model_names: list[str]) -> None:
+    """Compact per-direction walk-index rho table (lat/lon) for the console."""
+    latlon = [r for r in records if r["feature_set"] == "latlon"]
+    if not latlon:
+        return
+    logging.info("--- walk-index (lat/lon) Spearman rho, mean over seeds ---")
+    header = f"{'eval_mode':<18}{'train->test':<22}" + "".join(f"{m:>16}" for m in model_names)
+    logging.info(header)
+    seen: list[tuple[str, str]] = []
+    for rec in latlon:
+        key = (rec["eval_mode"], f"{'+'.join(rec['train_cities'])}->{rec['test_city']}")
+        if key in seen:
+            continue
+        seen.append(key)
+        subset = [
+            r for r in latlon
+            if r["eval_mode"] == rec["eval_mode"]
+            and r["train_cities"] == rec["train_cities"]
+            and r["test_city"] == rec["test_city"]
+        ]
+        cells = ""
+        for model_name in model_names:
+            stats = aggregate_metric(subset, HEADLINE_TARGET, model_name, "spearman_rho")
+            cells += f"{stats['mean']:>16.4f}" if stats else f"{'-':>16}"
+        logging.info(f"{key[0]:<18}{key[1]:<22}{cells}")
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Geography-only Ridge baseline for WalkCLIP v2")
-    p.add_argument("--train-city", choices=["msp", "seattle"])
-    p.add_argument("--test-city", choices=["msp", "seattle"])
-    p.add_argument("--in-city-city", choices=["msp", "seattle"])
-    p.add_argument("--all", action="store_true", help="Run all four combinations")
+    p = argparse.ArgumentParser(description="Coordinates-only geo baseline (city holdout, 5 targets).")
+    p.add_argument("--seeds", type=int, nargs="+", default=SEEDS_DEFAULT, help="Random seeds (default 41 42 43).")
+    p.add_argument(
+        "--feature-sets", nargs="+", default=["latlon", "geo_context"],
+        choices=list(FEATURE_SETS), help="Feature sets to run (default both).",
+    )
+    p.add_argument(
+        "--models", nargs="+", default=MODEL_NAMES, choices=MODEL_NAMES,
+        help="Models to run (default all three).",
+    )
+    p.add_argument("--no-in-city", action="store_true", help="Skip the supplementary in-city diagonal.")
+    p.add_argument("--quick", action="store_true", help="Smoke test: seed 42, latlon only.")
+    p.add_argument("--dry-run", action="store_true", help="Print the run plan and exit without fitting.")
     return p.parse_args()
 
 
 def main() -> int:
-    args = parse_args()
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(message)s",
         datefmt="%H:%M:%S",
     )
+    args = parse_args()
+    seeds = [42] if args.quick else args.seeds
+    feature_sets = ["latlon"] if args.quick else args.feature_sets
+    model_names = [m for m in MODEL_NAMES if m in args.models]
 
-    for path in (LABELS_CSV, LOCK_FILE):
-        if not path.exists():
-            logging.error("Required file not found: %s", path)
-            return 1
+    holdout_plan = build_plan()
+    in_city_cities = [] if args.no_in_city else CITIES
+    n_records = len(feature_sets) * len(seeds) * (len(holdout_plan) + len(in_city_cities)) * len(model_names)
 
+    logging.info("Seeds=%s  feature_sets=%s  models=%s", seeds, feature_sets, model_names)
+    logging.info(
+        "Plan: %d holdout dirs + %d in-city, x %d feature_sets x %d seeds x %d models = %d records",
+        len(holdout_plan), len(in_city_cities), len(feature_sets), len(seeds), len(model_names), n_records,
+    )
+    for eval_mode, train_cities, test_city in holdout_plan:
+        logging.info("  [%s] %s -> %s", eval_mode, "+".join(train_cities), test_city)
+    if in_city_cities:
+        logging.info("  [in_city] %s (70/30 split)", ", ".join(in_city_cities))
+    if args.dry_run:
+        logging.info("Dry run -- no models fitted.")
+        return 0
+
+    dataset = load_dataset()
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
-    lock_ids = [int(x) for x in LOCK_FILE.read_text().strip().splitlines()]
-    labels = pd.read_csv(LABELS_CSV)
-    labels["point_id"] = labels["point_id"].astype(int)
+    records: list[dict] = []
+    for feature_set_name in feature_sets:
+        for seed in seeds:
+            for eval_mode, train_cities, test_city in holdout_plan:
+                records.extend(
+                    run_holdout(dataset, train_cities, test_city, eval_mode,
+                                feature_set_name, model_names, seed)
+                )
+            for city in in_city_cities:
+                records.extend(run_in_city(dataset, city, feature_set_name, model_names, seed))
+            logging.info("Done: feature_set=%s seed=%d (%d records so far)", feature_set_name, seed, len(records))
 
-    missing_cols = [c for c in GEO_ONLY_FEATURES if c not in labels.columns]
-    if missing_cols:
-        logging.error("Missing columns in labels file: %s", missing_cols)
-        return 1
+    RESULTS_PATH.write_text(json.dumps(records, indent=2))
+    logging.info("Wrote %d run records -> %s", len(records), RESULTS_PATH)
 
-    feature_cols = GEO_ONLY_FEATURES
+    summary = summarize(records, model_names)
+    SUMMARY_PATH.write_text(json.dumps(summary, indent=2))
+    logging.info("Wrote summary -> %s", SUMMARY_PATH)
 
-    runs: list[dict[str, object]] = []
+    log_walkindex_table(records, model_names)
 
-    if args.all:
-        for train_city, test_city in [("msp", "seattle"), ("seattle", "msp")]:
-            res = run_cross_city(train_city, test_city, labels, lock_ids, feature_cols)
-            runs.append(res)
-            print_result(res)
-        for city in ["msp", "seattle"]:
-            res = run_in_city(city, labels, lock_ids, feature_cols)
-            runs.append(res)
-            print_result(res)
-    elif args.in_city_city:
-        res = run_in_city(args.in_city_city, labels, lock_ids, feature_cols)
-        runs.append(res)
-        print_result(res)
-    elif args.train_city and args.test_city:
-        if args.train_city == args.test_city:
-            logging.error("Use --in-city-city for same-city runs.")
-            return 1
-        res = run_cross_city(args.train_city, args.test_city, labels, lock_ids, feature_cols)
-        runs.append(res)
-        print_result(res)
-    else:
-        logging.error("Provide --train-city/--test-city, --in-city-city, or --all.")
-        return 1
-
-    out_path = REPORT_DIR / "geo_baseline_results.json"
-    existing: list[dict[str, object]] = []
-    if out_path.exists():
-        existing = json.loads(out_path.read_text())
-
-    # Deduplicate by (eval_mode, train_city, test_city)
-    key_fn = lambda r: (r["eval_mode"], r["train_city"], r["test_city"])
-    existing_keys = {key_fn(r) for r in existing}
-    for r in runs:
-        if key_fn(r) not in existing_keys:
-            existing.append(r)
-        else:
-            existing = [r if key_fn(e) == key_fn(r) else e for e in existing]
-
-    out_path.write_text(json.dumps(existing, indent=2))
-    logging.info("Results saved: %s", out_path)
+    head = summary["headline_walkability_index"]
+    cc = head["cross_city_trio"]
+    pg = head["pittsburgh_holdout"]
+    inc = head["in_city_reference"]["per_model_rho"]
+    inc_best = max((s["mean"] for s in inc.values() if s), default=float("nan"))
+    logging.info("=" * 72)
+    logging.info("HEADLINE -- walkability_index_v2, lat/lon only:")
+    logging.info(
+        "  cross-city (MSP/SEA/DC):  geo best rho=%.4f (%s)  vs imagery %.3f  gap=%.4f  -> %s",
+        cc["best_rho"] if cc["best_rho"] is not None else float("nan"),
+        cc["best_model"], cc["imagery_rho"], cc["gap"], cc["verdict"],
+    )
+    logging.info(
+        "  Pittsburgh zero-shot:     geo best rho=%.4f (%s)  vs imagery %.3f  gap=%.4f  -> %s",
+        pg["best_rho"] if pg["best_rho"] is not None else float("nan"),
+        pg["best_model"], pg["imagery_rho"], pg["gap"], pg["verdict"],
+    )
+    logging.info("  in-city reference (geography is local): best rho=%.4f", inc_best)
+    logging.info("=" * 72)
     return 0
 
 

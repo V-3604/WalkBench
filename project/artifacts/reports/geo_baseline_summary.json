@@ -1,0 +1,234 @@
+{
+  "config": {
+    "seeds": [
+      41,
+      42,
+      43
+    ],
+    "models": [
+      "random_forest",
+      "hist_gbdt",
+      "knn"
+    ],
+    "feature_sets": [
+      "geo_context",
+      "latlon"
+    ],
+    "knn_neighbors": 15,
+    "rf_n_estimators": 300,
+    "decision_margin": 0.03,
+    "n_records": 198
+  },
+  "imagery_anchors": {
+    "cross_city_trio": {
+      "siglip_frozen": 0.732,
+      "clip_frozen": 0.713,
+      "source": "docs/RESULTS.md / bootstrap_summary.json (walk-index rho, mean over 6 MSP/Seattle/DC LOCO directions)"
+    },
+    "pittsburgh_holdout": {
+      "frozen_rho_low": 0.833,
+      "frozen_rho_high": 0.862,
+      "source": "CLAUDE.md SRC-3 / bootstrap_summary.json (Pittsburgh zero-shot, frozen backbones x 3 seeds)"
+    }
+  },
+  "headline_walkability_index": {
+    "target": "walkability_index_v2",
+    "feature_set": "latlon",
+    "cross_city_trio": {
+      "per_model_rho": {
+        "random_forest": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 18
+        },
+        "hist_gbdt": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 18
+        },
+        "knn": {
+          "mean": 0.0223,
+          "std": 0.156,
+          "n": 18
+        }
+      },
+      "best_model": "knn",
+      "best_rho": 0.0223,
+      "verdict": "imagery_wins",
+      "imagery_rho": 0.732,
+      "geo_best_rho": 0.0223,
+      "gap": 0.7097
+    },
+    "pittsburgh_holdout": {
+      "per_model_rho": {
+        "random_forest": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 3
+        },
+        "hist_gbdt": {
+          "mean": 0.0,
+          "std": 0.0,
+          "n": 3
+        },
+        "knn": {
+          "mean": 0.2026,
+          "std": 0.0,
+          "n": 3
+        }
+      },
+      "best_model": "knn",
+      "best_rho": 0.2026,
+      "verdict": "imagery_wins",
+      "imagery_rho": 0.833,
+      "geo_best_rho": 0.2026,
+      "gap": 0.6304
+    },
+    "in_city_reference": {
+      "per_model_rho": {
+        "random_forest": {
+          "mean": 0.9102,
+          "std": 0.0449,
+          "n": 12
+        },
+        "hist_gbdt": {
+          "mean": 0.8443,
+          "std": 0.0591,
+          "n": 12
+        },
+        "knn": {
+          "mean": 0.9087,
+          "std": 0.0455,
+          "n": 12
+        }
+      },
+      "note": "Same-city 70/30 split: geography predicts within a city. Not a transfer number."
+    }
+  },
+  "all_targets_latlon": {
+    "overture_sidewalk_present": {
+      "metric": "auroc",
+      "cross_city_trio": {
+        "best_model": "knn",
+        "mean": 0.5078,
+        "std": 0.0343,
+        "n": 18
+      },
+      "pittsburgh_holdout": {
+        "best_model": "random_forest",
+        "mean": 0.5,
+        "std": 0.0,
+        "n": 3
+      },
+      "in_city": {
+        "best_model": "random_forest",
+        "mean": 0.8973,
+        "std": 0.0426,
+        "n": 12
+      }
+    },
+    "overture_crosswalk_present": {
+      "metric": "auroc",
+      "cross_city_trio": {
+        "best_model": "knn",
+        "mean": 0.5278,
+        "std": 0.0524,
+        "n": 18
+      },
+      "pittsburgh_holdout": {
+        "best_model": "random_forest",
+        "mean": 0.5,
+        "std": 0.0,
+        "n": 3
+      },
+      "in_city": {
+        "best_model": "knn",
+        "mean": 0.9165,
+        "std": 0.0637,
+        "n": 12
+      }
+    },
+    "overture_intersection_count_200m": {
+      "metric": "spearman_rho",
+      "cross_city_trio": {
+        "best_model": "knn",
+        "mean": 0.0193,
+        "std": 0.0623,
+        "n": 18
+      },
+      "pittsburgh_holdout": {
+        "best_model": "knn",
+        "mean": 0.0567,
+        "std": 0.0,
+        "n": 3
+      },
+      "in_city": {
+        "best_model": "random_forest",
+        "mean": 0.9066,
+        "std": 0.0499,
+        "n": 12
+      }
+    },
+    "overture_building_footprint_frac_100m": {
+      "metric": "spearman_rho",
+      "cross_city_trio": {
+        "best_model": "random_forest",
+        "mean": 0.0,
+        "std": 0.0,
+        "n": 18
+      },
+      "pittsburgh_holdout": {
+        "best_model": "knn",
+        "mean": 0.0911,
+        "std": 0.0,
+        "n": 3
+      },
+      "in_city": {
+        "best_model": "random_forest",
+        "mean": 0.8366,
+        "std": 0.0779,
+        "n": 12
+      }
+    },
+    "walkability_index_v2": {
+      "metric": "spearman_rho",
+      "cross_city_trio": {
+        "best_model": "knn",
+        "mean": 0.0223,
+        "std": 0.156,
+        "n": 18
+      },
+      "pittsburgh_holdout": {
+        "best_model": "knn",
+        "mean": 0.2026,
+        "std": 0.0,
+        "n": 3
+      },
+      "in_city": {
+        "best_model": "random_forest",
+        "mean": 0.9102,
+        "std": 0.0449,
+        "n": 12
+      }
+    }
+  },
+  "geo_context_walkability_index": {
+    "note": "Optional geo+context comparison (census/GTFS features added to lat/lon).",
+    "cross_city_trio": {
+      "best_model": "hist_gbdt",
+      "best_rho": 0.6962,
+      "verdict": "imagery_wins",
+      "imagery_rho": 0.732,
+      "geo_best_rho": 0.6962,
+      "gap": 0.0358
+    },
+    "pittsburgh_holdout": {
+      "best_model": "hist_gbdt",
+      "best_rho": 0.7862,
+      "verdict": "imagery_wins",
+      "imagery_rho": 0.833,
+      "geo_best_rho": 0.7862,
+      "gap": 0.0468
+    }
+  }
+}
