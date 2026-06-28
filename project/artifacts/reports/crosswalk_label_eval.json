@@ -1,0 +1,55 @@
+{
+  "backbone": "siglip2",
+  "pca_dim": 128,
+  "by_label": {
+    "overture_sidewalk_present": {
+      "role": "anchor_high (~0.76 known)",
+      "loco_directions": {
+        "msp->seattle": 0.6956,
+        "msp->dc": 0.57,
+        "seattle->msp": 0.7644,
+        "seattle->dc": 0.7714,
+        "dc->msp": 0.6794,
+        "dc->seattle": 0.7736
+      },
+      "loco_mean_auroc": 0.7091,
+      "loco_std_auroc": 0.0725,
+      "pittsburgh_zeroshot_auroc": 0.7924
+    },
+    "overture_crosswalk_present": {
+      "role": "anchor_low (~0.56 known, dropped target)",
+      "loco_directions": {
+        "msp->seattle": 0.5282,
+        "msp->dc": 0.6065,
+        "seattle->msp": 0.5858,
+        "seattle->dc": 0.5794,
+        "dc->msp": 0.5717,
+        "dc->seattle": 0.5139
+      },
+      "loco_mean_auroc": 0.5643,
+      "loco_std_auroc": 0.0326,
+      "pittsburgh_zeroshot_auroc": 0.6281
+    },
+    "osm_marked_crossing_present": {
+      "role": "TEST (cleaner crosswalk label)",
+      "loco_directions": {
+        "msp->seattle": 0.7688,
+        "msp->dc": 0.7673,
+        "seattle->msp": 0.8434,
+        "seattle->dc": 0.787,
+        "dc->msp": 0.7921,
+        "dc->seattle": 0.7982
+      },
+      "loco_mean_auroc": 0.7928,
+      "loco_std_auroc": 0.0253,
+      "pittsburgh_zeroshot_auroc": 0.7614
+    }
+  },
+  "verdict": {
+    "sidewalk_anchor": 0.7091,
+    "overture_crosswalk_anchor": 0.5643,
+    "osm_crosswalk_test": 0.7928,
+    "gain_over_overture": 0.2285,
+    "decision": "REVIVE crosswalk: cleaner OSM label unlocks learnable cross-city signal."
+  }
+}
