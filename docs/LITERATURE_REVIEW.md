@@ -9,11 +9,13 @@ here.
 learning in seven Canadian cities.* Scientific Reports 12, 18380.
 <https://www.nature.com/articles/s41598-022-22630-1>
 
-Trains segmentation and object-detection models on 1.15M Google Street View images across
-seven Canadian cities and reports a pooled R² of about 0.49. The models are trained on all
-seven cities pooled together — there is no leave-one-city-out test — and the authors note
-that transferability to new contexts "might be limited." Measuring that gap directly is the
-starting point for this project.
+Derives urban features from Google Street View images across seven Canadian cities using
+pretrained segmentation and object-detection models, then fits regressions on postal-code
+walk-to-work rates. The GSV features explain 48.8% of the variance, but the regression is fit
+on all seven cities combined (with a city fixed effect) — there is no leave-one-city-out
+test — and the authors state that "transferability of models used to predict walking rates
+from one city to the other ... might be limited." Measuring that gap directly is the starting
+point for this project.
 
 **Xiang et al. (2025).** *WalkCLIP: Multimodal Learning for Urban Walkability Prediction.*
 arXiv:2511.21947. <https://arxiv.org/abs/2511.21947>
@@ -26,12 +28,15 @@ uses Mapillary imagery I collected, Overture infrastructure targets instead of W
 four cities, and a leave-one-city-out protocol, so the two numbers are not directly
 comparable.
 
-**Hosseini et al. (2024).** *Urban Visual Intelligence: Studying Cities with Artificial
-Intelligence and Street-Level Imagery.* Annals of the American Association of Geographers.
-<https://www.tandfonline.com/doi/full/10.1080/24694452.2024.2313515>
+**Zhang et al. (2024).** *Urban Visual Intelligence: Studying Cities with Artificial
+Intelligence and Street-Level Imagery.* Annals of the American Association of Geographers
+114(5), 1004–1024. <https://www.tandfonline.com/doi/full/10.1080/24694452.2024.2313515>
 
-A survey of street-view-based urban analytics that names cross-domain generalization as one
-of the field's open problems — which is the gap this project targets.
+A survey of street-view-based urban analytics. It names cross-domain generalization as an
+open problem: "between-place inference commonly encounters challenges regarding cross-domain
+generalizability," and "it is unlikely that an inference model developed for one place can be
+directly applied to another without domain adaptation" (§8.1). That is the gap this project
+targets.
 
 **Koo et al. (2023).** *Assessment of Perceived and Physical Walkability Using Street View
 Images and Deep Learning Technology.* ISPRS International Journal of Geo-Information 12(5),

@@ -13,7 +13,7 @@ See [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md) for the overview; this is the d
 | Sidewalk presence | Binary | `overture_sidewalk_present` | Overture footway within 15 m of point |
 | Near-buffer crosswalk | Binary | `crosswalk_present_near` | Overture crosswalk within 15 m, ±30° heading wedge |
 | Intersection density | Regression | `overture_intersection_count_200m` | Log1p-transformed for training; expm1 at eval |
-| Building footprint fraction | Regression | `overture_building_footprint_frac_100m` | NAIP-derived; most transferable across cities |
+| Building footprint fraction | Regression | `overture_building_footprint_frac_100m` | NAIP-derived |
 | Composite walkability index | Regression | `walkability_index_v2` | PC1 of the four targets above + transit stops |
 
 The walkability index is the primary headline regression target. It is built by PCA on the five visually grounded components listed above (sidewalk, near-buffer crosswalk, log1p intersection count, building footprint frac, log1p transit stops). PC1 explains 0.365 of variance in those components; all loadings are positive. See `project/artifacts/reports/walkability_index_build.json` for loadings.
@@ -30,7 +30,7 @@ The walkability index is the primary headline regression target. It is built by 
 | `siglip_lora_loco` | SigLIP + LoRA adapter trained on the **other two cities only** | Yes |
 | `ensemble` | Mean logits from `siglip` + `clip` + `siglip_lora_loco_v2` | Yes |
 
-**Interpretation note**: The `siglip_lora` (in-corpus) backbone saw the test city's heading-level labels during its fine-tuning stage. Its high AUROC scores (sidewalk 0.918, crosswalk 0.858) are **not** cross-city transfer numbers. Under the LOCO protocol (`siglip_lora_loco`), where the test city is unseen, those gains disappear — the LOCO adapter lands within ±0.01 AUROC of the frozen SigLIP baseline on every target.
+**Note on the in-corpus adapter**: `siglip_lora` saw the test city's heading-level labels during fine-tuning, so its AUROC scores (sidewalk 0.90, crosswalk 0.85) are not cross-city transfer numbers. Under the LOCO protocol (`siglip_lora_loco`), where the test city is unseen, those scores drop back to 0.78 / 0.60, against a frozen SigLIP baseline of 0.75 / 0.55.
 
 ---
 
@@ -159,9 +159,7 @@ Mean Spearman ρ across all 6 leave-one-city-out directions (3 seeds averaged).
 | SigLIP + LoRA-LOCO v2 | 0.735 | `bootstrap_summary.json` → `siglip_lora_loco` |
 | Ensemble (SigLIP + CLIP + LoRA-LOCO v2) | **0.763** | `ensemble_results.json` mean across directions |
 
-**How to read this table**: the frozen SigLIP and CLIP baselines both achieve ~0.71–0.73 ρ cross-city. LoRA-LOCO v1 actually regressed below the frozen baseline (0.712 vs 0.732) — the v1 multi-task design was not richer enough to transfer. LoRA-LOCO v2 (multi-task, r=32, 4 heads, attention+MLP layers) recovers to 0.735, matching the frozen baseline. The ensemble lifts a further +0.028 over the best single LOCO backbone to 0.763.
-
-**Key finding**: low-rank fine-tuning on in-corpus heading labels does not transfer across US cities once leakage is removed — the LOCO adapter matches, but does not beat, the frozen backbone. The visual features alone (SigLIP / CLIP) are nearly interchangeable on this benchmark.
+Reading the table: frozen SigLIP and CLIP both land at ρ ~0.71–0.73 cross-city. LoRA-LOCO v1 is below the frozen baseline (0.712 vs 0.732). LoRA-LOCO v2 (multi-task, r=32, 4 heads, attention+MLP layers) is at 0.735, about the same as frozen SigLIP. The ensemble is +0.028 over the best single LOCO backbone, at 0.763.
 
 ### Cross-city LOCO — per-target breakdown
 
@@ -176,13 +174,13 @@ Mean across all 6 LOCO directions, 3 seeds, `full` ablation.
 | LoRA-LOCO v2 | 0.787 | 0.608 | 0.639 | 0.813 | 0.735 |
 | Ensemble | **0.797** | 0.593 | **0.667** | **0.844** | **0.763** |
 
-**Per-target interpretation**:
+Per target:
 
-- **Sidewalk (AUROC 0.76–0.79)**: Strong cross-city transfer. The frozen baselines and LoRA-LOCO v2 all land in the 0.76–0.79 range. The ensemble reaches 0.797.
-- **Crosswalk (AUROC 0.56–0.61)**: Weakest target. Near-chance cross-city. The label itself is the bottleneck — Overture crosswalk coverage is inconsistent across cities (e.g. Seattle prevalence 0.148 vs MSP 0.266). LoRA-LOCO v2 gives a small lift (+0.022 over frozen SigLIP) but remains well below anything usable.
-- **Intersection density (ρ 0.60–0.67)**: Moderate transfer. Log1p transform in training helps. The ensemble reaches 0.667. Building-type variation between cities (DC's dense grid vs MSP's suburban layout) creates distribution shift.
-- **Building footprint fraction (ρ 0.79–0.84)**: Most transferable target. Driven primarily by NAIP aerial imagery (building footprints are consistent in aerial view regardless of street-level style variation). The ensemble reaches 0.844.
-- **Composite walkability index (ρ 0.71–0.76)**: The aggregate headline. Because it is PC1 of the four targets above, its transferability is a weighted average of the individual targets — pulled up by building-frac, pulled down by crosswalk.
+- **Sidewalk (AUROC 0.76–0.79)**: frozen baselines and LoRA-LOCO v2 all land in the 0.76–0.79 range; the ensemble is at 0.797.
+- **Crosswalk (AUROC 0.56–0.61)**: lowest of the five. Overture crosswalk prevalence varies across cities (Seattle 0.148 vs MSP 0.266). LoRA-LOCO v2 is +0.022 over frozen SigLIP. See the label-ceiling audit below for the κ analysis.
+- **Intersection density (ρ 0.60–0.67)**: ensemble at 0.667. Log1p transform applied in training.
+- **Building footprint fraction (ρ 0.79–0.84)**: highest of the five; ensemble at 0.844. Comes mainly from the NAIP aerial tile.
+- **Composite walkability index (ρ 0.71–0.76)**: PC1 of the four targets above plus transit-stop density, so it tracks a weighted mix of them.
 
 ### 6-way cross-city matrix (SigLIP frozen, full ablation, single seed)
 
@@ -197,10 +195,10 @@ Absolute per-direction results for the SigLIP frozen backbone. Source: `multitar
 | DC → MSP | 0.751 | 0.627 | 0.290 | 0.655 |
 | DC → Seattle | 0.828 | 0.587 | 0.365 | 0.656 |
 
-Notable patterns:
-- **DC as source** gives the best crosswalk AUROC (0.587–0.627), likely because DC has the highest crosswalk label prevalence.
-- **MSP → DC** is the hardest direction (sidewalk 0.628, intersection ρ 0.028) — DC's urban density and architectural style are the furthest from MSP.
-- **Building footprint** is stable across all directions (0.648–0.683) because aerial geometry is city-agnostic.
+Patterns in this matrix:
+- DC as the source city gives the highest crosswalk AUROC (0.587–0.627); DC also has the highest crosswalk label prevalence.
+- MSP → DC is the lowest direction (sidewalk 0.628, intersection ρ 0.028).
+- Building footprint stays in a narrow band across all directions (0.648–0.683).
 
 ### In-city spatial CV — composite walkability index
 
@@ -215,11 +213,9 @@ Notable patterns:
 
 All 12 runs (4 backbones × 3 cities): `spatial_cv_results.jsonl`, filter `target_filter == "walkability_index_v2"`.
 
-**R²_recal note**: R²_recal is a post-hoc affine recalibration that shifts and scales predictions to match the test city's mean and std before computing R². It is an upper-bound, rank-faithful score — it measures rank correlation more than absolute accuracy. Report alongside ρ, not in isolation.
+**R²_recal note**: R²_recal is a post-hoc affine recalibration that shifts and scales predictions to match the test city's mean and std before computing R². Because it uses the test labels to do that, it is an upper bound and tracks rank more than absolute accuracy. Report it alongside ρ, not on its own.
 
-**Why frozen SigLIP wins for DC in-city**: DC's training distribution is unusual (dense grid, high intersection density) and the LoRA adapter adds noise for that city at the in-city task. Frozen SigLIP's more general features generalize better within DC's distribution.
-
-**Seattle is hardest**: Highest per-fold standard deviation (0.110) reflects heterogeneous neighborhoods. The spatial blocks pick up on suburban vs urban variation that creates fold-to-fold instability.
+Frozen SigLIP is the best backbone for DC in-city; LoRA is best for MSP and Seattle. Seattle has the highest per-fold standard deviation (0.110).
 
 ### f_ped ablation — contribution of pedestrian-graph kNN features
 
@@ -231,11 +227,11 @@ SigLIP frozen, 6 LOCO directions × 3 seeds. `full` ablation includes `pedgraph_
 | SigLIP without f_ped (vision_only) | 0.718 | 0.549 |
 | Delta (f_ped contribution) | **+0.013** | **+0.011** |
 
-**Interpretation**: The pedestrian-graph kNN features add a small but consistent positive lift. The majority of the cross-city result comes from the visual embeddings (SigLIP street + NAIP), not from the spatial context channel. This is important because `pedgraph_features.csv` is derived from OSM — the same underlying geography that Overture's sidewalk labels are also derived from, so one might worry about circular signal. The ablation shows that even removing f_ped entirely, cross-city ρ drops by only 0.013, confirming the result is visually grounded rather than geography-circular.
+The pedgraph kNN channel adds +0.013 ρ. Removing it entirely (vision_only) drops cross-city ρ from 0.732 to 0.718. Context for this ablation: `pedgraph_features.csv` is derived from OSM, the same geography Overture's labels come from, so it is worth checking how much of the result depends on it; the +0.013 delta is the answer.
 
 ### Label-ceiling audit (Overture vs Project Sidewalk)
 
-Sources: `project/artifacts/reports/label_noise_audit.json`, `project/artifacts/reports/label_ceiling_analysis.json`, `project/artifacts/reports/figures/label_ceiling.pdf`
+Sources: `project/artifacts/reports/label_noise_audit.json`, `project/artifacts/reports/label_ceiling_analysis.json`, `project/artifacts/reports/figures/fig_label_ceiling.pdf`
 
 Seattle and Pittsburgh Project Sidewalk audits, synthesized into the label-ceiling figure. Pittsburgh comes from a Harvard Dataverse static export (Oct 2021). Seattle is the only city where both sidewalk and crosswalk ceiling numbers are available; Pittsburgh has sidewalk only (its crosswalk label type was added after the 2021 snapshot), and the DC endpoint has been returning errors.
 
@@ -243,7 +239,7 @@ Seattle and Pittsburgh Project Sidewalk audits, synthesized into the label-ceili
 
 Source: `project/artifacts/reports/label_noise_audit.json`
 
-Seattle is the only city with accessible Project Sidewalk (PS) data for crosswalk — the DC PS deployment has been returning HTTP 503 on all endpoints for months; Pittsburgh has only sidewalk labels available in the 2021 Dataverse snapshot. The Seattle audit alone establishes the crosswalk label-quality ceiling.
+Seattle is the only city with accessible Project Sidewalk (PS) crosswalk data. The DC PS deployment returns HTTP 503 on all endpoints; Pittsburgh has only sidewalk labels in the 2021 Dataverse snapshot. So the crosswalk κ number is Seattle-only.
 
 **Label re-filter applied (2026-05-20)**: After the initial audit revealed near-zero crosswalk agreement, `CROSSWALK_CLASSES` in both `derive_overture_targets.py` and `derive_heading_overture_labels.py` was narrowed from all broad OSM crossing tags (`crossing`, `uncontrolled`, `traffic_signals`, `marked`) to `{"marked"}` only — physically painted crosswalks. `derive_overture_targets.py` and `derive_heading_overture_labels.py` were re-run for all 4 cities; `features_labels_agreement.csv` `overture_crosswalk_present` column was patched from the new `overture_targets.csv`. Results below reflect the re-filtered labels.
 
@@ -258,11 +254,13 @@ Confusion matrix (rows = PS, cols = Overture):
 - Crosswalk: [[3866, 869], [70, 46]] — 915 Overture positives vs 116 PS positives
 - Sidewalk: [[43, 418], [21, 2857]]
 
-**The label-quality interpretation**:
+Reading the table:
 
-*Crosswalk (post re-filter)*: κ=0.049 is "slight agreement" — an 8× improvement over the pre-filter κ=0.006. Overture prevalence dropped from 24.2% to 18.9% (22% reduction) by excluding `uncontrolled`, `traffic_signals`, and bare `crossing` OSM tags. AUROC(Overture→PS) = 0.607 confirms the label now carries real predictive signal (vs 0.517 ≈ chance before). The remaining ~7.9× prevalence gap (Overture 18.9% vs PS 2.4%) is structural: `crossing=marked` fires at every mapped painted crossing node in the road network; PS fires only when the auditor can clearly see the paint from the specific panorama viewpoint. These are the same physical phenomenon measured by different instruments and viewpoints, not noise. A model trained on marked-only Overture labels is learning a real signal; the ceiling is AUROC ≈ 0.61 against PS, not 0.50.
+*Crosswalk (post re-filter)*: κ=0.049, up 8× from the pre-filter κ=0.006. Overture prevalence dropped from 24.2% to 18.9% after excluding `uncontrolled`, `traffic_signals`, and bare `crossing` OSM tags. AUROC(Overture→PS) = 0.607, up from 0.517. The ~7.9× prevalence gap that remains (Overture 18.9% vs PS 2.4%) is the instrument difference: `crossing=marked` fires at every mapped crossing node in the road network, while PS fires only when the auditor can see the paint from the panorama.
 
-*Sidewalk (unchanged)*: κ=0.135 indicates weak but non-trivial agreement. Overture marks 98.1% of points as sidewalk-present (near-ceiling prevalence); PS marks 86.2%. AUROC(PS→Overture) = 0.772 is close to the model's observed sidewalk AUROC of 0.76–0.79. The model is operating near the sidewalk label-ceiling; the remaining gap reflects the instrument difference (Overture's near-ceiling prevalence makes it easy to score high by predicting "present" everywhere).
+Note on the κ→AUROC direction: AUROC(Overture→PS) = 0.607 and AUROC(PS→Overture) = 0.516 are two different quantities; which one is "the ceiling" depends on which source is treated as reference. This is flagged for the advisor and the specific ceiling value is left out of the figure until it is settled.
+
+*Sidewalk*: κ=0.135. Overture marks 98.1% of points sidewalk-present, PS marks 86.2%. AUROC(PS→Overture) = 0.772 is close to the model's observed sidewalk AUROC of 0.76–0.79. (κ is low here partly because prevalence is near 98% — high-prevalence κ is suppressed even when the two sources mostly agree.)
 
 **Pre-filter vs post-filter crosswalk summary**
 
@@ -281,7 +279,7 @@ Source: `project/artifacts/reports/model_vs_ps.json` (pre-retraining, old labels
 | Crosswalk | ~0.56 | ~0.64 | **+0.08** |
 | Sidewalk | ~0.77 | ~0.67 | −0.10 |
 
-These model-vs-PS numbers predate the label re-filter. After retraining on marked-only labels, crosswalk AUROC vs Overture should approach the new ceiling of ~0.61. The +0.08 delta against PS is expected to narrow since the training signal is now more aligned with PS ground truth.
+These model-vs-PS numbers predate the label re-filter, so they use the old broad-tag crosswalk labels. They have not been regenerated against the marked-only labels.
 
 ---
 
@@ -301,27 +299,27 @@ The 500 m buffer drops an average of 54 training points per fold for MSP and 80 
 | DC | Sidewalk AUROC | 0.752 ± 0.054 | 0.754 ± 0.049 | 80 (2.6%) |
 | DC | Crosswalk AUROC | 0.633 ± 0.053 | 0.622 ± 0.059 | — |
 
-**Reportable results use the 500 m buffer.** The ±0.005 change from buffer confirms the spatial CV protocol is not inflated by local autocorrelation.
+Reported results use the 500 m buffer. The buffer-vs-no-buffer change is < 0.005 across all cities and targets.
 
 ---
 
-## Summary of key findings
+## Summary of numbers
 
-1. **Frozen vision-language backbones transfer** — SigLIP SO400m and CLIP ViT-L/14 achieve ρ ≈ 0.71–0.73 on composite walkability index across city pairs without any adaptation.
+1. Frozen SigLIP SO400m and CLIP ViT-L/14 reach ρ ≈ 0.71–0.73 on the composite index cross-city with no adaptation.
 
-2. **LoRA fine-tuning does not help cross-city** — once in-city leakage is removed (LOCO protocol), LoRA-LOCO v1 and v2 match but do not beat the frozen baseline (±0.003 ρ on walkability index). The +0.16 sidewalk AUROC gain from in-corpus LoRA is entirely due to the test city's labels being seen at fine-tune time.
+2. Under LOCO, LoRA-LOCO v1 and v2 land within ±0.003 ρ of the frozen baseline on the index. In-corpus LoRA is +0.16 sidewalk AUROC over frozen, with the test city's labels seen at fine-tune time.
 
-3. **Building footprint is the most transferable target** (ρ 0.79–0.84 cross-city) — aerial geometry is consistent across cities regardless of street-level style variation.
+3. Building footprint is the highest cross-city target (ρ 0.79–0.84).
 
-4. **Crosswalk is the hardest target** (AUROC 0.55–0.61 cross-city) — Overture crosswalk label coverage is inconsistent across cities; this is a label-source bottleneck, not a model failure.
+4. Crosswalk is the lowest cross-city target (AUROC 0.55–0.61). Overture crosswalk prevalence varies across cities; see the label-ceiling audit.
 
-5. **Ensemble lifts +0.028 ρ** over the best single LOCO backbone (0.763 vs 0.735) by combining complementary signal from SigLIP and CLIP.
+5. The ensemble is +0.028 ρ over the best single LOCO backbone (0.763 vs 0.735).
 
-6. **f_ped contributes +0.013 ρ** on top of visual features alone, confirming the result is visually grounded rather than geography-circular.
+6. The pedgraph (f_ped) channel is +0.013 ρ over vision-only.
 
-7. **In-city ρ = 0.747** (mean best backbone, 5-fold spatial CV) is close to the cross-city result (0.763), with the small gap explained by spatial buffering, smaller per-fold training sets, and ensembling effects.
+7. In-city spatial CV ρ = 0.747 (mean best backbone, 5-fold), vs 0.763 cross-city.
 
-8. **Crosswalk label re-filter improved agreement 8×** — Initial audit with broad OSM crossing tags: κ=0.006, AUROC(Overture vs PS)=0.517 (near chance), Overture prevalence 24.2% vs PS 2.4%. After re-filtering to `crossing=marked` only: κ=0.049, AUROC=0.607, Overture prevalence 18.9%. A ~7.9× prevalence gap remains (structural instrument difference — OSM fires at road-network level, PS fires when paint is visible in panorama), but the model now trains on real signal with a ceiling of AUROC ≈ 0.61 against PS ground truth.
+8. Crosswalk label re-filter: broad OSM crossing tags gave κ=0.006, AUROC(Overture vs PS)=0.517, Overture prevalence 24.2%. `crossing=marked` only gives κ=0.049, AUROC=0.607, prevalence 18.9%. PS prevalence is 2.4%; the ~7.9× prevalence gap that remains is the OSM-vs-panorama instrument difference (OSM records crossing nodes in the road network; PS records paint visible from a panorama).
 
 ---
 
@@ -343,12 +341,12 @@ Training configuration: all three peer cities simultaneously (`dc+msp+seattle �
 | **LoRA-LOCO-Pittsburgh** | 0.754 | 0.615 | 0.754 | 0.859 | 0.833 | 0.654 |
 | **Mean (all 6)** | **0.753** | **0.598** | **0.771** | **0.867** | **0.847** | **0.666** |
 
-**Key observations:**
-- All six backbones transfer to Pittsburgh at walk-idx ρ = 0.833–0.862 — substantially above the 3-city 1v1 LOCO mean (0.717–0.738). The uplift reflects training on all three peer cities simultaneously (~14,600 examples) vs single-city LOCO training (~4,800–5,000 examples).
-- **LoRA-LOCO-Pittsburgh (0.833) is the lowest walk-ρ of all six backbones.** The LOCO adapter does not beat any frozen backbone on Pittsburgh, replicating the core finding from the 3-city protocol.
-- SigLIP 2 leads (0.862), consistent with its marginal 3-city LOCO advantage (0.738 vs 0.732).
-- RemoteCLIP on NAIP again fails to lift building-footprint ρ (0.858 vs 0.886 for plain SigLIP, 0.899 for SigLIP 2), reinforcing the negative result for RemoteCLIP on NAIP.
-- Pittsburgh crosswalk (AUROC 0.549–0.626) and intersection ρ (0.754–0.800) are meaningfully higher than the 3-city LOCO means (0.528–0.608; 0.595–0.639), likely due to Pittsburgh's denser, more regular street grid vs. MSP/Seattle/DC heterogeneity.
+Observations:
+- All six backbones reach walk-idx ρ = 0.833–0.862 on Pittsburgh, above the 3-city 1v1 LOCO mean (0.717–0.738). Pittsburgh is trained on all three peer cities at once (~14,600 examples) vs single-city LOCO training (~4,800–5,000 examples).
+- LoRA-LOCO-Pittsburgh (0.833) is the lowest walk-ρ of the six. The LOCO adapter does not beat any frozen backbone on Pittsburgh, same as in the 3-city protocol.
+- SigLIP 2 is highest (0.862), as in the 3-city LOCO (0.738 vs 0.732).
+- RemoteCLIP on NAIP does not lift building-footprint ρ (0.858 vs 0.886 for SigLIP, 0.899 for SigLIP 2).
+- Pittsburgh crosswalk (AUROC 0.549–0.626) and intersection ρ (0.754–0.800) are higher than the 3-city LOCO means (0.528–0.608; 0.595–0.639).
 
 ### Pittsburgh data status
 
