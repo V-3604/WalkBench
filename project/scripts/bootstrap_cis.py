@@ -53,7 +53,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 PRED_DIR  = REPO_ROOT / "project/artifacts/predictions"
 REPORT    = REPO_ROOT / "project/artifacts/reports"
 
-BINARY_TARGETS = {"overture_sidewalk_present", "overture_crosswalk_present"}
+BINARY_TARGETS = {"overture_sidewalk_present", "overture_crosswalk_present", "osm_marked_crossing_present"}
 REGRESSION_TARGETS = {
     "overture_intersection_count_200m",
     "overture_building_footprint_frac_100m",

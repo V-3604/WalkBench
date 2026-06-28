@@ -92,6 +92,7 @@ TARGET_SPECS: dict[str, dict] = {
     # Tier 1 — visually grounded (directly visible in street-view or aerial imagery)
     "overture_sidewalk_present":             {"tier": 1, "type": "binary",     "weight": 1.0},
     "overture_crosswalk_present":            {"tier": 1, "type": "binary",     "weight": 1.0},
+    "osm_marked_crossing_present":           {"tier": 1, "type": "binary",     "weight": 1.0},
     "overture_intersection_count_200m":      {"tier": 1, "type": "regression", "weight": 0.5},
     "overture_building_footprint_frac_100m": {"tier": 1, "type": "regression", "weight": 0.5},
     "walkability_index_v1":                  {"tier": 1, "type": "regression", "weight": 1.0},
@@ -879,6 +880,24 @@ def main() -> int:
         logging.warning(
             "walkability_index.csv not found; walkability_index_v1 target will be all-NaN."
         )
+
+    # OSM marked-crossing label (revived crosswalk target, 2026-06-24). Lives in its own
+    # file because Overture's crosswalk column was the dead ~0.56-AUROC label;
+    # osm_marked_crossing_present is the cleaner ~0.79 cross-city target. Joined on
+    # (point_id, city); points absent from the OSM pull get NaN and are masked in the loss.
+    osm_path = LABELS_CSV.parent / "osm_crossing_labels.csv"
+    if osm_path.exists():
+        osm = pd.read_csv(osm_path)[["point_id", "city", "osm_marked_crossing_present"]]
+        osm["point_id"] = osm["point_id"].astype(int)
+        labels["point_id"] = labels["point_id"].astype(int)
+        labels = labels.merge(osm, on=["point_id", "city"], how="left")
+    else:
+        logging.warning(
+            "osm_crossing_labels.csv not found; osm_marked_crossing_present target will be "
+            "all-NaN. Run fetch_osm_crossings.py first."
+        )
+    if "osm_marked_crossing_present" not in labels.columns:
+        labels["osm_marked_crossing_present"] = np.nan
 
     captions = pd.read_csv(CAPTION_CSV)
 
