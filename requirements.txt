@@ -16,6 +16,7 @@ open_clip_torch
 geopy
 vt2geojson
 geopandas
+pyogrio
 osmnx
 overturemaps
 pyarrow

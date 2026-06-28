@@ -1,0 +1,22 @@
+{
+  "match_radius_m": 25.0,
+  "n_dc_points": 4994,
+  "overture_vs_official": {
+    "n": 4994,
+    "kappa": 0.0426,
+    "auroc_overture_vs_official": 0.5175,
+    "raw_agreement": 0.7537,
+    "confusion_official_rows_overture_cols": [
+      [
+        127,
+        845
+      ],
+      [
+        385,
+        3637
+      ]
+    ],
+    "overture_prevalence": 0.8975,
+    "official_prevalence": 0.8054
+  }
+}

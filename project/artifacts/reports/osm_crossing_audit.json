@@ -1,0 +1,165 @@
+{
+  "match_radius_m": 25.0,
+  "by_city": {
+    "msp": {
+      "n_osm_crossings": 64560,
+      "n_osm_marked": 10214,
+      "overture_vs_osm_any": {
+        "n": 4824,
+        "kappa": 0.0612,
+        "auroc_overture_vs_osm": 0.5524,
+        "raw_agreement": 0.3607,
+        "confusion_osm_rows_overture_cols": [
+          [
+            1291,
+            31
+          ],
+          [
+            3053,
+            449
+          ]
+        ],
+        "overture_prevalence": 0.0995,
+        "osm_prevalence": 0.726
+      },
+      "overture_vs_osm_marked": {
+        "n": 4824,
+        "kappa": 0.268,
+        "auroc_overture_vs_osm": 0.6123,
+        "raw_agreement": 0.7187,
+        "confusion_osm_rows_overture_cols": [
+          [
+            3048,
+            61
+          ],
+          [
+            1296,
+            419
+          ]
+        ],
+        "overture_prevalence": 0.0995,
+        "osm_prevalence": 0.3555
+      }
+    },
+    "seattle": {
+      "n_osm_crossings": 80836,
+      "n_osm_marked": 17634,
+      "overture_vs_osm_any": {
+        "n": 4824,
+        "kappa": 0.0478,
+        "auroc_overture_vs_osm": 0.5771,
+        "raw_agreement": 0.3043,
+        "confusion_osm_rows_overture_cols": [
+          [
+            594,
+            34
+          ],
+          [
+            3322,
+            874
+          ]
+        ],
+        "overture_prevalence": 0.1882,
+        "osm_prevalence": 0.8698
+      },
+      "overture_vs_osm_marked": {
+        "n": 4824,
+        "kappa": 0.504,
+        "auroc_overture_vs_osm": 0.725,
+        "raw_agreement": 0.7991,
+        "confusion_osm_rows_overture_cols": [
+          [
+            3047,
+            100
+          ],
+          [
+            869,
+            808
+          ]
+        ],
+        "overture_prevalence": 0.1882,
+        "osm_prevalence": 0.3476
+      }
+    },
+    "dc": {
+      "n_osm_crossings": 70347,
+      "n_osm_marked": 50077,
+      "overture_vs_osm_any": {
+        "n": 4994,
+        "kappa": 0.1678,
+        "auroc_overture_vs_osm": 0.6363,
+        "raw_agreement": 0.4996,
+        "confusion_osm_rows_overture_cols": [
+          [
+            1107,
+            117
+          ],
+          [
+            2382,
+            1388
+          ]
+        ],
+        "overture_prevalence": 0.3014,
+        "osm_prevalence": 0.7549
+      },
+      "overture_vs_osm_marked": {
+        "n": 4994,
+        "kappa": 0.2576,
+        "auroc_overture_vs_osm": 0.6535,
+        "raw_agreement": 0.5893,
+        "confusion_osm_rows_overture_cols": [
+          [
+            1633,
+            195
+          ],
+          [
+            1856,
+            1310
+          ]
+        ],
+        "overture_prevalence": 0.3014,
+        "osm_prevalence": 0.634
+      }
+    },
+    "pittsburgh": {
+      "n_osm_crossings": 28745,
+      "n_osm_marked": 7207,
+      "overture_vs_osm_any": {
+        "n": 4982,
+        "kappa": 0.0844,
+        "auroc_overture_vs_osm": 0.5689,
+        "raw_agreement": 0.3926,
+        "confusion_osm_rows_overture_cols": [
+          [
+            1378,
+            34
+          ],
+          [
+            2992,
+            578
+          ]
+        ],
+        "overture_prevalence": 0.1228,
+        "osm_prevalence": 0.7166
+      },
+      "overture_vs_osm_marked": {
+        "n": 4982,
+        "kappa": 0.3562,
+        "auroc_overture_vs_osm": 0.6507,
+        "raw_agreement": 0.7549,
+        "confusion_osm_rows_overture_cols": [
+          [
+            3214,
+            65
+          ],
+          [
+            1156,
+            547
+          ]
+        ],
+        "overture_prevalence": 0.1228,
+        "osm_prevalence": 0.3418
+      }
+    }
+  }
+}
