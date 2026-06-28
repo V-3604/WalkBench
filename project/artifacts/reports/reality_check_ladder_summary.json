@@ -1,0 +1,277 @@
+{
+  "LOCO|1 linprobe-SigLIP (BASELINE)|crosswalk": [
+    0.7925,
+    0.0229,
+    60
+  ],
+  "LOCO|1 linprobe-SigLIP (BASELINE)|sidewalk": [
+    0.7271,
+    0.0545,
+    60
+  ],
+  "LOCO|1 linprobe-SigLIP (BASELINE)|intersect": [
+    0.5816,
+    0.0677,
+    60
+  ],
+  "LOCO|1 linprobe-SigLIP (BASELINE)|building": [
+    0.8317,
+    0.0241,
+    60
+  ],
+  "LOCO|2 MLP-SigLIP2|crosswalk": [
+    0.7889,
+    0.0284,
+    60
+  ],
+  "LOCO|2 MLP-SigLIP2|sidewalk": [
+    0.7462,
+    0.0832,
+    60
+  ],
+  "LOCO|2 MLP-SigLIP2|intersect": [
+    0.6219,
+    0.0568,
+    60
+  ],
+  "LOCO|2 MLP-SigLIP2|building": [
+    0.8333,
+    0.024,
+    60
+  ],
+  "LOCO|3 LoRA|crosswalk": [
+    0.7556,
+    0.0265,
+    60
+  ],
+  "LOCO|3 LoRA|sidewalk": [
+    0.9069,
+    0.0327,
+    60
+  ],
+  "LOCO|3 LoRA|intersect": [
+    0.6307,
+    0.0615,
+    60
+  ],
+  "LOCO|3 LoRA|building": [
+    0.7937,
+    0.0251,
+    60
+  ],
+  "LOCO|4 LoRA-LOCO|crosswalk": [
+    0.7858,
+    0.0243,
+    60
+  ],
+  "LOCO|4 LoRA-LOCO|sidewalk": [
+    0.7793,
+    0.076,
+    60
+  ],
+  "LOCO|4 LoRA-LOCO|intersect": [
+    0.635,
+    0.0535,
+    60
+  ],
+  "LOCO|4 LoRA-LOCO|building": [
+    0.8106,
+    0.0265,
+    60
+  ],
+  "LOCO|5 CORAL|crosswalk": [
+    0.75,
+    0.0147,
+    60
+  ],
+  "LOCO|5 CORAL|sidewalk": [
+    0.6782,
+    0.0404,
+    60
+  ],
+  "LOCO|5 CORAL|intersect": [
+    0.4434,
+    0.0485,
+    60
+  ],
+  "LOCO|5 CORAL|building": [
+    0.6398,
+    0.0357,
+    60
+  ],
+  "LOCO|6 subspace|crosswalk": [
+    0.7366,
+    0.0464,
+    60
+  ],
+  "LOCO|6 subspace|sidewalk": [
+    0.6747,
+    0.0514,
+    60
+  ],
+  "LOCO|6 subspace|intersect": [
+    0.2245,
+    0.1349,
+    60
+  ],
+  "LOCO|6 subspace|building": [
+    0.5098,
+    0.2504,
+    60
+  ],
+  "LOCO|1 linprobe-SigLIP2|crosswalk": [
+    0.7921,
+    0.0254,
+    60
+  ],
+  "LOCO|1 linprobe-SigLIP2|sidewalk": [
+    0.7105,
+    0.0745,
+    60
+  ],
+  "LOCO|1 linprobe-SigLIP2|intersect": [
+    0.5827,
+    0.0366,
+    60
+  ],
+  "LOCO|1 linprobe-SigLIP2|building": [
+    0.8325,
+    0.0272,
+    60
+  ],
+  "LOCO|1 linprobe-DINOv2|crosswalk": [
+    0.7473,
+    0.046,
+    60
+  ],
+  "LOCO|1 linprobe-DINOv2|sidewalk": [
+    0.6883,
+    0.0613,
+    60
+  ],
+  "LOCO|1 linprobe-DINOv2|intersect": [
+    0.5424,
+    0.0518,
+    60
+  ],
+  "LOCO|1 linprobe-DINOv2|building": [
+    0.7807,
+    0.0254,
+    60
+  ],
+  "PGH|1 linprobe-SigLIP (BASELINE)|crosswalk": [
+    0.769,
+    0.0034,
+    10
+  ],
+  "PGH|1 linprobe-SigLIP (BASELINE)|sidewalk": [
+    0.7906,
+    0.0023,
+    10
+  ],
+  "PGH|1 linprobe-SigLIP (BASELINE)|intersect": [
+    0.7485,
+    0.0025,
+    10
+  ],
+  "PGH|1 linprobe-SigLIP (BASELINE)|building": [
+    0.8875,
+    0.0015,
+    10
+  ],
+  "PGH|2 MLP-SigLIP2|sidewalk": [
+    0.7566,
+    0.0158,
+    3
+  ],
+  "PGH|2 MLP-SigLIP2|intersect": [
+    0.7997,
+    0.0155,
+    3
+  ],
+  "PGH|2 MLP-SigLIP2|building": [
+    0.8987,
+    0.0028,
+    3
+  ],
+  "PGH|5 CORAL|crosswalk": [
+    0.7136,
+    0.0023,
+    10
+  ],
+  "PGH|5 CORAL|sidewalk": [
+    0.7275,
+    0.0049,
+    10
+  ],
+  "PGH|5 CORAL|intersect": [
+    0.5624,
+    0.0028,
+    10
+  ],
+  "PGH|5 CORAL|building": [
+    0.7211,
+    0.0032,
+    10
+  ],
+  "PGH|6 subspace|crosswalk": [
+    0.6442,
+    0.0518,
+    10
+  ],
+  "PGH|6 subspace|sidewalk": [
+    0.7433,
+    0.0386,
+    10
+  ],
+  "PGH|6 subspace|intersect": [
+    0.2204,
+    0.1471,
+    10
+  ],
+  "PGH|6 subspace|building": [
+    0.5715,
+    0.2005,
+    10
+  ],
+  "PGH|1 linprobe-SigLIP2|crosswalk": [
+    0.7599,
+    0.004,
+    10
+  ],
+  "PGH|1 linprobe-SigLIP2|sidewalk": [
+    0.7944,
+    0.0026,
+    10
+  ],
+  "PGH|1 linprobe-SigLIP2|intersect": [
+    0.7426,
+    0.0034,
+    10
+  ],
+  "PGH|1 linprobe-SigLIP2|building": [
+    0.8986,
+    0.0005,
+    10
+  ],
+  "PGH|1 linprobe-DINOv2|crosswalk": [
+    0.7536,
+    0.0027,
+    10
+  ],
+  "PGH|1 linprobe-DINOv2|sidewalk": [
+    0.7687,
+    0.0048,
+    10
+  ],
+  "PGH|1 linprobe-DINOv2|intersect": [
+    0.691,
+    0.0027,
+    10
+  ],
+  "PGH|1 linprobe-DINOv2|building": [
+    0.8517,
+    0.0009,
+    10
+  ]
+}
